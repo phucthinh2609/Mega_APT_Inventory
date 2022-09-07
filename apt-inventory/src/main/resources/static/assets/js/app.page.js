@@ -138,6 +138,10 @@ class App {
             return false;
         })
 
+        let shortTitle = obj.title;
+        let index = shortTitle.indexOf("/");
+        let title = shortTitle.substring(0,index-1);
+
         let str = `
             <tr>
                 <td>
@@ -149,7 +153,12 @@ class App {
                 <td>
                     ${strImg}
                 </td>
-                <td data-bs-toggle="tooltip" title="Hooray!">${obj.title}</td>
+                <td>
+                    <div class="myTooltip">
+                      ${title} ...
+                      <span class="myTooltiptext">${obj.title}</span>
+                    </div>
+                </td>
                 <td>
                     ${
                         obj.businessStatus != "Ngừng Kinh Doanh" ? `<span class="badge badge-pill badge-soft-success font-size-12">${obj.businessStatus}</span>` : `<span class="badge badge-pill badge-soft-danger font-size-12">${obj.businessStatus}</span>`
