@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>User List Page</title>
+
+        <!-- Meta -->
+        <th:block th:replace="/layout/head/meta :: meta"/>
+        <!-- App-favicon -->
+        <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+        <!-- Main -->
+        <th:block th:replace="/layout/head/main :: main"/>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+            <!-- Begin page-topbar -->
+            <th:block th:replace="/layout/page-topbar :: page-topbar"/>
+            <!-- End page-topbar -->
+
+            <!-- Begin vertical-menu -->
+            <th:block th:replace="/layout/vertical-menu :: vertical-menu"/>
+            <!-- End vertical-menu -->
+
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Stock</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">User</a></li>
+                                            <li class="breadcrumb-item active">Over View</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+
+                                    <div class="row">
+                                        <h1>GROUP BY PRODUCT TITLE</h1>
+                                        <div class="col-7">
+                                            <canvas id="barChart" style="width:100%"></canvas>
+                                        </div>
+                                        <div class="col-5">
+                                            <canvas id="pieChart" style="width:100%"></canvas>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+            </div>
+            <!-- End Page-content -->
+
+            <!-- Modal -->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right Sidebar -->
+        <th:block th:replace="/layout/right-bar :: right-bar"/>
+        <!-- End right-bar -->
+
+        <!-- JAVASCRIPT -->
+        <th:block th:replace="/layout/script/javascript :: javascript"/>
+        <!-- App js -->
+        <th:block th:replace="/layout/script/app-js :: app-js"/>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+        <script>
+            let page = {
+                urls: {
+                    getInventoryGroupByProduct: App.BASER_URL + "/inventories"
+
+                },
+                elements: {
+                },
+                loadData: {},
+                commands: {},
+                dialogs: {
+                    elements: {},
+                    commands: {},
+                    alertDanger: {}
+                },
+            }
+
+            let inventoryGroupByProduct = [];
+
+            let xValues = [];
+            let yValues = [];
+            let barColors = [];
+
+            page.commands.getInventoryGroupByProduct = () => {
+                return $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: page.urls.getInventoryGroupByProduct,
+                })
+                    .done((data) => {
+                        inventoryGroupByProduct = data;
+                    })
+                    .fail((jqXHR) => {
+
+                    });
+            }
+
+            $(() => {
+                page.commands.getInventoryGroupByProduct().then(() => {
+                    $.each(inventoryGroupByProduct, (index, value) => {
+                        xValues.push(value.title);
+                        yValues.push(value.quantity);
+                        barColors.push("#" + ((1<<24)*Math.random() | 0).toString(16));
+                    })
+
+                    const barChart = new Chart($('#barChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                label: '',
+                                data: yValues,
+                                backgroundColor: barColors,
+                                borderColor: [],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+
+                const pieChart = new Chart($('#pieChart'), {
+                    type: 'pie',
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            label: '',
+                            data: yValues,
+                            backgroundColor: barColors,
+                            hoverOffset: 4
+                        }]
+                    }
+                });
+            });
+
+        </script>
+    </body>
+
+</html>

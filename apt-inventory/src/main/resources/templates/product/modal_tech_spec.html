@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="modal_tech_spec">
+    <div id="mdCreateTechSpec" class="modal fade " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tech spec information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                        <ul></ul>
+                    </div>
+                    <form id="frmCreateTechSpec">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="techSpecName" name="techSpecName">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Explanation</label>
+                                    <input type="text" class="form-control" id="explanation" name="explanation">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Multiline</label>
+                                    <select class="form-select" id="multiline" name="multiline">
+                                        <option value="false">Only one line</option>
+                                        <option value="true">Multiline</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnCreateTechSpec" class="btn btn-outline-primary">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Create Tech Spec
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

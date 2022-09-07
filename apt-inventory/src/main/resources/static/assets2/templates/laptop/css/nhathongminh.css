@@ -1,0 +1,105 @@
+span.featured {
+    position: absolute;
+    top: 15px !important;
+    left: auto;
+    right: 0;
+    font-weight: 500;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    background: #f4524d;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 8px 0 8px;
+    border-radius: 0;
+    transform: rotate(-45deg) translateY(-100%);
+    -webkit-transform: rotate(0) translateY(0);
+    transform-origin: right top;
+    -webkit-transform-origin: right top;
+}
+
+span.featured:after,
+span.featured:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    color: #f4524d;
+    border: solid 10px transparent;
+    border-left-color: #f4524d;
+}
+
+span.featured:before,
+span.onsale:before {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+span.featured:after,
+span.onsale:after {
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+
+.content-row {
+    display: table;
+    width: 100%;
+}
+
+.content-row .left-image {
+    padding-right: 20px;
+    width: 90px;
+    display: table-cell;
+}
+
+.content-row .right-info {
+    font-weight: 600;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.content-row .product_type-title a {
+    color: #000;
+}
+
+.blockTitle {
+    position: relative;
+    height: 45px;
+    background: #efefef;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.blockTitle h2 {
+    display: inline-block;
+    background: #056db6;
+    padding: 0 8px 0 12px;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    float: left;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    color: #fff;
+    line-height: 45px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.blockTitle h2:after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 22px solid transparent;
+    border-left: 15px solid;
+    border-left-color: #056db6;
+    border-right: 0 solid transparent;
+    border-bottom: 23px solid transparent;
+    position: absolute;
+    top: 0;
+    right: -15px;
+}

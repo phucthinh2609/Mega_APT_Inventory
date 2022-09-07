@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Create Product Page</title>
+
+        <!-- Meta -->
+        <th:block th:replace="/layout/head/meta :: meta"/>
+        <!-- App-favicon -->
+        <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+
+        <!-- select2 css -->
+        <th:block th:replace="/layout/head/select2-css :: select2-css"/>
+        <!-- dropzone css -->
+        <th:block th:replace="/layout/head/dropzone-css :: dropzone-css"/>
+        <!-- Summernote css -->
+        <th:block th:replace="/layout/head/summernote :: summernote"/>
+
+        <!-- Main -->
+        <th:block th:replace="/layout/head/main :: main"/>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+            <!-- Begin page-topbar -->
+            <th:block th:replace="/layout/page-topbar :: page-topbar"/>
+            <!-- End page-topbar -->
+
+            <!-- Begin vertical-menu -->
+            <th:block th:replace="/layout/vertical-menu :: vertical-menu"/>
+            <!-- End vertical-menu -->
+
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered table-nowrap">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th style="width: 20px;">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                    <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                </div>
+                                            </th>
+                                            <th>Image</th>
+                                            <th>Title</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/assets/images/laptop/macbook-1.jpeg" alt="product-img" title="product-img" class="avatar-md">
+                                            </td>
+                                            <td>MacBook Air 13 M2 2022/ Gray/ Sliver/ Starlight/ Midnight</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                    <label class="custom-control-label" for="customCheck3">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/assets/images/laptop/hp-1.jpeg" alt="product-img" title="product-img" class="avatar-md">
+                                            </td>
+                                            <td>HP Laptop 15s-fq5104TU/ i7-1255u/ RAM 8GB/ SSD 512GB</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                                    <label class="custom-control-label" for="customCheck4">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/assets/images/laptop/lenovo-1.jpeg" alt="product-img" title="product-img" class="avatar-md">
+                                            </td>
+                                            <td>Lenovo Legion 5 15ARH7 | 15.6 inch FHD</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck5">
+                                                    <label class="custom-control-label" for="customCheck5">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/assets/images/laptop/asus-1.jpeg" alt="product-img" title="product-img" class="avatar-md">
+                                            </td>
+                                            <td>ASUS TUF Gaming A15 FA506Q-SB54/ R5-5600H/ RAM 16GB/ SSD 512GB</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck6">
+                                                    <label class="custom-control-label" for="customCheck6">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/assets/images/laptop/msi-1.jpeg" alt="product-img" title="product-img" class="avatar-md">
+                                            </td>
+                                            <td>MSI GF63 Thin 10SC 468VN</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- start blog form -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title mb-4">Create New Blog</h4>
+                                <form class="outer-repeater">
+                                    <div data-repeater-list="outer-group" class="outer">
+                                        <div data-repeater-item="" class="outer">
+                                            <div class="form-group row mb-4">
+                                                <label for="taskname2" class="col-form-label col-lg-12">Blog Title</label>
+                                                <div class="col-lg-12">
+                                                    <input id="taskname2" name="taskname" type="text" class="form-control" placeholder="Enter Task Name...">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label col-lg-12">Blog Description</label>
+                                                <div class="col-lg-12">
+                                                    <div class="summernote">Hello Summernote</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-1 waves-effect waves-light">Save</button>
+                        <button type="submit" class="btn btn-secondary waves-effect">Cancel</button>
+
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+            </div>
+            <!-- End Page-content -->
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right Sidebar -->
+        <th:block th:replace="/layout/right-bar :: right-bar"/>
+        <!-- End right-bar -->
+
+        <!-- Modal -->
+        <th:block th:replace="/product/modal_tech_spec :: modal_tech_spec"/>
+        <!-- END Modal -->
+
+
+        <!-- JAVASCRIPT -->
+        <th:block th:replace="/layout/script/javascript :: javascript"/>
+
+        <!-- select 2 plugin -->
+        <th:block th:replace="/layout/script/select-2-plugin :: select-2-plugin"/>
+        <!-- dropzone plugin -->
+        <th:block th:replace="/layout/script/dropzone-plugin :: dropzone-plugin"/>
+        <!-- init js -->
+        <th:block th:replace="/layout/script/init-js :: init-js"/>
+        <!-- Summernote js -->
+        <th:block th:replace="/layout/script/summernote :: summernote"/>
+        <!-- form repeater js -->
+        <th:block th:replace="/layout/script/repeater :: repeater"/>
+
+        <!-- App js -->
+        <th:block th:replace="/layout/script/app-js :: app-js"/>
+
+    </body>
+
+</html>

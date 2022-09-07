@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Create Product Page</title>
+
+        <!-- Meta -->
+        <th:block th:replace="/layout/head/meta :: meta"/>
+        <!-- App-favicon -->
+        <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+
+        <!-- select2 css -->
+        <th:block th:replace="/layout/head/select2-css :: select2-css"/>
+        <!-- dropzone css -->
+        <th:block th:replace="/layout/head/dropzone-css :: dropzone-css"/>
+        <!-- Summernote css -->
+        <th:block th:replace="/layout/head/summernote :: summernote"/>
+
+        <!-- Main -->
+        <th:block th:replace="/layout/head/main :: main"/>
+
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Custom css -->
+        <th:block th:replace="/layout/head/custom-css :: custom-css"/>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+            <!-- Begin page-topbar -->
+            <th:block th:replace="/layout/page-topbar :: page-topbar"/>
+            <!-- End page-topbar -->
+
+            <!-- Begin vertical-menu -->
+            <th:block th:replace="/layout/vertical-menu :: vertical-menu"/>
+            <!-- End vertical-menu -->
+
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Create Product</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Product</a></li>
+                                            <li class="breadcrumb-item active">Create</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <!-- start product base form -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Product Data</h4>
+                                <p class="card-title-desc">Fill all information below</p>
+
+                                <form>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="brand">Laptop Brand</label>
+                                                <input id="brand" name="brand" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="model">Laptop Model</label>
+                                                <input id="model" name="model" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <input id="description" name="description" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="form-group">
+                                    <label >Image</label>
+                                    <input type="file" id="imageFile" accept="image/jpeg, image/png" required multiple />
+
+                                    <form action="/upload" method="post" class="dropzone dz-clickable form-group">
+
+<!--                                        <div class="dz-message needsclick">-->
+<!--                                            <div class="mb-3">-->
+<!--                                                <i class="display-4 text-muted bx bxs-cloud-upload"></i>-->
+<!--                                            </div>-->
+
+<!--                                            <h4>Drop files here or click to upload.</h4>-->
+<!--                                        </div>-->
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- start tech-spec -->
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="row mb-4">
+                                    <div class="col-sm-4">
+                                        <h4 class="card-title">Tech specs</h4>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-right">
+                                        <button type="button" id="btnShowTechSpecForm" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2 ">
+                                            <i class="mdi mdi-plus mr-1"></i>
+                                            Add New Spec
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="container-fluid">
+                                        <form id="frmInputTechSpec">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btnCreateProduct" class="btn btn-primary mr-1 waves-effect waves-light">Save</button>
+                        <button type="submit" class="btn btn-secondary waves-effect">Cancel</button>
+
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <th:block th:replace="/layout/head/error-collapse"/>
+                </footer>
+                <!-- End Footer -->
+            </div>
+            <!-- End Page-content -->
+        </div>
+        <!-- END layout-wrapper -->
+
+        <div class="loader hide"></div>
+
+        <!-- Right Sidebar -->
+        <th:block th:replace="/layout/right-bar :: right-bar"/>
+        <!-- End right-bar -->
+
+        <!-- Modal -->
+        <th:block th:replace="/product/modal_tech_spec :: modal_tech_spec"/>
+        <!-- END Modal -->
+
+
+        <!-- JAVASCRIPT -->
+        <th:block th:replace="/layout/script/javascript :: javascript"/>
+
+        <!-- select 2 plugin -->
+        <th:block th:replace="/layout/script/select-2-plugin :: select-2-plugin"/>
+        <!-- dropzone plugin -->
+        <th:block th:replace="/layout/script/dropzone-plugin :: dropzone-plugin"/>
+        <!-- init js -->
+        <th:block th:replace="/layout/script/init-js :: init-js"/>
+        <!-- Summernote js -->
+        <th:block th:replace="/layout/script/summernote :: summernote"/>
+        <!-- form repeater js -->
+        <th:block th:replace="/layout/script/repeater :: repeater"/>
+
+        <!-- App js -->
+        <th:block th:replace="/layout/script/app-js :: app-js"/>
+
+
+        <script>
+
+            let page = {
+                urls: {
+                    getAllComputerConfigurationParameters: App.BASER_URL + "/v1/computer-configuration-parameters",
+                    createComputerConfigurationParameter: App.BASER_URL + "/v1/computer-configuration-parameters",
+                    doCreate: App.BASER_URL + "/products"
+
+                },
+                elements: {
+                },
+                loadData: {},
+                commands: {},
+                dialogs: {
+                    elements: {},
+                    commands: {},
+                    alertDanger: {}
+                },
+            }
+
+            page.elements.loader = $(".loader");
+
+            page.elements.btnCreateTechSpec = $('#btnCreateTechSpec');
+            page.elements.btnShowTechSpecForm = $('#btnShowTechSpecForm');
+            page.elements.btnCreateProduct = $('#btnCreateProduct');
+
+            page.elements.modalCreateTechSpec = $('#mdCreateTechSpec');
+
+            page.elements.frmInputTechSpec = $('#frmInputTechSpec');
+
+            page.elements.name = $('#techSpecName');
+            page.elements.explanation = $('#explanation');
+            page.elements.multiline = $('#multiline');
+
+            page.elements.brand = $('#brand');
+            page.elements.model = $('#model');
+            page.elements.description = $("#description");
+
+            page.elements.footerAccordion = $(".footer section.accordion");
+            page.elements.footerContent = $(".footer section.accordion .content");
+            page.elements.accordionCollapse = $('input[name=collapse]');
+
+            let computerConfigurationParameters = [];
+
+            let computerConfiguration = {
+                id: null,
+                brand: null,
+                model: null,
+                title: null,
+                description : null,
+                slug:null,
+                purchaseOrderPrice: null,
+                configurationDetail: {}
+            }
+
+            page.commands.getAllComputerConfigurationParameters = () => {
+                return $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: page.urls.getAllComputerConfigurationParameters,
+                })
+                .done((data) => {
+                    computerConfigurationParameters = data;
+                })
+                .fail((jqXHR) => {
+                    console.log(jqXHR)
+                });
+            }
+
+            page.commands.createTechSpec = () => {
+                let computerConfigurationParameter = {
+                    id: 0,
+                    name: null,
+                    explanation: null,
+                    multiline: false
+                }
+
+                computerConfigurationParameter.name = page.elements.name.val();
+                computerConfigurationParameter.explanation = page.elements.explanation.val();
+                computerConfigurationParameter.multiline = page.elements.multiline.val();
+
+                $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "POST",
+                    url: page.urls.createComputerConfigurationParameter,
+                    data: JSON.stringify(computerConfigurationParameter)
+                })
+                .done((data) => {
+                    console.log(data);
+                    computerConfiguration.configurationDetail = {
+                        ...computerConfiguration.configurationDetail,
+                        [data.name] : {
+                            explanation: data.explanation
+                        }
+                    }
+                    page.elements.modalCreateTechSpec.modal('hide');
+                    page.elements.name.val("")
+                    page.elements.explanation.val("");
+                    let str = App.renderInputTechSpecForm(data);
+                    page.elements.frmInputTechSpec.append(str);
+                    App.SweetAleart.showSuccessAlert("Tạo Thông Số Thành Công");
+                })
+                .fail((jqxHR) => {
+                    console.log(jqxHR);
+                    $.each(jqxHR.responseJSON, (key, item) => {
+                        App.IziToast.showErrorAlert(item)
+                    })
+                })
+
+            }
+
+            page.commands.createProduct = () => {
+                page.elements.loader.removeClass("hide");
+                page.elements.footerAccordion.removeClass("show").addClass("hide");
+                page.elements.footerContent.empty();
+                page.elements.accordionCollapse.prop("checked", false);
+                page.elements.btnCreateProduct.prop('disabled', true);
+
+                page.elements.loader.removeClass("hide");
+
+                computerConfiguration.brand = page.elements.brand.val().trim();
+                computerConfiguration.model = page.elements.model.val().trim()
+                computerConfiguration.title = page.elements.brand.val().trim() + " " + page.elements.model.val().trim();
+                computerConfiguration.description = page.elements.description.val();
+
+                $.each(computerConfiguration.configurationDetail, function (key, value) {
+                    computerConfiguration.configurationDetail[key].content = $("#" + key).val();
+                })
+
+                let formData  = new FormData();
+
+                let fileInput = $('#imageFile')[0].files;
+
+                formData.append("brand", computerConfiguration.brand);
+                formData.append("model", computerConfiguration.model);
+                formData.append("title", computerConfiguration.title);
+                formData.append("description", computerConfiguration.description);
+                formData.append("configurationDetail", JSON.stringify(computerConfiguration.configurationDetail));
+
+                fileInput.forEach((file) => {
+                    formData.append("files", file);
+                })
+
+                $.ajax({
+                    type: "POST",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    url: page.urls.doCreate,
+                    data: formData
+                })
+                .done((data) => {
+                    page.elements.brand.val("");
+                    page.elements.model.val("");
+                    page.elements.brand.val("");
+                    page.elements.model.val("");
+                    page.elements.description.val("");
+
+                    $.each(computerConfiguration.configurationDetail, function (key, value) {
+                        computerConfiguration.configurationDetail[key].content = $("#" + key).val("");
+                    })
+
+                    App.SweetAleart.showSuccessAlert("Tạo Sản Phẩm Thành Công");
+                })
+                .fail((jqxHR) => {
+                    console.log(jqxHR)
+                    App.IziToast.showErrorAlert(App.ERROR_400)
+
+                    page.elements.footerAccordion.removeClass("hide").addClass("show");
+                    page.elements.footerContent.empty();
+                    page.elements.accordionCollapse.prop("checked", true);
+
+                    let str = ``;
+
+                    if (jqxHR.status === 401) {
+                        str += `<label id="message-error" class="error">${App.ERROR_401}</label>`;
+                    } else {
+                        if (jqxHR.status === 403) {
+                            str += `<label id="message-error" class="error">${App.ERROR_403}</label>`;
+                        } else {
+                            if (jqxHR.responseJSON) {
+                                if (jqxHR.responseJSON.message) {
+                                    str += `<label id="message-error" class="error" for="message">${jqxHR.responseJSON.message}</label>`;
+                                } else {
+                                    $.each(jqxHR.responseJSON, function (key, value) {
+                                        str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                                        $("#" + key).addClass("error");
+                                    });
+                                }
+                            } else {
+                                str += `<label id="message-error" class="error">${App.ERROR_500}</label>`;
+                            }
+                        }
+                    }
+
+                    console.log(str)
+
+                    page.elements.footerContent.html(str);
+                })
+                .always(function () {
+                    page.elements.loader.addClass("hide");
+                    page.elements.btnCreateProduct.prop('disabled', false);
+                });
+            }
+
+            page.initializeControlEvent = () => {
+                page.elements.btnShowTechSpecForm.on('click', () => {
+                    page.elements.modalCreateTechSpec.modal('show');
+                });
+
+                page.elements.btnCreateTechSpec.on('click', () => {
+                    page.commands.createTechSpec();
+                })
+
+                page.elements.btnCreateProduct.on('click',() => {
+                    page.commands.createProduct();
+                });
+            }
+
+            $(() => {
+                let lines = 1, maxLines = 5;
+
+                function limitLines(obj, e) {
+                    if (e.keyCode === 13) {
+                        if (obj.rows < maxLines) {
+                            lines++;
+                            $(obj).attr('rows', lines);
+                        }
+                    }
+                }
+
+                function resetLines(obj) {
+                    if ($(obj).val().length === 0) {
+                        lines = 1;
+                        $(obj).attr('rows', lines);
+                    }
+                }
+
+                page.commands.getAllComputerConfigurationParameters().then(() => {
+                    $.each(computerConfigurationParameters, (i, item) => {
+
+                        let key = item.name;
+                        let obj = {}
+
+                        obj[key] = {
+                            explanation: item.explanation
+                        }
+
+                        computerConfiguration.configurationDetail[key] = obj[key];
+
+                        let str = App.renderInputTechSpecForm(item);
+                        let frmInputTechSpec = $('#frmInputTechSpec');
+                        frmInputTechSpec.append(str);
+
+                        let textarea = $('textarea');
+
+                        textarea.on("keydown", function (e) {
+                            return limitLines(this, e);
+                        });
+
+                        textarea.on("input", function () {
+                            return resetLines(this);
+                        });
+                    })
+                });
+
+                page.initializeControlEvent();
+
+            })
+
+        </script>
+    </body>
+
+</html>
