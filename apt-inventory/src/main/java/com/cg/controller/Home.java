@@ -75,7 +75,7 @@ public class Home {
     @GetMapping("/purchase-orders")
     public ModelAndView showPurchaseOrderListPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("stock-in-order/list");
+        modelAndView.setViewName("purchase-order/list");
         return modelAndView;
     }
 
