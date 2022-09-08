@@ -136,6 +136,7 @@ public class ProductAPI {
                 productRender.setSlug(productMedia.getProduct().getSlug());
                 productRender.setPurchaseOrderPrice(productMedia.getProduct().getPurchaseOrderPrice());
                 productRender.setDescription(productMedia.getProduct().getDescription());
+                productRender.setConfigurationDetail(productMedia.getProduct().getConfigurationDetail());
                 productRender.setComputerConfigurationParameters(computerConfigurationParameters);
                 productRender.setBusinessStatus(productMedia.getProduct().getBusinessStatus().getValue());
 //                productRender.setBlogId(productMedia.getProduct().getBlog().getId());

@@ -2,6 +2,7 @@ package com.cg.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,17 +38,18 @@ public class Home {
         return modelAndView;
     }
 
+    @GetMapping("/products/{slug}")
+    public ModelAndView showProductDetailPage(@PathVariable String slug) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("product/detail");
+        modelAndView.addObject("slug", slug);
+        return modelAndView;
+    }
+
     @GetMapping("/products/create-description")
     public ModelAndView showCreateDescriptionProductPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("product/create-description");
-        return modelAndView;
-    }
-
-    @GetMapping("/products/detail")
-    public ModelAndView showProductDetailPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("product/detail");
         return modelAndView;
     }
 

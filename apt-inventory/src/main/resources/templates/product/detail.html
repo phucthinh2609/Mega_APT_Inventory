@@ -40,6 +40,7 @@
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0 font-size-18">Product Detail</h4>
+                                    <input id="slug" type="text" th:value="${slug}" hidden/>
 
                                     <div class="page-title-right">
                                         <a href="/products" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-keyboard-return"></i>  Product List</a>
@@ -61,42 +62,10 @@
                                                     <div class="row" style="margin-top: 30%">
                                                         <div class="col-md-2 col-sm-3 col-4">
                                                             <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                                <a class="nav-link active" id="product-1-tab" data-toggle="pill" href="#product-1" role="tab" aria-controls="product-1" aria-selected="true">
-                                                                    <img src="/assets/images/laptop/macbook-1.jpeg" alt="" class="img-fluid mx-auto d-block rounded">
-                                                                </a>
-                                                                <a class="nav-link" id="product-2-tab" data-toggle="pill" href="#product-2" role="tab" aria-controls="product-2" aria-selected="false">
-                                                                    <img src="/assets/images/laptop/macbook-2.jpeg" alt="" class="img-fluid mx-auto d-block rounded">
-                                                                </a>
-                                                                <a class="nav-link" id="product-3-tab" data-toggle="pill" href="#product-3" role="tab" aria-controls="product-3" aria-selected="false">
-                                                                    <img src="/assets/images/laptop/macbook-3.jpeg" alt="" class="img-fluid mx-auto d-block rounded">
-                                                                </a>
-                                                                <a class="nav-link" id="product-4-tab" data-toggle="pill" href="#product-4" role="tab" aria-controls="product-4" aria-selected="false">
-                                                                    <img src="/assets/images/laptop/macbook-4.jpeg" alt="" class="img-fluid mx-auto d-block rounded">
-                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-7 offset-md-1 col-sm-9 col-8">
                                                             <div class="tab-content" id="v-pills-tabContent">
-                                                                <div class="tab-pane fade show active" id="product-1" role="tabpanel" aria-labelledby="product-1-tab">
-                                                                    <div>
-                                                                        <img src="/assets/images/laptop/macbook-1.jpeg" alt="" class="img-fluid mx-auto d-block">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="product-2" role="tabpanel" aria-labelledby="product-2-tab">
-                                                                    <div>
-                                                                        <img src="/assets/images/laptop/macbook-2.jpeg" alt="" class="img-fluid mx-auto d-block">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="product-3" role="tabpanel" aria-labelledby="product-3-tab">
-                                                                    <div>
-                                                                        <img src="/assets/images/laptop/macbook-3.jpeg" alt="" class="img-fluid mx-auto d-block">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="product-4" role="tabpanel" aria-labelledby="product-4-tab">
-                                                                    <div>
-                                                                        <img src="/assets/images/laptop/macbook-4.jpeg" alt="" class="img-fluid mx-auto d-block">
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -106,63 +75,55 @@
 
                                             <div class="col-xl-6">
                                                 <div class="mt-4 mt-xl-3">
-                                                    <a href="#" class="text-primary">Macbook</a>
-                                                    <h4 class="mt-1 mb-3">MacBook Air 13 M2 2022/ Gray/ Sliver/ Starlight/ Midnight</h4>
+                                                    <p class="text-primary" id="brand"></p>
+                                                    <h4 class="mt-1 mb-3" id="title"></h4>
 
-                                                    <p class="text-muted float-left mr-3">
-                                                        <span class="bx bx-star text-warning"></span>
-                                                        <span class="bx bx-star text-warning"></span>
-                                                        <span class="bx bx-star text-warning"></span>
-                                                        <span class="bx bx-star text-warning"></span>
-                                                        <span class="bx bx-star"></span>
-                                                    </p>
-                                                    <p class="text-muted mb-4">( 152 Customers Review )</p>
-
-                                                    <h5 class="mb-4">Purchase Order Price : <b>30.800.000₫</b></h5>
-                                                    <p class="text-muted mb-4">/..Description/</p>
+                                                    <h5 class="mb-4">Purchase Order Price : <b id="purchaseOrderPrice">30.800.000₫</b></h5>
+                                                    <span class="badge badge-pill badge-soft-success font-size-12 mb-4" id="businessStatus"></span>
+                                                    <p class="text-muted mb-4">Description: <span>id="description"</span></p>
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <div>
-                                                                <p class="text-muted"><i class="bx bxs-package font-size-16 align-middle text-primary mr-1"></i> <b>CPU :</b> Apple M2 8-core CPU</p>
-                                                                <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary mr-1"></i> <b>RAM :</b> 8GB unified memory Configurable to 16GB or 24GB</p>
-                                                                <p class="text-muted"><i class="bx bx-memory-card font-size-16 align-middle text-primary mr-1"></i> <b>Memory :</b> 256GB SSD Configurable to 512GB, 1TB, or 2TB</p>
+                                                                <p class="text-muted"><i class="bx bxs-package font-size-16 align-middle text-primary mr-1"></i> <b>CPU :</b> <span id="processcer"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary mr-1"></i> <b>RAM :</b> <span id="capacity"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-memory-card font-size-16 align-middle text-primary mr-1"></i> <b>Memory :</b> <span id="memory"></span></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div>
-                                                                <p class="text-muted"><i class="bx bx-card font-size-16 align-middle text-primary mr-1"></i> <b>Screen size :</b> 13.3 inch Retina (2560 x 1600), 500 nits brightness, Retina, True Tone Technology, Tấm nền IPS, Wide color (P3) </p>
-                                                                <p class="text-muted"><i class="bx bx-wallet-alt font-size-16 align-middle text-primary mr-1"></i> <b>Graphic card :</b> Card tích hợp - 10 nhân GPU</p>
+                                                                <p class="text-muted"><i class="bx bx-card font-size-16 align-middle text-primary mr-1"></i> <b>Screen size :</b> <span id="monitor"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-wallet-alt font-size-16 align-middle text-primary mr-1"></i> <b>Graphic card :</b> <span id="graphicCard"></span></p>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="product-color">
-                                                        <h5 class="font-size-15">Color :</h5>
-                                                        <a href="#" class="active">
-                                                            <div class="product-color-item border rounded">
-                                                                <img src="/assets/images/laptop/macbook-1.jpeg" alt="" class="avatar-md">
-                                                            </div>
-                                                            <p>Gray</p>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="product-color-item border rounded">
-                                                                <img src="/assets/images/laptop/macbook-2.jpeg" alt="" class="avatar-md">
-                                                            </div>
-                                                            <p>Sliver</p>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="product-color-item border rounded">
-                                                                <img src="/assets/images/laptop/macbook-3.jpeg" alt="" class="avatar-md">
-                                                            </div>
-                                                            <p>Starlight</p>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="product-color-item border rounded">
-                                                                <img src="/assets/images/laptop/macbook-4.jpeg" alt="" class="avatar-md">
-                                                            </div>
-                                                            <p>Midnight</p>
-                                                        </a>
-                                                    </div>
+<!--                                                    <div class="product-color">-->
+<!--                                                        <h5 class="font-size-15">Color :</h5>-->
+<!--                                                        <a href="#" class="active">-->
+<!--                                                            <div class="product-color-item border rounded">-->
+<!--                                                                <img src="/assets/images/laptop/macbook-1.jpeg" alt="" class="avatar-md">-->
+<!--                                                            </div>-->
+<!--                                                            <p>Gray</p>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="#">-->
+<!--                                                            <div class="product-color-item border rounded">-->
+<!--                                                                <img src="/assets/images/laptop/macbook-2.jpeg" alt="" class="avatar-md">-->
+<!--                                                            </div>-->
+<!--                                                            <p>Sliver</p>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="#">-->
+<!--                                                            <div class="product-color-item border rounded">-->
+<!--                                                                <img src="/assets/images/laptop/macbook-3.jpeg" alt="" class="avatar-md">-->
+<!--                                                            </div>-->
+<!--                                                            <p>Starlight</p>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="#">-->
+<!--                                                            <div class="product-color-item border rounded">-->
+<!--                                                                <img src="/assets/images/laptop/macbook-4.jpeg" alt="" class="avatar-md">-->
+<!--                                                            </div>-->
+<!--                                                            <p>Midnight</p>-->
+<!--                                                        </a>-->
+<!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -172,108 +133,95 @@
                                             <h5 class="mb-3">Specifications :</h5>
 
                                             <div class="table-responsive">
-                                                <table class="table mb-0 table-bordered">
+                                                <table id="tbTechSpec" class="table mb-0 table-bordered">
                                                     <tbody>
-                                                    <tr>
-                                                        <th scope="row" style="width: 400px;">CPU</th>
-                                                        <td>Apple M2 8-core CPU</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">RAM</th>
-                                                        <td>8GB unified memory Configurable to 16GB or 24GB</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Memory</th>
-                                                        <td>256GB SSD Configurable to 512GB, 1TB, or 2TB</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Screen size</th>
-                                                        <td>13.3 inch Retina (2560 x 1600), 500 nits brightness, Retina, True Tone Technology, Tấm nền IPS, Wide color (P3)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Graphic card</th>
-                                                        <td>Card tích hợp - 10 nhân GPU</td>
-                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <!-- end Specifications -->
 
+                                        <!-- start Blog -->
                                         <div class="mt-5">
-                                            <h5>Reviews :</h5>
-
-                                            <div class="media py-3 border-bottom">
-                                                <img src="/assets/images/users/avatar-2.jpg" class="avatar-xs mr-3 rounded-circle" alt="img">
-                                                <div class="media-body">
-                                                    <h5 class="mt-0 mb-1 font-size-15">Brian</h5>
-                                                    <p class="text-muted">If several languages coalesce, the grammar of the resulting language.</p>
-                                                    <ul class="list-inline float-sm-right mb-sm-0">
-                                                        <li class="list-inline-item">
-                                                            <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 5 hrs ago</div>
-                                                </div>
-                                            </div>
-                                            <div class="media py-3 border-bottom">
-                                                <img src="/assets/images/users/avatar-4.jpg" class="avatar-xs mr-3 rounded-circle" alt="img">
-                                                <div class="media-body">
-                                                    <h5 class="mt-0 font-size-15 mb-1">Denver</h5>
-                                                    <p class="text-muted">To an English person, it will seem like simplified English, as a skeptical Cambridge</p>
-                                                    <ul class="list-inline float-sm-right mb-sm-0">
-                                                        <li class="list-inline-item">
-                                                            <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 07 Oct, 2019</div>
-                                                    <div class="media mt-4">
-                                                        <img src="/assets/images/users/avatar-5.jpg" class="avatar-xs mr-3 rounded-circle" alt="img">
-                                                        <div class="media-body">
-                                                            <h5 class="mt-0 mb-1 font-size-15">Henry</h5>
-                                                            <p class="text-muted">Their separate existence is a myth. For science, music, sport, etc.</p>
-                                                            <ul class="list-inline float-sm-right mb-sm-0">
-                                                                <li class="list-inline-item">
-                                                                    <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                                                                </li>
-                                                                <li class="list-inline-item">
-                                                                    <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 08 Oct, 2019</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="media py-3 border-bottom">
-                                                <div class="avatar-xs mr-3">
-                                                    <span class="avatar-title bg-soft-primary text-primary rounded-circle font-size-16">
-                                                        N
-                                                    </span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="mt-0 mb-1 font-size-15">Neal</h5>
-                                                    <p class="text-muted">Everyone realizes why a new common language would be desirable.</p>
-                                                    <ul class="list-inline float-sm-right mb-sm-0">
-                                                        <li class="list-inline-item">
-                                                            <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 05 Oct, 2019</div>
-                                                </div>
-                                            </div>
+                                            <h5>Blog :</h5>
                                         </div>
+                                        <!-- end Blog -->
 
+                                        <!-- start Comment -->
+                                        <!--                                        <div class="mt-5">-->
+<!--                                            <h5>Reviews :</h5>-->
+
+<!--                                            <div class="media py-3 border-bottom">-->
+<!--                                                <img src="/assets/images/users/avatar-2.jpg" class="avatar-xs mr-3 rounded-circle" alt="img">-->
+<!--                                                <div class="media-body">-->
+<!--                                                    <h5 class="mt-0 mb-1 font-size-15">Brian</h5>-->
+<!--                                                    <p class="text-muted">If several languages coalesce, the grammar of the resulting language.</p>-->
+<!--                                                    <ul class="list-inline float-sm-right mb-sm-0">-->
+<!--                                                        <li class="list-inline-item">-->
+<!--                                                            <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>-->
+<!--                                                        </li>-->
+<!--                                                        <li class="list-inline-item">-->
+<!--                                                            <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>-->
+<!--                                                        </li>-->
+<!--                                                    </ul>-->
+<!--                                                    <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 5 hrs ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="media py-3 border-bottom">-->
+<!--                                                <img src="/assets/images/users/avatar-4.jpg" class="avatar-xs mr-3 rounded-circle" alt="img">-->
+<!--                                                <div class="media-body">-->
+<!--                                                    <h5 class="mt-0 font-size-15 mb-1">Denver</h5>-->
+<!--                                                    <p class="text-muted">To an English person, it will seem like simplified English, as a skeptical Cambridge</p>-->
+<!--                                                    <ul class="list-inline float-sm-right mb-sm-0">-->
+<!--                                                        <li class="list-inline-item">-->
+<!--                                                            <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>-->
+<!--                                                        </li>-->
+<!--                                                        <li class="list-inline-item">-->
+<!--                                                            <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>-->
+<!--                                                        </li>-->
+<!--                                                    </ul>-->
+<!--                                                    <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 07 Oct, 2019</div>-->
+<!--                                                    <div class="media mt-4">-->
+<!--                                                        <img src="/assets/images/users/avatar-5.jpg" class="avatar-xs mr-3 rounded-circle" alt="img">-->
+<!--                                                        <div class="media-body">-->
+<!--                                                            <h5 class="mt-0 mb-1 font-size-15">Henry</h5>-->
+<!--                                                            <p class="text-muted">Their separate existence is a myth. For science, music, sport, etc.</p>-->
+<!--                                                            <ul class="list-inline float-sm-right mb-sm-0">-->
+<!--                                                                <li class="list-inline-item">-->
+<!--                                                                    <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>-->
+<!--                                                                </li>-->
+<!--                                                                <li class="list-inline-item">-->
+<!--                                                                    <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>-->
+<!--                                                                </li>-->
+<!--                                                            </ul>-->
+<!--                                                            <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 08 Oct, 2019</div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+
+<!--                                            <div class="media py-3 border-bottom">-->
+<!--                                                <div class="avatar-xs mr-3">-->
+<!--                                                    <span class="avatar-title bg-soft-primary text-primary rounded-circle font-size-16">-->
+<!--                                                        N-->
+<!--                                                    </span>-->
+<!--                                                </div>-->
+<!--                                                <div class="media-body">-->
+<!--                                                    <h5 class="mt-0 mb-1 font-size-15">Neal</h5>-->
+<!--                                                    <p class="text-muted">Everyone realizes why a new common language would be desirable.</p>-->
+<!--                                                    <ul class="list-inline float-sm-right mb-sm-0">-->
+<!--                                                        <li class="list-inline-item">-->
+<!--                                                            <a href="#"><i class="far fa-thumbs-up mr-1"></i> Like</a>-->
+<!--                                                        </li>-->
+<!--                                                        <li class="list-inline-item">-->
+<!--                                                            <a href="#"><i class="far fa-comment-dots mr-1"></i> Comment</a>-->
+<!--                                                        </li>-->
+<!--                                                    </ul>-->
+<!--                                                    <div class="text-muted font-size-12"><i class="far fa-calendar-alt text-primary mr-1"></i> 05 Oct, 2019</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <!-- end Comment -->
                                     </div>
                                 </div>
                                 <!-- end card -->
@@ -316,40 +264,70 @@
             },
         }
 
-        page.elements.btnCreateTechSpec = $('#btnCreateTechSpec');
-        page.elements.btnShowTechSpecForm = $('#btnShowTechSpecForm');
-        page.elements.btnCreateProduct = $('#btnCreateProduct');
+        page.elements.slug = $('#slug');
+
+        page.elements.tbTechSpec = $('#tbTechSpec');
+
+        page.elements.pillImage = $('#v-pills-tab');
+        page.elements.mainImage = $('#v-pills-tabContent');
 
 
-        let computerConfigurationParameters = [];
+        page.elements.brand = $('#brand');
+        page.elements.title = $('#title');
+        page.elements.description = $('#description');
+        page.elements.businessStatus = $('#businessStatus');
+        page.elements.purchaseOrderPrice = $('#purchaseOrderPrice')
 
-        let computerConfiguration = {
-            id: null,
-            brand: null,
-            model: null,
-            title: null,
-            description : null,
-            slug:null,
-            purchaseOrderPrice: null,
-            configurationDetail: {}
-        }
+        page.elements.processcer = $('#processcer');
+        page.elements.capacity = $('#capacity');
+        page.elements.memory = $('#memory');
+        page.elements.monitor = $('#monitor');
+        page.elements.graphicCard = $('#graphicCard');
 
-        page.commands.getAllComputerConfigurationParameters = () => {
+
+        let slug = page.elements.slug.val();
+
+        let product = {};
+
+
+        page.commands.getProductBySlug = () => {
             return $.ajax({
                 headers: {
                     "accept": "application/json",
                     "content-type": "application/json"
                 },
                 type: "GET",
-                url: page.urls.getAllComputerConfigurationParameters,
+                url: page.urls.getProductBySlug + slug,
             })
             .done((data) => {
-                computerConfigurationParameters = data;
+                product = data[0];
+
+                page.elements.brand.text(product.brand);
+                page.elements.title.text(product.title);
+                page.elements.description.text(product.description);
+                page.elements.businessStatus.text(product.businessStatus)
+                page.elements.purchaseOrderPrice.text(product.purchaseOrderPrice);
+
+                page.elements.processcer.text(product.configurationDetail.processcer.content);
+                page.elements.capacity.text(product.configurationDetail.capacity.content);
+                page.elements.memory.text(product.configurationDetail.memory.content);
+                page.elements.monitor.text(product.configurationDetail.monitor.content);
+                page.elements.graphicCard.text(product.configurationDetail.graphicCard.content);
+
+                let str = App.renderTechSpecTable(product);
+                page.elements.tbTechSpec.append(str);
+
+                let image = App.renderImageDetail(product.fileUrls);
+                page.elements.pillImage.append(image.strPillImg);
+                page.elements.mainImage.append(image.strMainImg);
+
+                console.log(image.strMainImg)
+
             })
             .fail((jqxHR) => {
-                $.each(jqxHR.responseJSON, (key, item) => {
-                    App.IziToast.showErrorAlert(item)
-                })
+                // $.each(jqxHR.responseJSON, (key, item) => {
+                //     App.IziToast.showErrorAlert(item)
+                // })
             })
         }
 
@@ -362,6 +340,7 @@
         }
 
         $(() => {
+            page.commands.getProductBySlug();
 
             page.initializeControlEvent();
 

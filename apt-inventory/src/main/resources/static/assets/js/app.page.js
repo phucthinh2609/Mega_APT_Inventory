@@ -167,4 +167,73 @@ class App {
         return str;
     }
 
+    static renderTechSpecTable(prd) {
+        let str = "";
+
+        $.each(prd.computerConfigurationParameters, (key, value) => {
+            str += `
+                <tr>
+                    <th scope="row" style="width: 400px;">${value.explanation}</th>
+                    <td id="cpu">${prd.configurationDetail[value.name].content}</td>
+                </tr>
+            `;
+        })
+
+        return str;
+    }
+
+    static renderImageDetail(fileUrls) {
+        let image = {
+            strPillImg: null,
+            strMainImg: null
+        };
+        let strPillImg = "";
+        let strMainImg = "";
+
+        let count = 1;
+
+        $.each(fileUrls, (key, value) => {
+
+            if (count === 1) {
+                strPillImg += `
+                    <a class="nav-link active" id="product-${count}-tab" data-toggle="pill" href="#product-${count}" role="tab" aria-controls="product-${count}" aria-selected="true">
+                        <img src="${value}" alt="" class="img-fluid mx-auto d-block rounded">
+                    </a>
+                `;
+
+                strMainImg += `
+                    <div class="tab-pane fade show active" id="product-${count}" role="tabpanel" aria-labelledby="product-${count}-tab">
+                        <div>
+                            <img src="${value}" alt="" class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                `;
+            } else {
+                strPillImg += `
+                    <a class="nav-link" id="product-${count}-tab" data-toggle="pill" href="#product-${count}" role="tab" aria-controls="product-${count}" aria-selected="false">
+                        <img src="${value}" alt="" class="img-fluid mx-auto d-block rounded">
+                    </a>
+                `;
+
+                strMainImg += `
+                    <div class="tab-pane fade" id="product-${count}" role="tabpanel" aria-labelledby="product-${count}-tab">
+                        <div>
+                            <img src="${value}" alt="" class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                `;
+            }
+
+            count+=1;
+        })
+
+        image = {
+            strPillImg: strPillImg,
+            strMainImg: strMainImg
+        };
+
+        return image;
+    }
+
+
 }

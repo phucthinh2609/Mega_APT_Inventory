@@ -14,6 +14,7 @@ public class FileUploadController {
 
     @PostMapping
     public void upload(@RequestParam("file") MultipartFile file) {
+
         log.info("uploaded file " + file.getOriginalFilename());
     }
 }
