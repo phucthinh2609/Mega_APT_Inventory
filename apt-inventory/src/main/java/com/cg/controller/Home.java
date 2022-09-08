@@ -82,7 +82,14 @@ public class Home {
     @GetMapping("/purchase-orders/create")
     public ModelAndView showCreatePurchaseOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("stock-in-order/create");
+        modelAndView.setViewName("purchase-order/create");
+        return modelAndView;
+    }
+
+    @GetMapping("/purchase-orders/update")
+    public ModelAndView showUpdatePurchaseOrderPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("purchase-order/update");
         return modelAndView;
     }
 
