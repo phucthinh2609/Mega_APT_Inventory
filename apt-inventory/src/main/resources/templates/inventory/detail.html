@@ -33,76 +33,92 @@
     <div class="main-content">
 
         <div class="page-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">Chi Tiết Kho</h4>
+            <div class="container-fluid">
 
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Inventory</a></li>
-                                        <li class="breadcrumb-item active">Details</li>
-                                    </ol>
-                                </div>
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0 font-size-18">Chi Tiết Kho</h4>
 
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Inventory</a></li>
+                                    <li class="breadcrumb-item active">Detail</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
+                </div>
+                <!-- end page title -->
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row mb-2">
-                                        <div class="col-sm-6">
-                                            <div class="search-box mr-2 mb-2 d-inline-block">
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control" placeholder="Enter title..." id="keySearch">
-                                                    <i class="bx bx-search-alt search-icon"></i>
-                                                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-sm-6">
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span>Tên sản phẩm: </span>
+                                                <input type="search" class="form-control" placeholder="Nhập tên sản phẩm..." id="keySearch">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="table-responsive">
-                                        <table class="table table-centered table-nowrap" id="tbsInventoryDetails">
-                                            <thead class="thead-light">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Ngày Nhập Hàng</th>
-                                                <th>Sản Phẩm</th>
-                                                <th>Giá Nhập</th>
-                                                <th>Số Lượng</th>
-                                                <th>Thành tiền</th>
-                                                <th>Tỷ trọng (%)</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                            <tfoot>
-
-                                            </tfoot>
-                                        </table>
+                                    <div class="col-sm-6">
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span>Từ ngày: </span>
+                                                <input type="date" class="form-control" id="dateFrom">
+                                            </div>
+                                        </div>
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span>Đến ngày: </span>
+                                                <input type="date" class="form-control" id="dateTo">
+                                            </div>
+                                        </div>
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span></span>
+                                                <button type="button" class="btn btn-success" id="btnSearch">Tìm kiếm</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-centered table-nowrap" id="tbsInventoryDetails">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Ngày Nhập Hàng</th>
+                                            <th>Sản Phẩm</th>
+                                            <th>Giá Nhập</th>
+                                            <th>Số Lượng</th>
+                                            <th>Thành tiền</th>
+                                            <th>Tỷ trọng (%)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        <tfoot>
+
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end row -->
                 </div>
-                <!-- container-fluid -->
+                <!-- end row -->
             </div>
             <!-- container-fluid -->
         </div>
     </div>
     <!-- End Page-content -->
-
-    <!-- Modal -->
 
 </div>
 <!-- END layout-wrapper -->
@@ -116,266 +132,125 @@
 <!-- App js -->
 <th:block th:replace="/layout/script/app-js :: app-js"/>
 
-<!--        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
-<script src="/assets/js/pages/chart.js"></script>
-<!--<script src="/assets/libs/apexcharts/apexcharts.min.js"></script>-->
+<script>
+    let page = {
+        urls: {
+            getInventoryDetail: App.BASER_URL + "/inventories/details",
+            getInventoryTotalAmount: App.BASER_URL + "/inventories/totalAmount"
+        },
+        elements: {
+        },
+        loadData: {},
+        commands: {},
+        dialogs: {
+            elements: {},
+            commands: {},
+            alertDanger: {}
+        },
+    }
 
-<!--<script>-->
-<!--    let page = {-->
-<!--        urls: {-->
-<!--            getInventoryOverView: App.BASER_URL + "/inventories",-->
-<!--            // getInventoryGroup: App.BASER_URL + "/inventories/groups",-->
-<!--            getInventoryGroupByBrand: App.BASER_URL + "/inventories/brands",-->
-<!--            getInventoryGroupByModel: App.BASER_URL + "/inventories/models",-->
-<!--            // getInventoryGroupByCore: App.BASER_URL + "/inventories/cores",-->
-<!--            // getInventoryGroupByRam: App.BASER_URL + "/inventories/rams",-->
-<!--            // getInventoryGroupByCapacity: App.BASER_URL + "/inventories/capacities",-->
-<!--        },-->
-<!--        elements: {-->
-<!--        },-->
-<!--        loadData: {},-->
-<!--        commands: {},-->
-<!--        dialogs: {-->
-<!--            elements: {},-->
-<!--            commands: {},-->
-<!--            alertDanger: {}-->
-<!--        },-->
-<!--    }-->
+    let inventoryDetails = [];
+    let inventorySearchDetails = [];
+    let keySearch = "";
+    let dateFrom;
+    let dateTo;
+    let totalAmount;
 
-<!--    let inventories = [];-->
-<!--    let xValues = [];-->
-<!--    let yValues = [];-->
-<!--    let barColors = [];-->
+    page.commands.getInventoryDetail = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getInventoryDetail,
+        })
+            .done((data) => {
+                inventoryDetails = data;
+                // localStorage.setItem('inventoryDetails', JSON.stringify(inventoryDetails));
+            })
+            .fail((jqXHR) => {
 
-<!--    page.commands.getInventoryOverView = () => {-->
-<!--        return $.ajax({-->
-<!--            headers: {-->
-<!--                "accept": "application/json",-->
-<!--                "content-type": "application/json"-->
-<!--            },-->
-<!--            type: "GET",-->
-<!--            url: page.urls.getInventoryOverView,-->
-<!--        })-->
-<!--            .done((data) => {-->
-<!--                inventories = data;-->
-<!--            })-->
-<!--            .fail((jqXHR) => {-->
+            });
+    }
 
-<!--            });-->
-<!--    }-->
+    page.commands.getInventoryTotalAmount = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getInventoryTotalAmount,
+        })
+            .done((data) => {
+                totalAmount = data;
+            })
+            .fail((jqXHR) => {
 
-<!--    let groupName;-->
-<!--    let ajaxUrl;-->
-<!--    let inventoryByGroup = [];-->
+            });
+    }
 
-<!--    let barChartGroup, pieChartGroup;-->
+    $('#btnSearch').on('click', () => {
+        keySearch = $('#keySearch').val().toLowerCase();
+        dateFrom = $('#dateFrom').val();
+        dateTo = $('#dateTo').val();
+        inventorySearchDetails = inventoryDetails.filter(inventoryDetail => {
+            return (keySearch? inventoryDetail.title.toLowerCase().includes(keySearch) : true)
+                && (dateFrom? inventoryDetail.stockInDate >= dateFrom : true)
+                && (dateTo? inventoryDetail.stockInDate <= dateTo : true)
+        });
+        if (keySearch || dateFrom || dateTo) {
+            page.commands.renderDetails(inventorySearchDetails);
+        }
+    })
 
-<!--    page.commands.getInventoryByGroup = (ajaxUrl) => {-->
-<!--        return $.ajax({-->
-<!--            headers: {-->
-<!--                "accept": "application/json",-->
-<!--                "content-type": "application/json"-->
-<!--            },-->
-<!--            type: "GET",-->
-<!--            url: ajaxUrl,-->
-<!--        })-->
-<!--            .done((data) => {-->
-<!--                inventoryByGroup = data;-->
-<!--            })-->
-<!--            .fail((jqXHR) => {-->
+    page.commands.renderDetails = (details) => {
+        let tbsBody = $('#tbsInventoryDetails tbody');
+        tbsBody.html("");
+        let tbsFoot = $('#tbsInventoryDetails tfoot');
+        tbsFoot.html("");
+        let groupQuantity = 0;
+        let groupAmount = 0;
+        let groupPercent = 0;
+        $.each(details, (index, value) => {
+            let str = `
+                            <tr>
+                                <td>
+                                    <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                </td>
+                                <td>${value.stockInDate}</td>
+                                <td>${value.title}</td>
+                                <td>${value.stockInPrice}</td>
+                                <td>${value.quantity}</td>
+                                <td>${value.stockInPrice * value.quantity}</td>
+                                <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                            </tr>
+                        `;
+            tbsBody.append(str);
 
-<!--            });-->
-<!--    }-->
+            groupQuantity += value.quantity;
+            groupAmount += value.stockInPrice * value.quantity;
+            groupPercent += value.stockInPrice * value.quantity / totalAmount;
+        })
+        let footStr = `
+                <td colSpan="4">TỔNG</td>
+                <td>${groupQuantity}</td>
+                <td>${groupAmount}</td>
+                <td>${groupPercent}</td>
+            `;
+        tbsFoot.append(footStr);
+    }
 
-<!--    $('#groupValue').on('change', () => {-->
-<!--        if ((barChartGroup && pieChartGroup) instanceof Chart) {-->
-<!--            barChartGroup.destroy();-->
-<!--            pieChartGroup.destroy();-->
-<!--        }-->
-<!--        groupName = $('#groupValue').val();-->
-<!--        switch (groupName) {-->
-<!--            case 'brand':-->
-<!--                ajaxUrl = page.urls.getInventoryGroupByBrand;-->
-<!--                break;-->
-<!--            case 'model':-->
-<!--                ajaxUrl = page.urls.getInventoryGroupByModel;-->
-<!--                break;-->
-<!--            default:-->
-<!--                ajaxUrl = null;-->
-<!--        }-->
+    $(() => {
+        page.commands.getInventoryDetail().then(() => {
+            page.commands.getInventoryTotalAmount().then(() => {
+                page.commands.renderDetails(inventoryDetails);
+            })
 
-<!--        if (ajaxUrl != null) {-->
-<!--            let xGroupValues = [];-->
-<!--            let yGroupValues = [];-->
-<!--            let barGroupColors = [];-->
-<!--            page.commands.getInventoryByGroup(ajaxUrl).then(() => {-->
-<!--                $.each(inventoryByGroup, (index, value) => {-->
-<!--                    xGroupValues.push(value.title);-->
-<!--                    yGroupValues.push(value.quantity);-->
-<!--                    barGroupColors.push("#" + ((1 << 24) * Math.random() | 0).toString(16));-->
-<!--                });-->
-
-<!--                barChartGroup = new Chart($('#barChartGroup'), {-->
-<!--                    type: 'bar',-->
-<!--                    data: {-->
-<!--                        labels: xGroupValues,-->
-<!--                        datasets: [{-->
-<!--                            label: '',-->
-<!--                            data: yGroupValues,-->
-<!--                            backgroundColor: barGroupColors,-->
-<!--                            borderColor: [],-->
-<!--                            borderWidth: 1-->
-<!--                        }]-->
-<!--                    },-->
-<!--                    options: {-->
-<!--                        // indexAxis: 'y',-->
-<!--                        scales: {-->
-<!--                            y: {-->
-<!--                                beginAtZero: true-->
-<!--                            },-->
-<!--                            x: {-->
-<!--                                ticks: {-->
-<!--                                    display: false,-->
-<!--                                }-->
-<!--                            }-->
-<!--                        },-->
-<!--                        plugins: {-->
-<!--                            legend: {-->
-<!--                                display: false-->
-<!--                            }-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-
-<!--                pieChartGroup = new Chart($('#pieChartGroup'), {-->
-<!--                    type: 'pie',-->
-<!--                    data: {-->
-<!--                        labels: xGroupValues,-->
-<!--                        datasets: [{-->
-<!--                            label: '',-->
-<!--                            data: yGroupValues,-->
-<!--                            backgroundColor: barGroupColors,-->
-<!--                            hoverOffset: 10-->
-<!--                        }]-->
-<!--                    },-->
-<!--                    options: {-->
-<!--                        plugins: {-->
-<!--                            legend: {-->
-<!--                                display: false-->
-<!--                            }-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-<!--            });-->
-<!--        } else {-->
-<!--            console.log('Invalid Group name');-->
-<!--        }-->
-<!--    })-->
-
-
-<!--    $(() => {-->
-<!--        page.commands.getInventoryOverView().then(() => {-->
-<!--            $.each(inventories, (index, value) => {-->
-<!--                xValues.push(value.title);-->
-<!--                yValues.push(value.quantity);-->
-<!--                barColors.push("#" + ((1<<24)*Math.random() | 0).toString(16));-->
-<!--            })-->
-
-<!--            const barChart = new Chart($('#barChart'), {-->
-<!--                type: 'bar',-->
-<!--                data: {-->
-<!--                    labels: xValues,-->
-<!--                    datasets: [{-->
-<!--                        label: '',-->
-<!--                        data: yValues,-->
-<!--                        backgroundColor: barColors,-->
-<!--                        borderColor: [],-->
-<!--                        borderWidth: 1-->
-<!--                    }]-->
-<!--                },-->
-<!--                options: {-->
-<!--                    // indexAxis: 'y',-->
-<!--                    scales: {-->
-<!--                        y: {-->
-<!--                            beginAtZero: true-->
-<!--                        },-->
-<!--                        x: {-->
-<!--                            ticks: {-->
-<!--                                display: false,-->
-<!--                            }-->
-<!--                        }-->
-<!--                    },-->
-<!--                    plugins: {-->
-<!--                        legend: {-->
-<!--                            display: false-->
-<!--                        }-->
-<!--                    }-->
-<!--                }-->
-<!--            });-->
-
-<!--            // let options = {-->
-<!--            //     series: yValues,-->
-<!--            //     chart: {-->
-<!--            //         width: 380,-->
-<!--            //         type: 'pie',-->
-<!--            //     },-->
-<!--            //     labels: xValues,-->
-<!--            //     responsive: [{-->
-<!--            //         breakpoint: 480,-->
-<!--            //         options: {-->
-<!--            //             chart: {-->
-<!--            //                 width: 200-->
-<!--            //             },-->
-<!--            //             legend: {-->
-<!--            //                 position: 'bottom'-->
-<!--            //             }-->
-<!--            //         }-->
-<!--            //     }]-->
-<!--            // };-->
-<!--            //-->
-<!--            // let chart = new ApexCharts(document.querySelector("#pieChart"), options);-->
-<!--            // chart.render();-->
-
-<!--            const pieChart = new Chart($('#pieChart'), {-->
-<!--                type: 'pie',-->
-<!--                data: {-->
-<!--                    labels: xValues,-->
-<!--                    datasets: [{-->
-<!--                        label: '',-->
-<!--                        data: yValues,-->
-<!--                        backgroundColor: barColors,-->
-<!--                        hoverOffset: 6-->
-<!--                    }]-->
-<!--                },-->
-<!--                options: {-->
-<!--                    tooltips: {-->
-<!--                        enabled: false-->
-<!--                    },-->
-<!--                    plugins: {-->
-<!--                        datalabels: {-->
-<!--                            formatter: (value, ctx) => {-->
-<!--                                let datasets = ctx.chart.data.datasets;-->
-<!--                                if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {-->
-<!--                                    let sum = datasets[0].data.reduce((a, b) => a + b, 0);-->
-<!--                                    let percentage = Math.round((value / sum) * 100) + '%';-->
-<!--                                    return percentage;-->
-<!--                                } else {-->
-<!--                                    return percentage;-->
-<!--                                }-->
-<!--                            },-->
-<!--                            color: '#fff',-->
-<!--                        },-->
-<!--                        legend: {-->
-<!--                            display: false-->
-<!--                        }-->
-<!--                    }-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    });-->
-
-<!--</script>-->
+        });
+    })
+</script>
 </body>
 
 </html>

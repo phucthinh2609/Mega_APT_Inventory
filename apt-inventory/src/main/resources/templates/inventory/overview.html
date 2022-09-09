@@ -61,8 +61,8 @@
                                             <div class="col-sm-6">
                                                 <div class="search-box mr-2 mb-2 d-inline-block">
                                                     <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Enter title..." id="keySearch">
-                                                        <i class="bx bx-search-alt search-icon"></i>
+                                                        <span>Tên sản phẩm: </span>
+                                                        <input type="search" class="form-control" placeholder="Nhập từ khóa sản phẩm..." id="keySearch">
                                                     </div>
                                                 </div>
                                             </div>
@@ -73,12 +73,9 @@
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Ngày Nhập Hàng</th>
                                                         <th>Sản Phẩm</th>
-                                                        <th>Giá Nhập</th>
                                                         <th>Số Lượng</th>
-                                                        <th>Thành tiền</th>
-                                                        <th>Tỷ trọng (%)</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -100,6 +97,58 @@
             </div>
             <!-- End Page-content -->
 
+            <!-- Modal -->
+            <div id="modalProductDetail" class="modal" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chi tiết kho sản phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mb-2">Tên sản phẩm: <span id="productDetailTitle" class="text-primary"></span></p>
+                            <div class="table-responsive">
+                                <table id="tbsProductDetail" class="table table-centered table-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ngày Nhập Hàng</th>
+                                        <th scope="col">Giá Nhập</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Tỷ trọng (%)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <th scope="row">
+                                            <div>
+                                                <img src="" alt="" class="avatar-sm">
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <div>
+                                                <h5 class="text-truncate font-size-14">Hoodie (Blue)</h5>
+                                                <p class="text-muted mb-0">$ 145 x 1</p>
+                                            </div>
+                                        </td>
+                                        <td>$ 145</td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- END layout-wrapper -->
 
@@ -116,8 +165,8 @@
             let page = {
                 urls: {
                     getInventoryOverView: App.BASER_URL + "/inventories",
-                    getInventoryTotalAmount: App.BASER_URL + "/inventories/totalAmount",
-                    getInventoryTotalQuantity: App.BASER_URL + "/inventories/totalQuantity"
+                    getProductDetail: App.BASER_URL + "/inventories/product/",
+                    getInventoryTotalAmount: App.BASER_URL + "/inventories/totalAmount"
                 },
                 elements: {
                 },
@@ -130,11 +179,10 @@
                 },
             }
 
-            // let inventoryDetails = JSON.parse(localStorage.getItem('inventoryDetails')) || [];
             let inventoryDetails = [];
             let inventorySearchDetails = [];
             let keySearch = "";
-            let totalAmount, totalQuantity;
+            let totalAmount;
 
             page.commands.getInventoryOverView = () => {
                 return $.ajax({
@@ -147,7 +195,6 @@
                 })
                     .done((data) => {
                         inventoryDetails = data;
-                        // localStorage.setItem('inventoryDetails', JSON.stringify(inventoryDetails));
                     })
                     .fail((jqXHR) => {
 
@@ -171,24 +218,6 @@
                     });
             }
 
-            page.commands.getInventoryTotalQuantity = () => {
-                return $.ajax({
-                    headers: {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    type: "GET",
-                    url: page.urls.getInventoryTotalQuantity,
-                })
-                    .done((data) => {
-                        totalQuantity = data;
-                    })
-                    .fail((jqXHR) => {
-
-                    });
-            }
-
-
             $('#keySearch').on('input', () => {
                 keySearch = $('#keySearch').val().toLowerCase();
                 inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
@@ -197,52 +226,103 @@
                 }
             })
 
+            function handleShowProductDetail() {
+                $('.viewProductDetail').on('click', function () {
+                    let productId = $(this).attr("id");
+                    $.ajax({
+                        headers: {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: page.urls.getProductDetail + productId
+                    })
+                        .done((data) => {
+                            $('#modalProductDetail').modal('show');
+                            $('#productDetailTitle').text(data[0].title);
+                            let tbsBody = $('#tbsProductDetail tbody');
+                            tbsBody.html('')
+                            let tbsFoot = $('#tbsProductDetail tfoot');
+                            tbsFoot.html('');
+                            let groupQuantity = 0;
+                            let groupAmount = 0;
+                            let groupPercent = 0;
+                            $.each(data, (index, value) => {
+                                let str = `
+                                    <tr>
+                                        <td>
+                                            <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                        </td>
+                                        <td>${value.stockInDate}</td>
+                                        <td>${value.stockInPrice}</td>
+                                        <td>${value.quantity}</td>
+                                        <td>${value.stockInPrice * value.quantity}</td>
+                                        <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                                    </tr>
+                                `;
+                                tbsBody.append(str);
+
+                                groupQuantity += value.quantity;
+                                groupAmount += value.stockInPrice * value.quantity;
+                                groupPercent += value.stockInPrice * value.quantity / totalAmount;
+                            })
+                            let footStr = `
+                                <td colSpan="3">TỔNG</td>
+                                <td>${groupQuantity}</td>
+                                <td>${groupAmount}</td>
+                                <td>${groupPercent}</td>
+                            `;
+                            tbsFoot.append(footStr);
+
+                        })
+                        .fail((jqXHR) => {
+                            // App.SweetAlert.showErrorAlert(jqXHR.responseJSON.message);
+                            // console.log(jqXHR);
+                        })
+
+
+                });
+            }
+
             page.commands.renderDetails = (details) => {
                 let tbsBody = $('#tbsInventoryDetails tbody');
                 tbsBody.html("");
                 let tbsFoot = $('#tbsInventoryDetails tfoot');
                 tbsFoot.html("");
                 let groupQuantity = 0;
-                let groupAmount = 0;
-                let groupPercent = 0;
                 $.each(details, (index, value) => {
                     let str = `
-                            <tr id=tr_${value.id}>
+                            <tr>
                                 <td>
                                     <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
                                 </td>
-                                <td>${value.stockInDate}</td>
                                 <td>${value.title}</td>
-                                <td>${value.stockInPrice}</td>
                                 <td>${value.quantity}</td>
-                                <td>${value.stockInPrice * value.quantity}</td>
-                                <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded viewProductDetail" id="${value.productId}" data-toggle="modal" data-target=".exampleModal">
+                                        Xem
+                                    </button>
+                                </td>
                             </tr>
                         `;
                     tbsBody.append(str);
 
                     groupQuantity += value.quantity;
-                    groupAmount += value.stockInPrice * value.quantity;
-                    groupPercent += value.stockInPrice * value.quantity / totalAmount;
                 })
                 let footStr = `
-                                <td colSpan="4">TỔNG</td>
+                                <td colSpan="2">TỔNG</td>
                                 <td>${groupQuantity}</td>
-                                <td>${groupAmount}</td>
-                                <td>${groupPercent}</td>
+                                <td></td>
                             `;
                 tbsFoot.append(footStr);
+                handleShowProductDetail();
             }
 
             $(() => {
                 page.commands.getInventoryOverView().then(() => {
                     page.commands.getInventoryTotalAmount().then(() => {
-                        page.commands.getInventoryTotalQuantity().then(() => {
-                            page.commands.renderDetails(inventoryDetails);
-
-                        })
+                        page.commands.renderDetails(inventoryDetails);
                     })
-
                 });
             })
         </script>

@@ -29,6 +29,11 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
     }
 
     @Override
+    public List<InventoryDetailDTO> getProductDetail(String productId) {
+        return inventoryDetailRepository.getProductDetail(productId);
+    }
+
+    @Override
     public int getInventoryTotalQuantity() {
         return inventoryDetailRepository.getInventoryTotalQuantity();
     }
@@ -43,15 +48,15 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
 //        return inventoryDetailRepository.getQuantityOfGroup(group);
 //    }
 
-    @Override
-    public List<InventoryDetailDTO> getInventoryGroupByBrand() {
-        return inventoryDetailRepository.getInventoryGroupByBrand();
-    }
-
-    @Override
-    public List<InventoryDetailDTO> getInventoryGroupByModel() {
-        return inventoryDetailRepository.getInventoryGroupByModel();
-    }
+//    @Override
+//    public List<InventoryDetailDTO> getInventoryGroupByBrand() {
+//        return inventoryDetailRepository.getInventoryGroupByBrand();
+//    }
+//
+//    @Override
+//    public List<InventoryDetailDTO> getInventoryGroupByModel() {
+//        return inventoryDetailRepository.getInventoryGroupByModel();
+//    }
 //
 //    @Override
 //    public List<InventoryDetailDTO> getInventoryGroupByCore(String core) {

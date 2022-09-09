@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class InventoryDetailDTO {
-    private String id;
     private String title;
     private String productCode;
     private BigDecimal purchaseOrderPrice;
@@ -19,9 +18,9 @@ public class InventoryDetailDTO {
     private boolean selled;
     private BigDecimal grossProfit;
     private Long quantity;
+    private String productId;
 
-    public InventoryDetailDTO(String id, String title, String productCode, BigDecimal stockInPrice, LocalDate stockInDate) {
-        this.id = id;
+    public InventoryDetailDTO(String title, String productCode, BigDecimal stockInPrice, LocalDate stockInDate) {
         this.title = title;
         this.productCode = productCode;
         this.stockInPrice = stockInPrice;
@@ -35,7 +34,8 @@ public class InventoryDetailDTO {
         this.quantity = quantity;
     }
 
-    public InventoryDetailDTO(String title, Long quantity) {
+    public InventoryDetailDTO(String productId, String title, Long quantity) {
+        this.productId = productId;
         this.title = title;
         this.quantity = quantity;
     }
