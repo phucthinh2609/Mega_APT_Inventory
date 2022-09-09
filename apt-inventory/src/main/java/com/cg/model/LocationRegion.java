@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.LocationRegionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,5 +48,15 @@ public class LocationRegion {
     @OneToOne(mappedBy = "locationRegion")
     private Employee employee;
 
+    public LocationRegionDTO toLocationRegionDTO() {
+        return new LocationRegionDTO()
+                .setId(String.valueOf(id))
+                .setProvinceId(provinceId.toString())
+                .setProvinceName(provinceName)
+                .setDistrictId(districtId.toString())
+                .setDistrictName(districtName)
+                .setWardId(wardId.toString())
+                .setWardName(wardName);
+    }
 
 }

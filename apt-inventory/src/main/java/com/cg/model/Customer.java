@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.CustomerDTO;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
@@ -48,5 +49,18 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Comment> comments;
+
+    public CustomerDTO toCustomerDTO() {
+        return new CustomerDTO()
+                .setId(id)
+                .setEmail(email)
+                .setPassword(password)
+                .setPhone(phone)
+                .setFullName(fullName)
+                .setCompanyName(companyName)
+                .setRole(role.toRoleDTO())
+                .setLocationRegion(locationRegion.toLocationRegionDTO())
+                .setUserMedia(userMedia.toUserMediaDTO());
+    }
 
 }

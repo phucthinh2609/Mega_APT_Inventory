@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.LocationDeliveryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,5 +46,17 @@ public class LocationDelivery {
 
     @OneToOne(mappedBy = "locationRegionDelivery")
     private Order order;
+
+    public LocationDeliveryDTO toLocationDeliveryDTO() {
+        return new LocationDeliveryDTO()
+                .setId(id)
+                .setProvinceId(provinceId.toString())
+                .setProvinceName(provinceName)
+                .setDistrictId(districtId.toString())
+                .setDistrictName(districtName)
+                .setWardId(id.toString())
+                .setWardName(wardName)
+                .setAddress(address);
+    }
 
 }

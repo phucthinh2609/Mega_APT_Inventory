@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,4 +44,13 @@ public class Order {
 
     @OneToMany(targetEntity = OrderDetail.class, mappedBy = "order", fetch = FetchType.EAGER)
     private Set<OrderDetail> orderDetails;
+
+    public OrderDTO toOrderDTO() {
+        return new OrderDTO()
+                .setId(id)
+                .setQuantityTotal(String.valueOf(quantityTotal))
+                .setTotalAmount(totalAmount.toString())
+                .setLocationRegionDelivery(locationRegionDelivery.toLocationDeliveryDTO())
+                .setCustomer(customer.toCustomerDTO());
+    }
 }

@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.RoleDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,12 @@ public class Role {
     @OneToMany(targetEntity = Customer.class, mappedBy = "role", fetch = FetchType.EAGER)
     private Set<Employee> employees;
 
+    public RoleDTO toRoleDTO() {
+        return new RoleDTO()
+                .setId(id)
+                .setCode(code)
+                .setName(name);
+    }
 //    @Override
 //    public String toString() {
 //        return "Role{" +

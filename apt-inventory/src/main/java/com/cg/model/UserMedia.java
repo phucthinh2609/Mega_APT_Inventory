@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.UserMediaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,5 +45,15 @@ public class UserMedia {
 
     @OneToOne(mappedBy = "userMedia")
     private Employee employee;
+
+    public UserMediaDTO toUserMediaDTO() {
+        return new UserMediaDTO()
+                .setId(id)
+                .setCloudId(cloudId)
+                .setFileFolder(fileFolder)
+                .setFileName(fileName)
+                .setFileType(fileType)
+                .setFileUrl(fileUrl);
+    }
 
 }

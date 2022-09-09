@@ -26,11 +26,19 @@ public class SituationDTO implements Validator {
 
     private String id;
     private ESituationValue value;
+
+    private String strValue;
     private LocalDate date;
 
     private OrderDTO order;
 
     private EmployeeDTO employee;
+
+    public SituationDTO(String id, ESituationValue value, Order order) {
+        this.id = id;
+        this.strValue = value.getValue();
+        this.order = order.toOrderDTO();
+    }
 
     public Situation toSituation() {
         return new Situation()
