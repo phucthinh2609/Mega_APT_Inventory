@@ -47,16 +47,5 @@ public class LocationRegion {
     @OneToOne(mappedBy = "locationRegion")
     private Employee employee;
 
-//    public LocationRegionDTO toLocationRegionDTO() {
-//        return new LocationRegionDTO()
-//                .setId(id)
-//                .setProvinceId(provinceId)
-//                .setProvinceName(provinceName)
-//                .setDistrictId(districtId)
-//                .setDistrictName(districtName)
-//                .setWardId(wardId)
-//                .setWardName(wardName)
-//                .setAddress(address);
-//    }
 
 }

@@ -93,6 +93,13 @@ public class Home {
         return modelAndView;
     }
 
+    @GetMapping("/purchase-orders/invoice")
+    public ModelAndView showPurchaseOrderInvoicePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("purchase-order/invoice");
+        return modelAndView;
+    }
+
     @GetMapping("/users/create")
     public ModelAndView showCreateUserPage() {
         ModelAndView modelAndView = new ModelAndView();

@@ -90,4 +90,7 @@ public class ProductDTO implements Serializable {
                 .setFileType(fileType)
                 .setProduct(product);
     }
+
+    public static class SituationDTO {
+    }
 }

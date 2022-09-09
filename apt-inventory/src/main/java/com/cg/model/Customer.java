@@ -47,9 +47,6 @@ public class Customer {
     private UserMedia userMedia;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private Set<LocationDelivery> locationDeliveries;
-
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
 }

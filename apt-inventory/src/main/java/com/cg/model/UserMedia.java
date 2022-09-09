@@ -40,7 +40,7 @@ public class UserMedia {
     private String cloudId;
 
     @OneToOne(mappedBy = "userMedia")
-    private Customer cusotmer;
+    private Customer customer;
 
     @OneToOne(mappedBy = "userMedia")
     private Employee employee;
