@@ -110,7 +110,7 @@ public class Home {
     @GetMapping("/inventories/details")
     public ModelAndView showInventoryDetailPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("inventory/details");
+        modelAndView.setViewName("inventory/detail");
         return modelAndView;
     }
 

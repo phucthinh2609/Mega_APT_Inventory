@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User List Page</title>
+
+    <!-- Meta -->
+    <th:block th:replace="/layout/head/meta :: meta"/>
+    <!-- App-favicon -->
+    <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+    <!-- Main -->
+    <th:block th:replace="/layout/head/main :: main"/>
+
+</head>
+
+<body data-sidebar="dark">
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Begin page-topbar -->
+    <th:block th:replace="/layout/page-topbar :: page-topbar"/>
+    <!-- End page-topbar -->
+
+    <!-- Begin vertical-menu -->
+    <th:block th:replace="/layout/vertical-menu :: vertical-menu"/>
+    <!-- End vertical-menu -->
+
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0 font-size-18">Chi Tiết Kho</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Inventory</a></li>
+                                        <li class="breadcrumb-item active">Details</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-6">
+                                            <div class="search-box mr-2 mb-2 d-inline-block">
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control" placeholder="Enter title..." id="keySearch">
+                                                    <i class="bx bx-search-alt search-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-centered table-nowrap" id="tbsInventoryDetails">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ngày Nhập Hàng</th>
+                                                <th>Sản Phẩm</th>
+                                                <th>Giá Nhập</th>
+                                                <th>Số Lượng</th>
+                                                <th>Thành tiền</th>
+                                                <th>Tỷ trọng (%)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                            <tfoot>
+
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- container-fluid -->
+        </div>
+    </div>
+    <!-- End Page-content -->
+
+    <!-- Modal -->
+
+</div>
+<!-- END layout-wrapper -->
+
+<!-- Right Sidebar -->
+<th:block th:replace="/layout/right-bar :: right-bar"/>
+<!-- End right-bar -->
+
+<!-- JAVASCRIPT -->
+<th:block th:replace="/layout/script/javascript :: javascript"/>
+<!-- App js -->
+<th:block th:replace="/layout/script/app-js :: app-js"/>
+
+<!--        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
+<script src="/assets/js/pages/chart.js"></script>
+<!--<script src="/assets/libs/apexcharts/apexcharts.min.js"></script>-->
+
+<!--<script>-->
+<!--    let page = {-->
+<!--        urls: {-->
+<!--            getInventoryOverView: App.BASER_URL + "/inventories",-->
+<!--            // getInventoryGroup: App.BASER_URL + "/inventories/groups",-->
+<!--            getInventoryGroupByBrand: App.BASER_URL + "/inventories/brands",-->
+<!--            getInventoryGroupByModel: App.BASER_URL + "/inventories/models",-->
+<!--            // getInventoryGroupByCore: App.BASER_URL + "/inventories/cores",-->
+<!--            // getInventoryGroupByRam: App.BASER_URL + "/inventories/rams",-->
+<!--            // getInventoryGroupByCapacity: App.BASER_URL + "/inventories/capacities",-->
+<!--        },-->
+<!--        elements: {-->
+<!--        },-->
+<!--        loadData: {},-->
+<!--        commands: {},-->
+<!--        dialogs: {-->
+<!--            elements: {},-->
+<!--            commands: {},-->
+<!--            alertDanger: {}-->
+<!--        },-->
+<!--    }-->
+
+<!--    let inventories = [];-->
+<!--    let xValues = [];-->
+<!--    let yValues = [];-->
+<!--    let barColors = [];-->
+
+<!--    page.commands.getInventoryOverView = () => {-->
+<!--        return $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: page.urls.getInventoryOverView,-->
+<!--        })-->
+<!--            .done((data) => {-->
+<!--                inventories = data;-->
+<!--            })-->
+<!--            .fail((jqXHR) => {-->
+
+<!--            });-->
+<!--    }-->
+
+<!--    let groupName;-->
+<!--    let ajaxUrl;-->
+<!--    let inventoryByGroup = [];-->
+
+<!--    let barChartGroup, pieChartGroup;-->
+
+<!--    page.commands.getInventoryByGroup = (ajaxUrl) => {-->
+<!--        return $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: ajaxUrl,-->
+<!--        })-->
+<!--            .done((data) => {-->
+<!--                inventoryByGroup = data;-->
+<!--            })-->
+<!--            .fail((jqXHR) => {-->
+
+<!--            });-->
+<!--    }-->
+
+<!--    $('#groupValue').on('change', () => {-->
+<!--        if ((barChartGroup && pieChartGroup) instanceof Chart) {-->
+<!--            barChartGroup.destroy();-->
+<!--            pieChartGroup.destroy();-->
+<!--        }-->
+<!--        groupName = $('#groupValue').val();-->
+<!--        switch (groupName) {-->
+<!--            case 'brand':-->
+<!--                ajaxUrl = page.urls.getInventoryGroupByBrand;-->
+<!--                break;-->
+<!--            case 'model':-->
+<!--                ajaxUrl = page.urls.getInventoryGroupByModel;-->
+<!--                break;-->
+<!--            default:-->
+<!--                ajaxUrl = null;-->
+<!--        }-->
+
+<!--        if (ajaxUrl != null) {-->
+<!--            let xGroupValues = [];-->
+<!--            let yGroupValues = [];-->
+<!--            let barGroupColors = [];-->
+<!--            page.commands.getInventoryByGroup(ajaxUrl).then(() => {-->
+<!--                $.each(inventoryByGroup, (index, value) => {-->
+<!--                    xGroupValues.push(value.title);-->
+<!--                    yGroupValues.push(value.quantity);-->
+<!--                    barGroupColors.push("#" + ((1 << 24) * Math.random() | 0).toString(16));-->
+<!--                });-->
+
+<!--                barChartGroup = new Chart($('#barChartGroup'), {-->
+<!--                    type: 'bar',-->
+<!--                    data: {-->
+<!--                        labels: xGroupValues,-->
+<!--                        datasets: [{-->
+<!--                            label: '',-->
+<!--                            data: yGroupValues,-->
+<!--                            backgroundColor: barGroupColors,-->
+<!--                            borderColor: [],-->
+<!--                            borderWidth: 1-->
+<!--                        }]-->
+<!--                    },-->
+<!--                    options: {-->
+<!--                        // indexAxis: 'y',-->
+<!--                        scales: {-->
+<!--                            y: {-->
+<!--                                beginAtZero: true-->
+<!--                            },-->
+<!--                            x: {-->
+<!--                                ticks: {-->
+<!--                                    display: false,-->
+<!--                                }-->
+<!--                            }-->
+<!--                        },-->
+<!--                        plugins: {-->
+<!--                            legend: {-->
+<!--                                display: false-->
+<!--                            }-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+
+<!--                pieChartGroup = new Chart($('#pieChartGroup'), {-->
+<!--                    type: 'pie',-->
+<!--                    data: {-->
+<!--                        labels: xGroupValues,-->
+<!--                        datasets: [{-->
+<!--                            label: '',-->
+<!--                            data: yGroupValues,-->
+<!--                            backgroundColor: barGroupColors,-->
+<!--                            hoverOffset: 10-->
+<!--                        }]-->
+<!--                    },-->
+<!--                    options: {-->
+<!--                        plugins: {-->
+<!--                            legend: {-->
+<!--                                display: false-->
+<!--                            }-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+<!--            });-->
+<!--        } else {-->
+<!--            console.log('Invalid Group name');-->
+<!--        }-->
+<!--    })-->
+
+
+<!--    $(() => {-->
+<!--        page.commands.getInventoryOverView().then(() => {-->
+<!--            $.each(inventories, (index, value) => {-->
+<!--                xValues.push(value.title);-->
+<!--                yValues.push(value.quantity);-->
+<!--                barColors.push("#" + ((1<<24)*Math.random() | 0).toString(16));-->
+<!--            })-->
+
+<!--            const barChart = new Chart($('#barChart'), {-->
+<!--                type: 'bar',-->
+<!--                data: {-->
+<!--                    labels: xValues,-->
+<!--                    datasets: [{-->
+<!--                        label: '',-->
+<!--                        data: yValues,-->
+<!--                        backgroundColor: barColors,-->
+<!--                        borderColor: [],-->
+<!--                        borderWidth: 1-->
+<!--                    }]-->
+<!--                },-->
+<!--                options: {-->
+<!--                    // indexAxis: 'y',-->
+<!--                    scales: {-->
+<!--                        y: {-->
+<!--                            beginAtZero: true-->
+<!--                        },-->
+<!--                        x: {-->
+<!--                            ticks: {-->
+<!--                                display: false,-->
+<!--                            }-->
+<!--                        }-->
+<!--                    },-->
+<!--                    plugins: {-->
+<!--                        legend: {-->
+<!--                            display: false-->
+<!--                        }-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+
+<!--            // let options = {-->
+<!--            //     series: yValues,-->
+<!--            //     chart: {-->
+<!--            //         width: 380,-->
+<!--            //         type: 'pie',-->
+<!--            //     },-->
+<!--            //     labels: xValues,-->
+<!--            //     responsive: [{-->
+<!--            //         breakpoint: 480,-->
+<!--            //         options: {-->
+<!--            //             chart: {-->
+<!--            //                 width: 200-->
+<!--            //             },-->
+<!--            //             legend: {-->
+<!--            //                 position: 'bottom'-->
+<!--            //             }-->
+<!--            //         }-->
+<!--            //     }]-->
+<!--            // };-->
+<!--            //-->
+<!--            // let chart = new ApexCharts(document.querySelector("#pieChart"), options);-->
+<!--            // chart.render();-->
+
+<!--            const pieChart = new Chart($('#pieChart'), {-->
+<!--                type: 'pie',-->
+<!--                data: {-->
+<!--                    labels: xValues,-->
+<!--                    datasets: [{-->
+<!--                        label: '',-->
+<!--                        data: yValues,-->
+<!--                        backgroundColor: barColors,-->
+<!--                        hoverOffset: 6-->
+<!--                    }]-->
+<!--                },-->
+<!--                options: {-->
+<!--                    tooltips: {-->
+<!--                        enabled: false-->
+<!--                    },-->
+<!--                    plugins: {-->
+<!--                        datalabels: {-->
+<!--                            formatter: (value, ctx) => {-->
+<!--                                let datasets = ctx.chart.data.datasets;-->
+<!--                                if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {-->
+<!--                                    let sum = datasets[0].data.reduce((a, b) => a + b, 0);-->
+<!--                                    let percentage = Math.round((value / sum) * 100) + '%';-->
+<!--                                    return percentage;-->
+<!--                                } else {-->
+<!--                                    return percentage;-->
+<!--                                }-->
+<!--                            },-->
+<!--                            color: '#fff',-->
+<!--                        },-->
+<!--                        legend: {-->
+<!--                            display: false-->
+<!--                        }-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+
+<!--</script>-->
+</body>
+
+</html>

@@ -39,12 +39,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0 font-size-18">Stock</h4>
+                                    <h4 class="mb-0 font-size-18">Tổng Quan Kho</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">User</a></li>
-                                            <li class="breadcrumb-item active">Over View</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Inventory</a></li>
+                                            <li class="breadcrumb-item active">Overview</li>
                                         </ol>
                                     </div>
 
@@ -56,17 +56,40 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-
-                                    <div class="row">
-                                        <h1>GROUP BY PRODUCT TITLE</h1>
-                                        <div class="col-7">
-                                            <canvas id="barChart" style="width:100%"></canvas>
+                                    <div class="card-body">
+                                        <div class="row mb-2">
+                                            <div class="col-sm-6">
+                                                <div class="search-box mr-2 mb-2 d-inline-block">
+                                                    <div class="position-relative">
+                                                        <input type="text" class="form-control" placeholder="Enter title..." id="keySearch">
+                                                        <i class="bx bx-search-alt search-icon"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-5">
-                                            <canvas id="pieChart" style="width:100%"></canvas>
+
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap" id="tbsInventoryDetails">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Ngày Nhập Hàng</th>
+                                                        <th>Sản Phẩm</th>
+                                                        <th>Giá Nhập</th>
+                                                        <th>Số Lượng</th>
+                                                        <th>Thành tiền</th>
+                                                        <th>Tỷ trọng (%)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                                <tfoot>
+
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -76,8 +99,6 @@
                 </div>
             </div>
             <!-- End Page-content -->
-
-            <!-- Modal -->
 
         </div>
         <!-- END layout-wrapper -->
@@ -91,13 +112,12 @@
         <!-- App js -->
         <th:block th:replace="/layout/script/app-js :: app-js"/>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-
         <script>
             let page = {
                 urls: {
-                    getInventoryGroupByProduct: App.BASER_URL + "/inventories"
-
+                    getInventoryOverView: App.BASER_URL + "/inventories",
+                    getInventoryTotalAmount: App.BASER_URL + "/inventories/totalAmount",
+                    getInventoryTotalQuantity: App.BASER_URL + "/inventories/totalQuantity"
                 },
                 elements: {
                 },
@@ -110,74 +130,121 @@
                 },
             }
 
-            let inventoryGroupByProduct = [];
+            // let inventoryDetails = JSON.parse(localStorage.getItem('inventoryDetails')) || [];
+            let inventoryDetails = [];
+            let inventorySearchDetails = [];
+            let keySearch = "";
+            let totalAmount, totalQuantity;
 
-            let xValues = [];
-            let yValues = [];
-            let barColors = [];
-
-            page.commands.getInventoryGroupByProduct = () => {
+            page.commands.getInventoryOverView = () => {
                 return $.ajax({
                     headers: {
                         "accept": "application/json",
                         "content-type": "application/json"
                     },
                     type: "GET",
-                    url: page.urls.getInventoryGroupByProduct,
+                    url: page.urls.getInventoryOverView,
                 })
                     .done((data) => {
-                        inventoryGroupByProduct = data;
+                        inventoryDetails = data;
+                        // localStorage.setItem('inventoryDetails', JSON.stringify(inventoryDetails));
                     })
                     .fail((jqXHR) => {
 
                     });
             }
 
+            page.commands.getInventoryTotalAmount = () => {
+                return $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: page.urls.getInventoryTotalAmount,
+                })
+                    .done((data) => {
+                        totalAmount = data;
+                    })
+                    .fail((jqXHR) => {
+
+                    });
+            }
+
+            page.commands.getInventoryTotalQuantity = () => {
+                return $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: page.urls.getInventoryTotalQuantity,
+                })
+                    .done((data) => {
+                        totalQuantity = data;
+                    })
+                    .fail((jqXHR) => {
+
+                    });
+            }
+
+
+            $('#keySearch').on('input', () => {
+                keySearch = $('#keySearch').val().toLowerCase();
+                inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
+                if (keySearch) {
+                    page.commands.renderDetails(inventorySearchDetails);
+                }
+            })
+
+            page.commands.renderDetails = (details) => {
+                let tbsBody = $('#tbsInventoryDetails tbody');
+                tbsBody.html("");
+                let tbsFoot = $('#tbsInventoryDetails tfoot');
+                tbsFoot.html("");
+                let groupQuantity = 0;
+                let groupAmount = 0;
+                let groupPercent = 0;
+                $.each(details, (index, value) => {
+                    let str = `
+                            <tr id=tr_${value.id}>
+                                <td>
+                                    <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                </td>
+                                <td>${value.stockInDate}</td>
+                                <td>${value.title}</td>
+                                <td>${value.stockInPrice}</td>
+                                <td>${value.quantity}</td>
+                                <td>${value.stockInPrice * value.quantity}</td>
+                                <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                            </tr>
+                        `;
+                    tbsBody.append(str);
+
+                    groupQuantity += value.quantity;
+                    groupAmount += value.stockInPrice * value.quantity;
+                    groupPercent += value.stockInPrice * value.quantity / totalAmount;
+                })
+                let footStr = `
+                                <td colSpan="4">TỔNG</td>
+                                <td>${groupQuantity}</td>
+                                <td>${groupAmount}</td>
+                                <td>${groupPercent}</td>
+                            `;
+                tbsFoot.append(footStr);
+            }
+
             $(() => {
-                page.commands.getInventoryGroupByProduct().then(() => {
-                    $.each(inventoryGroupByProduct, (index, value) => {
-                        xValues.push(value.title);
-                        yValues.push(value.quantity);
-                        barColors.push("#" + ((1<<24)*Math.random() | 0).toString(16));
+                page.commands.getInventoryOverView().then(() => {
+                    page.commands.getInventoryTotalAmount().then(() => {
+                        page.commands.getInventoryTotalQuantity().then(() => {
+                            page.commands.renderDetails(inventoryDetails);
+
+                        })
                     })
 
-                    const barChart = new Chart($('#barChart'), {
-                        type: 'bar',
-                        data: {
-                            labels: xValues,
-                            datasets: [{
-                                label: '',
-                                data: yValues,
-                                backgroundColor: barColors,
-                                borderColor: [],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
                 });
-
-                const pieChart = new Chart($('#pieChart'), {
-                    type: 'pie',
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                            label: '',
-                            data: yValues,
-                            backgroundColor: barColors,
-                            hoverOffset: 4
-                        }]
-                    }
-                });
-            });
-
+            })
         </script>
     </body>
 

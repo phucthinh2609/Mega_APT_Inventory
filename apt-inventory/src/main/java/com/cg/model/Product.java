@@ -54,9 +54,6 @@ public class Product {
     @Column(name = "bussiness_status", length = 25)
     private EBussinessStatus businessStatus;
 
-    @OneToMany(targetEntity = Inventory.class, mappedBy = "product", fetch = FetchType.EAGER)
-    private Set<Inventory> inventories;
-
     @OneToMany(targetEntity = ProductMedia.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductMedia> productMedia;
 
@@ -66,7 +63,7 @@ public class Product {
     @OneToMany(targetEntity = Comment.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
-    @OneToMany(targetEntity = Inventory.class, mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = InventoryDetail.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<InventoryDetail> inventoryDetails;
 
     @OneToOne(mappedBy = "product")
