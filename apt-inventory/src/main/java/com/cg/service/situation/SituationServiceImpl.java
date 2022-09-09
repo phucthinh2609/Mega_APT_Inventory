@@ -1,5 +1,6 @@
 package com.cg.service.situation;
 import com.cg.model.dto.SituationDTO;
+import com.cg.model.enums.ESituationValue;
 import com.cg.repository.SituationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,18 @@ public class SituationServiceImpl implements SituationService{
         List<SituationDTO> situationDTOListRes = new ArrayList<>();
         for (int i = 0 ; i < situationDTOList.size() ; i++ ) {
             if (i == situationDTOList.size() - 1) {
-                if (countDelivery == 1 || countDelivery == 0) {
+                if (temOrderId.equals(situationDTOList.get(i).getOrder().getId())) {
+                    countDelivery++;
+                }
+                if (countDelivery == 0) {
                     situationDTOListRes.add(situationDTOList.get(i));
+                }
+                if (countDelivery == 1) {
+                    SituationDTO tempSituationDTO = situationDTOList.get(i);
+                    String valueStatus = tempSituationDTO.getStrValue();
+                    if (!valueStatus.equals(ESituationValue.CANCELLED.getValue())){
+                        situationDTOListRes.add(situationDTOList.get(i));
+                    }
                 }
             }else {
                 if (temOrderId.equals(situationDTOList.get(i).getOrder().getId())) {
@@ -38,7 +49,7 @@ public class SituationServiceImpl implements SituationService{
                     if (countDelivery == 2) {
                         SituationDTO tempSituationDTO = situationDTOList.get(i-1);
                         String valueStatus = tempSituationDTO.getStrValue();
-                        if (!(situationDTOList.get(i-1).getStrValue()).equals("Đã Hủy") || !(situationDTOList.get(i-1).getStrValue()).equals("Hoàn Thành")){
+                        if (!valueStatus.equals("Đã Hủy") && !valueStatus.equals("Hoàn Thành")){
                             situationDTOListRes.add(situationDTOList.get(i-1));
                         }
                     }
