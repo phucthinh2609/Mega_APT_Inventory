@@ -1,9 +1,11 @@
 package com.cg.model;
 
+import com.cg.model.dto.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@Accessors(chain = true)
 @Table(name = "orders")
 public class Order {
 
@@ -31,9 +34,9 @@ public class Order {
     @Column(name = "quantity_total")
     private int quantityTotal;
 
-    @ManyToOne
-    @JoinColumn(name = "location_delivery_id", nullable = false)
-    private LocationDelivery locationDelivery;
+    @OneToOne
+    @JoinColumn(name = "location_region_delivery_id", nullable = false)
+    private LocationDelivery locationRegionDelivery;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -41,4 +44,13 @@ public class Order {
 
     @OneToMany(targetEntity = OrderDetail.class, mappedBy = "order", fetch = FetchType.EAGER)
     private Set<OrderDetail> orderDetails;
+
+    public OrderDTO toOrderDTO() {
+        return new OrderDTO()
+                .setId(id)
+                .setQuantityTotal(String.valueOf(quantityTotal))
+                .setTotalAmount(totalAmount.toString())
+                .setLocationRegionDelivery(locationRegionDelivery.toLocationDeliveryDTO())
+                .setCustomer(customer.toCustomerDTO());
+    }
 }

@@ -2204,9 +2204,9 @@ Makes editable any HTML element on the page. Applied as jQuery method.
         Note, that if element's text is empty - text is automatically generated from value and can be customized (see `autotext` option).  
         For example, to display currency sign:
         @example
-        <a id="price" data-type="text" data-value="100"></a>
+        <a id="salePrice" data-type="text" data-value="100"></a>
         <script>
-        $('#price').editable({
+        $('#salePrice').editable({
             ...
             display: function(value) {
               $(this).text(value + '$');
