@@ -76,7 +76,9 @@ public class ProductServiceImpl implements ProductService {
     public Product create(ProductDTO productDTO) {
 
         List<MultipartFile> fileList = productDTO.getFiles();
-        productDTO.setPrice(new BigDecimal(0L));
+
+        productDTO.setSalePrice(new BigDecimal(0L));
+        
         String config = productDTO.getConfigurationDetail();
         String[] ary = config.split("\"content\":\"");
         String strTitle = "";
@@ -123,6 +125,64 @@ public class ProductServiceImpl implements ProductService {
                 uploadAndSaveProductVideo(productDTO, product, productMedia);
             }
         }
+        return product;
+    }
+
+    @Override
+    public Product update(ProductDTO productDTO) {
+
+        List<MultipartFile> fileList = productDTO.getFiles();
+
+//        productDTO.setPurchaseOrderPrice(new BigDecimal(0L));
+        String config = productDTO.getConfigurationDetail();
+        String[] ary = config.split("\"content\":\"");
+        String strTitle = "";
+        int length = 7;
+        for (int i = 1;i < length;i++) {
+            int indexValue = ary[i].indexOf("\"");
+            ary[i] = ary[i].substring(0,indexValue-1);
+            if (i != length - 1) {
+                int indexValue1 = ary[i].indexOf(",");
+                ary[i] = ary[i].substring(0,indexValue1);
+                strTitle += ary[i].trim() +"/ ";
+            }else {
+                int indexValue1 = ary[i].indexOf(",");
+                ary[i] = ary[i].substring(0,indexValue1);
+                strTitle += ary[i].trim();
+            }
+        }
+        String title = (productDTO.getTitle()).trim().replaceAll("\\s+", " ") + " " + strTitle;
+        String slug = AppUtils.removeNonAlphanumeric(title);
+
+        productDTO.setTitle(title);
+        productDTO.setSlug(slug);
+        productDTO.setBusinessStatus(EBussinessStatus.NEW_RELEASES);
+
+        Product product = productRepository.save(productDTO.toProduct());
+
+        if (fileList != null) {
+            for (MultipartFile file : fileList) {
+                String fileType = file.getContentType();
+
+                assert fileType != null;
+
+                fileType = fileType.substring(0, 5);
+
+                productDTO.setFileType(fileType);
+                productDTO.setFile(file);
+
+                ProductMedia productMedia = productMediaRepository.save(productDTO.toProductMedia(product));
+
+                if (fileType.equals(FileType.IMAGE.getValue())) {
+                    uploadAndSaveProductImage(productDTO, product, productMedia);
+                }
+
+                if (fileType.equals(FileType.VIDEO.getValue())) {
+                    uploadAndSaveProductVideo(productDTO, product, productMedia);
+                }
+            }
+        }
+
         return product;
     }
 

@@ -16,6 +16,8 @@ public interface ProductService {
 
     Product create(ProductDTO productDTO);
 
+    Product update(ProductDTO productDTO);
+
     void delete(Product product) throws IOException;
 
 

@@ -203,7 +203,6 @@
                     getAllComputerConfigurationParameters: App.BASER_URL + "/v1/computer-configuration-parameters",
                     createComputerConfigurationParameter: App.BASER_URL + "/v1/computer-configuration-parameters",
                     doCreate: App.BASER_URL + "/products"
-
                 },
                 elements: {
                 },
@@ -384,6 +383,7 @@
                     formData.append("files", file);
                 })
 
+
                 $.ajax({
                     type: "POST",
                     contentType: false,
@@ -437,6 +437,7 @@
                     }
 
                     console.log(str)
+
 
                     page.elements.footerContent.html(str);
                 })
