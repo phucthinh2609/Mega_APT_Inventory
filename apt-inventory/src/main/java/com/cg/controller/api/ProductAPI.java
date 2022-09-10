@@ -86,6 +86,27 @@ public class ProductAPI {
             throw new DataInputException(e.getMessage());
         }
     }
+
+    @PutMapping("/update/{slug}")
+    public ResponseEntity<?> update(@PathVariable String slug, @Validated ProductDTO productDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return appUtils.mapErrorToResponse(bindingResult);
+
+        Optional<Product> product = productService.findProductBySlug(slug);
+
+        if (!product.isPresent()) {
+            throw new DataInputException("Invalid product id");
+        }
+
+        productDTO.setId(product.get().getId());
+
+        try {
+            Product updatedProduct = productService.update(productDTO);
+            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new DataInputException(e.getMessage());
+        }
+    }
 //
 //    @PutMapping("/edit/{mediaId}")
 //    public ResponseEntity<?> editMedia(@PathVariable String mediaId) {
@@ -112,7 +133,19 @@ public class ProductAPI {
             productService.delete(product.get());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            throw new DataInputException("Invalid product information");
+            throw new DataInputException("Invalid this product media information");
+        }
+    }
+
+    @DeleteMapping("/media/delete/{id}")
+    public ResponseEntity<?> deleteMedia(@PathVariable String id) throws IOException {
+        Optional<ProductMedia> productMedia = productMediaService.findById(id);
+
+        if (productMedia.isPresent()) {
+            productMediaService.delete(productMedia.get());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } else {
+            throw new DataInputException("Invalid product media information");
         }
     }
 
