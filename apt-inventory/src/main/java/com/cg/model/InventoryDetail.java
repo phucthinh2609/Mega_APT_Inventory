@@ -10,6 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -24,7 +26,8 @@ public class InventoryDetail {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String title;
+    @Column(name = "stock_in_date")
+    private LocalDate stockInDate;
 
     @Column(name = "product_code")
     private String productCode;

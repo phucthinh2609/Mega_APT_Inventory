@@ -41,8 +41,7 @@ public class Product {
     private String slug;
 
     @Digits(integer = 12, fraction = 0)
-    @Column(name = "purchase_order_price")
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal price;
 
     private String description;
 
@@ -54,9 +53,6 @@ public class Product {
     @Column(name = "bussiness_status", length = 25)
     private EBussinessStatus businessStatus;
 
-    @OneToMany(targetEntity = Inventory.class, mappedBy = "product", fetch = FetchType.EAGER)
-    private Set<Inventory> inventories;
-
     @OneToMany(targetEntity = ProductMedia.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductMedia> productMedia;
 
@@ -66,7 +62,7 @@ public class Product {
     @OneToMany(targetEntity = Comment.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
-    @OneToMany(targetEntity = Inventory.class, mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = InventoryDetail.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<InventoryDetail> inventoryDetails;
 
     @OneToOne(mappedBy = "product")
@@ -78,7 +74,7 @@ public class Product {
                 .setBrand(brand)
                 .setModel(model)
                 .setTitle(title)
-                .setPurchaseOrderPrice(purchaseOrderPrice)
+                .setPrice(price)
                 .setDescription(description);
     }
 }

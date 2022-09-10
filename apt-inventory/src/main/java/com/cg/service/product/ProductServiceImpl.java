@@ -77,7 +77,8 @@ public class ProductServiceImpl implements ProductService {
 
         List<MultipartFile> fileList = productDTO.getFiles();
 
-        productDTO.setPurchaseOrderPrice(new BigDecimal(0L));
+        productDTO.setSalePrice(new BigDecimal(0L));
+        
         String config = productDTO.getConfigurationDetail();
         String[] ary = config.split("\"content\":\"");
         String strTitle = "";

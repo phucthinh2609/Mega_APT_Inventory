@@ -16,19 +16,8 @@ public class ComputerConfigurationParameterServiceImpl implements ComputerConfig
     @Autowired
     private ComputerConfigurationParameterRepository computerConfigurationParameterRepository;
 
-    @Override
     public List<ComputerConfigurationParameter> findAll() {
         return computerConfigurationParameterRepository.findAll();
-    }
-
-    @Override
-    public Optional<ComputerConfigurationParameter> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public ComputerConfigurationParameter getById(Long id) {
-        return null;
     }
 
     @Override
@@ -36,8 +25,4 @@ public class ComputerConfigurationParameterServiceImpl implements ComputerConfig
         return computerConfigurationParameterRepository.save(computerConfigurationParameter);
     }
 
-    @Override
-    public void remove(Long id) {
-
-    }
 }

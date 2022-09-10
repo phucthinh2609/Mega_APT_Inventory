@@ -68,38 +68,38 @@ public class Home {
         return modelAndView;
     }
 
-    @GetMapping("/stock-in-orders")
-    public ModelAndView showStockInOrderListPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("stock-in-order/list");
-        return modelAndView;
-    }
-
-    @GetMapping("/stock-in-orders/create")
-    public ModelAndView showCreateStockInOrderPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("stock-in-order/create");
-        return modelAndView;
-    }
-
     @GetMapping("/purchase-orders")
-    public ModelAndView showPurchaseOrderListPage() {
+    public ModelAndView showStockInOrderListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("purchase-order/list");
         return modelAndView;
     }
 
     @GetMapping("/purchase-orders/create")
-    public ModelAndView showCreatePurchaseOrderPage() {
+    public ModelAndView showCreateStockInOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("purchase-order/create");
         return modelAndView;
     }
 
-    @GetMapping("/purchase-orders/update")
+    @GetMapping("/orders")
+    public ModelAndView showOrderListPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("order/list");
+        return modelAndView;
+    }
+
+    @GetMapping("/orders/create")
+    public ModelAndView showCreatePurchaseOrderPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("order/create");
+        return modelAndView;
+    }
+
+    @GetMapping("/orders/update")
     public ModelAndView showUpdatePurchaseOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("purchase-order/update");
+        modelAndView.setViewName("order/update");
         return modelAndView;
     }
 
@@ -127,7 +127,7 @@ public class Home {
     @GetMapping("/inventories/details")
     public ModelAndView showInventoryDetailPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("inventory/details");
+        modelAndView.setViewName("inventory/detail");
         return modelAndView;
     }
 

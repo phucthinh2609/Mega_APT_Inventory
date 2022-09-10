@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -9,8 +9,6 @@
         <!-- App-favicon -->
         <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
         <!-- Main -->
-        <link rel="stylesheet" href="/assets/css/bootstrap/jquery.bootstrap-touchspin.min.css">
-
         <th:block th:replace="/layout/head/main :: main"/>
 
     </head>
@@ -76,79 +74,47 @@
                                         </div>
 
                                         <div class="table-responsive">
-                                            <table id="tablePurchaseOrder" class="table table-centered table-nowrap text-center">
+                                            <table id="tbsPurchaseOrders" class="table table-centered table-nowrap">
                                                 <thead class="thead-light">
                                                 <tr>
-                                                    <th style="width: 20px;">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                            <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <th>Order ID</th>
-                                                    <th>Total Amount</th>
-                                                    <th>Quantity Total</th>
-                                                    <th>Customer</th>
-                                                    <th>Status</th>
-                                                    <th>View Details</th>
-                                                    <th>State Change</th>
-                                                    <th>Action</th>
+                                                    <th>#</th>
+                                                    <th>Ngày Nhập kho</th>
+                                                    <th>Nhà Cung Cấp</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Thành tiền</th>
+                                                    <th>Mã Nhân Viên</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
                                                     <td><a href="javascript: void(0);" class="text-body font-weight-bold">#SK2540</a> </td>
-                                                    <td>12.000.000 VNĐ</td>
+                                                    <td>Neal Matthews</td>
                                                     <td>
-                                                        1
-                                                    </td>
-                                                    <td>Trương Văn Phôn</td>
-                                                    <td>
-                                                        <span class="badge badge-pill badge-soft-warning font-size-12">Đang chờ xử lý</span>
+                                                        07 Oct, 2019
                                                     </td>
                                                     <td>
-                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail">View Details</a>
+                                                        $400
                                                     </td>
                                                     <td>
-                                                        <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded">Change</a>
+                                                        <span class="badge badge-pill badge-soft-success font-size-12">Paid</span>
                                                     </td>
                                                     <td>
-                                                        <a href="/purchase-orders/update" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                        <i class="fab fa-cc-mastercard mr-1"></i> Mastercard
+                                                    </td>
+                                                    <td>
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-primary btn-sm btn-rounded" data-toggle="modal" data-target=".exampleModal">
+                                                            View Details
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                                         <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td><a href="javascript: void(0);" class="text-body font-weight-bold">#SK2540</a> </td>
-                                                    <td>12.000.000 VNĐ</td>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>Trương Văn Phôn</td>
-                                                    <td>
-                                                        <span class="badge badge-pill badge-soft-info font-size-12">Đang giao hàng</span>
-                                                    </td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail">View Details</a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded">Change</a>
-                                                    </td>
-                                                    <td>
 
-                                                    </td>
-                                                </tr>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -179,7 +145,43 @@
                 </div>
             </div>
             <!-- End Page-content -->
-            <th:block th:replace="/purchase-order/modal-details :: modal-details"/>
+
+            <!-- Modal -->
+            <div id="modalPurchaseOrderDetail" class="modal" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chi Tiết Phiếu Nhập</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mb-2">Ngày nhập kho: <span id="stockInDate" class="text-primary"></span></p>
+                            <div class="table-responsive">
+                                <table id="tbsProductDetail" class="table table-centered table-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sản phẩm</th>
+                                            <th scope="col">Giá Nhập</th>
+                                            <th scope="col">Số Lượng</th>
+                                            <th scope="col">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- END layout-wrapper -->
 
@@ -192,39 +194,141 @@
         <!-- App js -->
         <th:block th:replace="/layout/script/app-js :: app-js"/>
 
-    <script>
-        let page = {
-            urls: {
-                getAllProduct: App.BASER_URL + "/products"
-            },
-            elements: {
-            },
-            loadData: {},
-            commands: {},
-            dialogs: {
-                elements: {},
+        <script>
+            let page = {
+                urls: {
+                    getAllPurchaseOrders: App.BASER_URL + "/purchaseOrders",
+                    getPurchaseOrderDetail: App.BASER_URL + "/purchaseOrders/details/",
+                },
+                elements: {
+                },
+                loadData: {},
                 commands: {},
-                alertDanger: {}
-            },
-        }
+                dialogs: {
+                    elements: {},
+                    commands: {},
+                    alertDanger: {}
+                },
+            }
+
+            let purchaseOrderList = []
+            page.commands.getAllPurchaseOrders = () => {
+                return $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: page.urls.getAllPurchaseOrders,
+                })
+                    .done((data) => {
+                        purchaseOrderList = data;
+                    })
+                    .fail((jqXHR) => {
+
+                    });
+            }
 
 
-        page.elements.modalDetail= $('#modalDetail');
+            // $('#keySearch').on('input', () => {
+            //     keySearch = $('#keySearch').val().toLowerCase();
+            //     inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
+            //     if (keySearch) {
+            //         page.commands.renderDetails(inventorySearchDetails);
+            //     }
+            // })
 
-        page.elements.btnShowDetail= $('#tablePurchaseOrder tbody tr td .showDetail');
+            page.commands.handleShowPurchaseOrderDetail = () => {
+                $('button.viewProductDetail').on('click', function () {
+                    let productId = $(this).attr("id");
+                    $.ajax({
+                        headers: {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: page.urls.getProductDetail + productId
+                    })
+                        .done((data) => {
+                            $('#modalProductDetail').modal('show');
+                            $('#productDetailTitle').text(data[0].title);
+                            let tbsBody = $('#tbsProductDetail tbody');
+                            tbsBody.html('')
+                            let tbsFoot = $('#tbsProductDetail tfoot');
+                            tbsFoot.html('');
+                            let groupQuantity = 0;
+                            let groupAmount = 0;
+                            let groupPercent = 0;
+                            $.each(data, (index, value) => {
+                                let str = `
+                                    <tr>
+                                        <td>
+                                            <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                        </td>
+                                        <td>${value.stockInDate}</td>
+                                        <td>${value.stockInPrice}</td>
+                                        <td>${value.quantity}</td>
+                                        <td>${value.stockInPrice * value.quantity}</td>
+                                        <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                                    </tr>
+                                `;
+                                tbsBody.append(str);
 
-        page.elements.btnShowDetail.on('click',() => {
-            page.elements.modalDetail.modal('show');
-        })
+                                groupQuantity += value.quantity;
+                                groupAmount += value.stockInPrice * value.quantity;
+                                groupPercent += value.stockInPrice * value.quantity / totalAmount;
+                            })
+                            let footStr = `
+                                <td colSpan="3">TỔNG</td>
+                                <td>${groupQuantity}</td>
+                                <td>${groupAmount}</td>
+                                <td>${groupPercent}</td>
+                            `;
+                            tbsFoot.append(footStr);
+
+                        })
+                        .fail((jqXHR) => {
+                            // App.SweetAlert.showErrorAlert(jqXHR.responseJSON.message);
+                            // console.log(jqXHR);
+                        })
 
 
-    </script>
+                });
+            }
 
+            page.commands.renderPurchaseOrders = (purchaseOrders) => {
+                let tbsBody = $('#tbsPurchaseOrders tbody');
+                tbsBody.html("");
 
+                $.each(purchaseOrders, (index, value) => {
+                    let str = `
+                            <tr>
+                                <td>
+                                    <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                </td>
+                                <td>${value.stockInDate}</td>
+                                <td>${value.supplierName}</td>
+                                <td>${value.quantity}</td>
+                                <td>${value.amount}</td>
+                                <td>${value.employeeCode}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded viewProductDetail" id="${value.purchaseOrderId}" data-toggle="modal" data-target=".exampleModal">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    tbsBody.append(str);
+                })
+                // handleShowProductDetail();
+            }
 
-
-
-
+            $(() => {
+                page.commands.getAllPurchaseOrders().then(() => {
+                    page.commands.renderPurchaseOrders(purchaseOrderList);
+                });
+            })
+        </script>
     </body>
 
 </html>

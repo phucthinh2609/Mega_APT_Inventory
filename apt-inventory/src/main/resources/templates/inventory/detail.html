@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User List Page</title>
+
+    <!-- Meta -->
+    <th:block th:replace="/layout/head/meta :: meta"/>
+    <!-- App-favicon -->
+    <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+    <!-- Main -->
+    <th:block th:replace="/layout/head/main :: main"/>
+
+</head>
+
+<body data-sidebar="dark">
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Begin page-topbar -->
+    <th:block th:replace="/layout/page-topbar :: page-topbar"/>
+    <!-- End page-topbar -->
+
+    <!-- Begin vertical-menu -->
+    <th:block th:replace="/layout/vertical-menu :: vertical-menu"/>
+    <!-- End vertical-menu -->
+
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0 font-size-18">Chi Tiết Kho</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Inventory</a></li>
+                                    <li class="breadcrumb-item active">Detail</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-sm-6">
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span>Tên sản phẩm: </span>
+                                                <input type="search" class="form-control" placeholder="Nhập tên sản phẩm..." id="keySearch">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span>Từ ngày: </span>
+                                                <input type="date" class="form-control" id="dateFrom">
+                                            </div>
+                                        </div>
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span>Đến ngày: </span>
+                                                <input type="date" class="form-control" id="dateTo">
+                                            </div>
+                                        </div>
+                                        <div class="search-box mr-2 mb-2 d-inline-block">
+                                            <div class="position-relative">
+                                                <span></span>
+                                                <button type="button" class="btn btn-success" id="btnSearch">Tìm kiếm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-centered table-nowrap" id="tbsInventoryDetails">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Ngày Nhập Hàng</th>
+                                            <th>Sản Phẩm</th>
+                                            <th>Giá Nhập</th>
+                                            <th>Số Lượng</th>
+                                            <th>Thành tiền</th>
+                                            <th>Tỷ trọng (%)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        <tfoot>
+
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- container-fluid -->
+        </div>
+    </div>
+    <!-- End Page-content -->
+
+</div>
+<!-- END layout-wrapper -->
+
+<!-- Right Sidebar -->
+<th:block th:replace="/layout/right-bar :: right-bar"/>
+<!-- End right-bar -->
+
+<!-- JAVASCRIPT -->
+<th:block th:replace="/layout/script/javascript :: javascript"/>
+<!-- App js -->
+<th:block th:replace="/layout/script/app-js :: app-js"/>
+
+<script>
+    let page = {
+        urls: {
+            getInventoryDetail: App.BASER_URL + "/inventories/details",
+            getInventoryTotalAmount: App.BASER_URL + "/inventories/totalAmount"
+        },
+        elements: {
+        },
+        loadData: {},
+        commands: {},
+        dialogs: {
+            elements: {},
+            commands: {},
+            alertDanger: {}
+        },
+    }
+
+    let inventoryDetails = [];
+    let inventorySearchDetails = [];
+    let keySearch = "";
+    let dateFrom;
+    let dateTo;
+    let totalAmount;
+
+    page.commands.getInventoryDetail = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getInventoryDetail,
+        })
+            .done((data) => {
+                inventoryDetails = data;
+                // localStorage.setItem('inventoryDetails', JSON.stringify(inventoryDetails));
+            })
+            .fail((jqXHR) => {
+
+            });
+    }
+
+    page.commands.getInventoryTotalAmount = () => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getInventoryTotalAmount,
+        })
+            .done((data) => {
+                totalAmount = data;
+            })
+            .fail((jqXHR) => {
+
+            });
+    }
+
+    $('#btnSearch').on('click', () => {
+        keySearch = $('#keySearch').val().toLowerCase();
+        dateFrom = $('#dateFrom').val();
+        dateTo = $('#dateTo').val();
+        inventorySearchDetails = inventoryDetails.filter(inventoryDetail => {
+            return (keySearch? inventoryDetail.title.toLowerCase().includes(keySearch) : true)
+                && (dateFrom? inventoryDetail.stockInDate >= dateFrom : true)
+                && (dateTo? inventoryDetail.stockInDate <= dateTo : true)
+        });
+        if (keySearch || dateFrom || dateTo) {
+            page.commands.renderDetails(inventorySearchDetails);
+        }
+    })
+
+    page.commands.renderDetails = (details) => {
+        let tbsBody = $('#tbsInventoryDetails tbody');
+        tbsBody.html("");
+        let tbsFoot = $('#tbsInventoryDetails tfoot');
+        tbsFoot.html("");
+        let groupQuantity = 0;
+        let groupAmount = 0;
+        let groupPercent = 0;
+        $.each(details, (index, value) => {
+            let str = `
+                            <tr>
+                                <td>
+                                    <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                </td>
+                                <td>${value.stockInDate}</td>
+                                <td>${value.title}</td>
+                                <td>${value.stockInPrice}</td>
+                                <td>${value.quantity}</td>
+                                <td>${value.stockInPrice * value.quantity}</td>
+                                <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                            </tr>
+                        `;
+            tbsBody.append(str);
+
+            groupQuantity += value.quantity;
+            groupAmount += value.stockInPrice * value.quantity;
+            groupPercent += value.stockInPrice * value.quantity / totalAmount;
+        })
+        let footStr = `
+                <td colSpan="4">TỔNG</td>
+                <td>${groupQuantity}</td>
+                <td>${groupAmount}</td>
+                <td>${groupPercent}</td>
+            `;
+        tbsFoot.append(footStr);
+    }
+
+    $(() => {
+        page.commands.getInventoryDetail().then(() => {
+            page.commands.getInventoryTotalAmount().then(() => {
+                page.commands.renderDetails(inventoryDetails);
+            })
+
+        });
+    })
+</script>
+</body>
+
+</html>
