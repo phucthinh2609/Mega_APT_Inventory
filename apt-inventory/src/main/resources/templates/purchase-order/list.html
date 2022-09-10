@@ -163,7 +163,9 @@
 
         page.commands.showModalDetails = () => {
             page.elements.btnShowDetail = $('#tablePurchaseOrder tbody tr td .showDetail');
-            page.elements.btnShowDetail.on('click',() => {
+            page.elements.btnShowDetail.on('click',function (){
+                let orderId = $(this).data("id");
+                console.log(orderId);
                 page.elements.modalDetail.modal('show');
             })
         }
