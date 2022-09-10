@@ -1,0 +1,24 @@
+.myTooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.myTooltip .myTooltiptext {
+    visibility: hidden;
+    box-sizing: border-box;
+    width: auto;
+    background-color: #989898;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 7px;
+    position: absolute;
+    z-index: 1;
+    top: 27px;
+    left: -2px;
+}
+
+.myTooltip:hover .myTooltiptext {
+    visibility: visible;
+}

@@ -128,6 +128,19 @@ class App {
         return str;
     }
 
+    static renderInputImage(arr) {
+        let str = "";
+        arr.forEach((i) => {
+            str += `
+                    <div class="my-upload d-flex justify-content-center position-relative col-lg-2">
+                        <img class="my-upload-img" src="` + i.url + `"  alt="" />
+                        <span class="my-upload-delete position-absolute" onclick="deleteImage(` + arr.indexOf(i) + `)">&times;</span>
+                    </div>
+                `;
+        })
+        return str;
+    }
+
     static renderProduct(obj) {
         let strImg = "";
 
@@ -137,6 +150,10 @@ class App {
               `;
             return false;
         })
+
+        let shortTitle = obj.title;
+        let index = shortTitle.indexOf("/");
+        let title = shortTitle.substring(0,index);
 
         let str = `
             <tr>
@@ -149,7 +166,12 @@ class App {
                 <td>
                     ${strImg}
                 </td>
-                <td data-bs-toggle="tooltip" title="Hooray!">${obj.title}</td>
+                <td>
+                    <div class="myTooltip">
+                      ${title} ...
+                      <span class="myTooltiptext">${obj.title}</span>
+                    </div>
+                </td>
                 <td>
                     ${
                         obj.businessStatus != "Ngừng Kinh Doanh" ? `<span class="badge badge-pill badge-soft-success font-size-12">${obj.businessStatus}</span>` : `<span class="badge badge-pill badge-soft-danger font-size-12">${obj.businessStatus}</span>`
@@ -162,6 +184,90 @@ class App {
                     <a href="/products/update/${obj.slug}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                 </td>
             </tr>
+        `;
+
+        return str;
+    }
+
+    static renderTechSpecTable(prd) {
+        let str = "";
+
+        $.each(prd.computerConfigurationParameters, (key, value) => {
+            str += `
+                <tr>
+                    <th scope="row" style="width: 400px;">${value.explanation}</th>
+                    <td id="cpu">${prd.configurationDetail[value.name].content}</td>
+                </tr>
+            `;
+        })
+
+        return str;
+    }
+
+    static renderImageDetail(fileUrls) {
+        let image = {
+            strPillImg: null,
+            strMainImg: null
+        };
+        let strPillImg = "";
+        let strMainImg = "";
+
+        let count = 1;
+
+        $.each(fileUrls, (key, value) => {
+
+            if (count === 1) {
+                strPillImg += `
+                    <a class="nav-link active" id="product-${count}-tab" data-toggle="pill" href="#product-${count}" role="tab" aria-controls="product-${count}" aria-selected="true">
+                        <img src="${value}" alt="" class="img-fluid mx-auto d-block rounded">
+                    </a>
+                `;
+
+                strMainImg += `
+                    <div class="tab-pane fade show active" id="product-${count}" role="tabpanel" aria-labelledby="product-${count}-tab">
+                        <div>
+                            <img src="${value}" alt="" class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                `;
+            } else {
+                strPillImg += `
+                    <a class="nav-link" id="product-${count}-tab" data-toggle="pill" href="#product-${count}" role="tab" aria-controls="product-${count}" aria-selected="false">
+                        <img src="${value}" alt="" class="img-fluid mx-auto d-block rounded">
+                    </a>
+                `;
+
+                strMainImg += `
+                    <div class="tab-pane fade" id="product-${count}" role="tabpanel" aria-labelledby="product-${count}-tab">
+                        <div>
+                            <img src="${value}" alt="" class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                `;
+            }
+
+            count+=1;
+        })
+
+        image = {
+            strPillImg: strPillImg,
+            strMainImg: strMainImg
+        };
+
+        return image;
+    }
+
+    static renderInputTechSpecFormDetail(obj) {
+        let str = `
+            <div class="form-group row mb-4">
+                <label class="col-form-label col-lg-2">${obj.explanation} : </label>
+                <div class="col-lg-10">
+                    ${obj.multiline
+            ? `<textarea class="form-control" id="${obj.name}" data-name="${obj.name}" data-explanation="${obj.explanation}" rows="1" style="resize: none;"></textarea>`
+            : `<input type="text" class="form-control" id="${obj.name}" data-name="${obj.name}" data-explanation="${obj.explanation}">`
+        }
+                </div>
+            </div>
         `;
 
         return str;

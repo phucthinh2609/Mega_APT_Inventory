@@ -2,6 +2,7 @@ package com.cg.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,17 +38,26 @@ public class Home {
         return modelAndView;
     }
 
+    @GetMapping("/products/{slug}")
+    public ModelAndView showProductDetailPage(@PathVariable String slug) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("product/detail");
+        modelAndView.addObject("slug", slug);
+        return modelAndView;
+    }
+
+    @GetMapping("/products/update/{slug}")
+    public ModelAndView showProductUpdatelPage(@PathVariable String slug) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("product/update");
+        modelAndView.addObject("slug", slug);
+        return modelAndView;
+    }
+
     @GetMapping("/products/create-description")
     public ModelAndView showCreateDescriptionProductPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("product/create-description");
-        return modelAndView;
-    }
-
-    @GetMapping("/products/detail")
-    public ModelAndView showProductDetailPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("product/detail");
         return modelAndView;
     }
 
@@ -83,6 +93,13 @@ public class Home {
     public ModelAndView showCreatePurchaseOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("order/create");
+        return modelAndView;
+    }
+
+    @GetMapping("/orders/update")
+    public ModelAndView showUpdatePurchaseOrderPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("order/update");
         return modelAndView;
     }
 
@@ -125,13 +142,6 @@ public class Home {
     public ModelAndView showBlogListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("blog/list");
-        return modelAndView;
-    }
-
-    @GetMapping("/demo")
-    public ModelAndView showBlogListPagee() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("demoImage");
         return modelAndView;
     }
 
