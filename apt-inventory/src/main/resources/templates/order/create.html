@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Create Purchase Order Page</title>
+
+        <!-- Meta -->
+        <th:block th:replace="/layout/head/meta :: meta"/>
+        <!-- App-favicon -->
+        <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+        <!-- Main -->
+        <th:block th:replace="/layout/head/main :: main"/>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+            <!-- Begin page-topbar -->
+            <th:block th:replace="/layout/page-topbar :: page-topbar"/>
+            <!-- End page-topbar -->
+
+            <!-- Begin vertical-menu -->
+            <th:block th:replace="/layout/vertical-menu :: vertical-menu"/>
+            <!-- End vertical-menu -->
+
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Create Purchase Order</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Purchase Order</a></li>
+                                            <li class="breadcrumb-item active">Create</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                                <div class="position-relative col-sm-8 mb-3">
+                                    <input type="text" class="form-control" placeholder="Search product...">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-centered mb-0 table-nowrap">
+                                                <thead class="thead-light">
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Product Desc</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th colspan="2">Total</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="\assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
+                                                    </td>
+                                                    <td>
+                                                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Half sleeve T-shirt</a></h5>
+                                                        <p class="mb-0">Color : <span class="font-weight-medium">Maroon</span></p>
+                                                    </td>
+                                                    <td>
+                                                        $ 450
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 120px;">
+                                                            <input type="text" value="02" name="demo_vertical">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        $ 900
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="\assets\images\product\img-2.png" alt="product-img" title="product-img" class="avatar-md">
+                                                    </td>
+                                                    <td>
+                                                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Light blue T-shirt</a></h5>
+                                                        <p class="mb-0">Color : <span class="font-weight-medium">Light blue</span></p>
+                                                    </td>
+                                                    <td>
+                                                        $ 225
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 120px;">
+                                                            <input type="text" value="01" name="demo_vertical">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        $ 225
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="\assets\images\product\img-3.png" alt="product-img" title="product-img" class="avatar-md">
+                                                    </td>
+                                                    <td>
+                                                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Black Color T-shirt</a></h5>
+                                                        <p class="mb-0">Color : <span class="font-weight-medium">Black</span></p>
+                                                    </td>
+                                                    <td>
+                                                        $ 152
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 120px;">
+                                                            <input type="text" value="02" name="demo_vertical">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        $ 304
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="\assets\images\product\img-4.png" alt="product-img" title="product-img" class="avatar-md">
+                                                    </td>
+                                                    <td>
+                                                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Hoodie (Blue)</a></h5>
+                                                        <p class="mb-0">Color : <span class="font-weight-medium">Blue</span></p>
+                                                    </td>
+                                                    <td>
+                                                        $ 145
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 120px;">
+                                                            <input type="text" value="02" name="demo_vertical">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        $ 290
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="\assets\images\product\img-5.png" alt="product-img" title="product-img" class="avatar-md">
+                                                    </td>
+                                                    <td>
+                                                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Half sleeve T-Shirt</a></h5>
+                                                        <p class="mb-0">Color : <span class="font-weight-medium">Light orange</span></p>
+                                                    </td>
+                                                    <td>
+                                                        $ 138
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 120px;">
+                                                            <input type="text" value="01" name="demo_vertical">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        $ 138
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="\assets\images\product\img-6.png" alt="product-img" title="product-img" class="avatar-md">
+                                                    </td>
+                                                    <td>
+                                                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Green color T-shirt</a></h5>
+                                                        <p class="mb-0">Color : <span class="font-weight-medium">Green</span></p>
+                                                    </td>
+                                                    <td>
+                                                        $ 152
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 120px;">
+                                                            <input type="text" value="02" name="demo_vertical">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        $ 304
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-sm-6">
+                                                <a href="ecommerce-products.html" class="btn btn-secondary">
+                                                    <i class="mdi mdi-arrow-left mr-1"></i> Continue Shopping </a>
+                                            </div> <!-- end col -->
+                                            <div class="col-sm-6">
+                                                <div class="text-sm-right mt-2 mt-sm-0">
+                                                    <a href="ecommerce-checkout.html" class="btn btn-success">
+                                                        <i class="mdi mdi-cart-arrow-right mr-1"></i> Checkout </a>
+                                                </div>
+                                            </div> <!-- end col -->
+                                        </div> <!-- end row-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h4 class="card-title mb-3">Suppplier</h4>
+                                            </div>
+                                            <div class="col-sm-8 align-end">
+                                                <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i> Add New Supplier</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                                <option>Shopee</option>
+                                                <option>Tiki</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Address :</td>
+                                                    <td>28 NTP</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ward : </td>
+                                                    <td>Phường Phú Nhuận</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>District :</td>
+                                                    <td>Thành phố Huế</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Province : </td>
+                                                    <td>Thừa Thiên Huế</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- end table-responsive -->
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Order Summary</h4>
+
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Grand Total :</td>
+                                                    <td>$ 1,857</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Discount : </td>
+                                                    <td>- $ 157</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Shipping Charge :</td>
+                                                    <td>$ 25</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Estimated Tax : </td>
+                                                    <td>$ 19.22</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Total :</th>
+                                                    <th>$ 1744.22</th>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- end table-responsive -->
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+            </div>
+            <!-- End Page-content -->
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right Sidebar -->
+        <th:block th:replace="/layout/right-bar :: right-bar"/>
+        <!-- End right-bar -->
+
+        <!-- JAVASCRIPT -->
+        <th:block th:replace="/layout/script/javascript :: javascript"/>
+        <!-- App js -->
+        <th:block th:replace="/layout/script/app-js :: app-js"/>
+    </body>
+
+</html>

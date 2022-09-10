@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -23,6 +25,11 @@ public class ProductMediaServiceImpl implements ProductMediaService {
     @Override
     public Iterable<ProductMedia> findAllByOrderByProductIdAsc() {
         return productMediaRepository.findAllByOrderByProductIdAsc();
+    }
+
+    @Override
+    public Optional<ProductMedia> findById(String id) {
+        return productMediaRepository.findById(id);
     }
 
     @Override

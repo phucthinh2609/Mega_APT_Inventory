@@ -39,12 +39,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0 font-size-18">Stock</h4>
+                                    <h4 class="mb-0 font-size-18">Tổng Quan Kho</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">User</a></li>
-                                            <li class="breadcrumb-item active">Over View</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Inventory</a></li>
+                                            <li class="breadcrumb-item active">Overview</li>
                                         </ol>
                                     </div>
 
@@ -56,17 +56,37 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-
-                                    <div class="row">
-                                        <h1>GROUP BY PRODUCT TITLE</h1>
-                                        <div class="col-7">
-                                            <canvas id="barChart" style="width:100%"></canvas>
+                                    <div class="card-body">
+                                        <div class="row mb-2">
+                                            <div class="col-sm-6">
+                                                <div class="search-box mr-2 mb-2 d-inline-block">
+                                                    <div class="position-relative">
+                                                        <span>Tên sản phẩm: </span>
+                                                        <input type="search" class="form-control" placeholder="Nhập từ khóa sản phẩm..." id="keySearch">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-5">
-                                            <canvas id="pieChart" style="width:100%"></canvas>
+
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap" id="tbsInventoryDetails">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Sản Phẩm</th>
+                                                        <th>Số Lượng</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                                <tfoot>
+
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -78,7 +98,42 @@
             <!-- End Page-content -->
 
             <!-- Modal -->
+            <div id="modalProductDetail" class="modal" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chi tiết kho sản phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mb-2">Tên sản phẩm: <span id="productDetailTitle" class="text-primary"></span></p>
+                            <div class="table-responsive">
+                                <table id="tbsProductDetail" class="table table-centered table-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ngày Nhập Hàng</th>
+                                        <th scope="col">Giá Nhập</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Tỷ trọng (%)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- END layout-wrapper -->
 
@@ -91,13 +146,12 @@
         <!-- App js -->
         <th:block th:replace="/layout/script/app-js :: app-js"/>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-
         <script>
             let page = {
                 urls: {
-                    getInventoryGroupByProduct: App.BASER_URL + "/inventories"
-
+                    getInventoryOverView: App.BASER_URL + "/inventories",
+                    getProductDetail: App.BASER_URL + "/inventories/product/",
+                    getInventoryTotalAmount: App.BASER_URL + "/inventories/totalAmount"
                 },
                 elements: {
                 },
@@ -110,74 +164,152 @@
                 },
             }
 
-            let inventoryGroupByProduct = [];
+            let inventoryDetails = [];
+            let inventorySearchDetails = [];
+            let keySearch = "";
+            let totalAmount;
 
-            let xValues = [];
-            let yValues = [];
-            let barColors = [];
-
-            page.commands.getInventoryGroupByProduct = () => {
+            page.commands.getInventoryOverView = () => {
                 return $.ajax({
                     headers: {
                         "accept": "application/json",
                         "content-type": "application/json"
                     },
                     type: "GET",
-                    url: page.urls.getInventoryGroupByProduct,
+                    url: page.urls.getInventoryOverView,
                 })
                     .done((data) => {
-                        inventoryGroupByProduct = data;
+                        inventoryDetails = data;
                     })
                     .fail((jqXHR) => {
 
                     });
             }
 
-            $(() => {
-                page.commands.getInventoryGroupByProduct().then(() => {
-                    $.each(inventoryGroupByProduct, (index, value) => {
-                        xValues.push(value.title);
-                        yValues.push(value.quantity);
-                        barColors.push("#" + ((1<<24)*Math.random() | 0).toString(16));
+            page.commands.getInventoryTotalAmount = () => {
+                return $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: page.urls.getInventoryTotalAmount,
+                })
+                    .done((data) => {
+                        totalAmount = data;
                     })
+                    .fail((jqXHR) => {
 
-                    const barChart = new Chart($('#barChart'), {
-                        type: 'bar',
-                        data: {
-                            labels: xValues,
-                            datasets: [{
-                                label: '',
-                                data: yValues,
-                                backgroundColor: barColors,
-                                borderColor: [],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
                     });
-                });
+            }
 
-                const pieChart = new Chart($('#pieChart'), {
-                    type: 'pie',
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                            label: '',
-                            data: yValues,
-                            backgroundColor: barColors,
-                            hoverOffset: 4
-                        }]
-                    }
-                });
-            });
+            $('#keySearch').on('input', () => {
+                keySearch = $('#keySearch').val().toLowerCase();
+                inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
+                if (keySearch) {
+                    page.commands.renderDetails(inventorySearchDetails);
+                }
+            })
 
+            page.commands.handleShowProductDetail = () => {
+                $('button.viewProductDetail').on('click', function () {
+                    let productId = $(this).attr("id");
+                    $.ajax({
+                        headers: {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: page.urls.getProductDetail + productId
+                    })
+                        .done((data) => {
+                            $('#modalProductDetail').modal('show');
+                            $('#productDetailTitle').text(data[0].title);
+                            let tbsBody = $('#tbsProductDetail tbody');
+                            tbsBody.html('')
+                            let tbsFoot = $('#tbsProductDetail tfoot');
+                            tbsFoot.html('');
+                            let groupQuantity = 0;
+                            let groupAmount = 0;
+                            let groupPercent = 0;
+                            $.each(data, (index, value) => {
+                                let str = `
+                                    <tr>
+                                        <td>
+                                            <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                        </td>
+                                        <td>${value.stockInDate}</td>
+                                        <td>${value.stockInPrice}</td>
+                                        <td>${value.quantity}</td>
+                                        <td>${value.stockInPrice * value.quantity}</td>
+                                        <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                                    </tr>
+                                `;
+                                tbsBody.append(str);
+
+                                groupQuantity += value.quantity;
+                                groupAmount += value.stockInPrice * value.quantity;
+                                groupPercent += value.stockInPrice * value.quantity / totalAmount;
+                            })
+                            let footStr = `
+                                <td colSpan="3">TỔNG</td>
+                                <td>${groupQuantity}</td>
+                                <td>${groupAmount}</td>
+                                <td>${groupPercent}</td>
+                            `;
+                            tbsFoot.append(footStr);
+
+                        })
+                        .fail((jqXHR) => {
+                            // App.SweetAlert.showErrorAlert(jqXHR.responseJSON.message);
+                            // console.log(jqXHR);
+                        })
+
+
+                });
+            }
+
+            page.commands.renderDetails = (details) => {
+                let tbsBody = $('#tbsInventoryDetails tbody');
+                tbsBody.html("");
+                let tbsFoot = $('#tbsInventoryDetails tfoot');
+                tbsFoot.html("");
+                let groupQuantity = 0;
+                $.each(details, (index, value) => {
+                    let str = `
+                            <tr>
+                                <td>
+                                    <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                                </td>
+                                <td>${value.title}</td>
+                                <td>${value.quantity}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded viewProductDetail" id="${value.productId}" data-toggle="modal" data-target=".exampleModal">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    tbsBody.append(str);
+
+                    groupQuantity += value.quantity;
+                })
+                let footStr = `
+                                <td colSpan="2">TỔNG</td>
+                                <td>${groupQuantity}</td>
+                                <td></td>
+                            `;
+                tbsFoot.append(footStr);
+                page.commands.handleShowProductDetail();
+            }
+
+            $(() => {
+                page.commands.getInventoryOverView().then(() => {
+                    page.commands.getInventoryTotalAmount().then(() => {
+                        page.commands.renderDetails(inventoryDetails);
+                    })
+                });
+            })
         </script>
     </body>
 

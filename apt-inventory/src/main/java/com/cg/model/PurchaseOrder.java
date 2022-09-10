@@ -1,11 +1,14 @@
 package com.cg.model;
 
 
+import com.cg.model.enums.EBussinessStatus;
+import com.cg.model.enums.EPurchaseOrderStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "purchase_orders")
@@ -19,8 +22,14 @@ public class PurchaseOrder {
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 
-    @Column(name = "quantity_total", nullable = false)
-    private int quantityTotal;
+    @Column(name = "total_quantity", nullable = false)
+    private int totalQuantity;
+
+    @Column(name = "stock_in_date")
+    private LocalDate stockInDate;
+
+    @Enumerated(EnumType.STRING)
+    private EPurchaseOrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")

@@ -1,0 +1,42 @@
+.my-upload-container {
+    min-height: 230px;
+    border: 2px dashed #ced4da;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-left: 0rem;
+}
+
+.my-upload-container-clickable {
+    text-align: center;
+    margin-top: 3.5rem;
+}
+
+.my-upload {
+    height: 120px;
+    width: 200px;
+    border-radius: 6px;
+    margin-right: 30px;
+    margin-top: -0.5rem;
+}
+
+.my-upload-img {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 134px;
+    height: 120px;
+    position: relative;
+    display: block;
+    z-index: 10;
+    margin-top: 1.5rem;
+}
+
+.my-upload-delete {
+    top: 10px;
+    right: -8px;
+    color: #f46a6a;
+    font-size: 28px;
+    font-weight: normal;
+    cursor: pointer;
+    z-index: 3;
+}

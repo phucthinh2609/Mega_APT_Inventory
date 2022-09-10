@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +21,9 @@ public class ProductRender {
     private String model;
     private String title;
     private String slug;
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal price;
     private String description;
+    private Map<String, Object> configurationDetail;
     private List<ComputerConfigurationParameter> computerConfigurationParameters;
     private String businessStatus;
     private String blogId;
