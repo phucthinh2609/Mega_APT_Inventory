@@ -20,7 +20,7 @@ public class ProductRender {
     private String model;
     private String title;
     private String slug;
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal price;
     private String description;
     private List<ComputerConfigurationParameter> computerConfigurationParameters;
     private String businessStatus;

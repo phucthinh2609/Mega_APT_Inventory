@@ -19,11 +19,6 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
     private InventoryDetailRepository inventoryDetailRepository;
 
     @Override
-    public List<InventoryDetail> findAll() {
-        return inventoryDetailRepository.findAll();
-    }
-
-    @Override
     public List<InventoryDetailDTO> getInventoryOverView() {
         return inventoryDetailRepository.getInventoryOverView();
     }
@@ -76,25 +71,5 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
     @Override
     public List<InventoryDetailDTO> getAllInventoryDetails() {
         return inventoryDetailRepository.getAllInventoryDetails();
-    }
-
-    @Override
-    public Optional<InventoryDetail> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public InventoryDetail getById(Long id) {
-        return null;
-    }
-
-    @Override
-    public InventoryDetail save(InventoryDetail inventoryDetail) {
-        return inventoryDetailRepository.save(inventoryDetail);
-    }
-
-    @Override
-    public void remove(Long id) {
-
     }
 }

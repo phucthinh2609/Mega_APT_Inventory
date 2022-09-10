@@ -41,8 +41,7 @@ public class Product {
     private String slug;
 
     @Digits(integer = 12, fraction = 0)
-    @Column(name = "purchase_order_price")
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal price;
 
     private String description;
 
@@ -75,7 +74,7 @@ public class Product {
                 .setBrand(brand)
                 .setModel(model)
                 .setTitle(title)
-                .setPurchaseOrderPrice(purchaseOrderPrice)
+                .setPrice(price)
                 .setDescription(description);
     }
 }

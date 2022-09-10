@@ -2,12 +2,11 @@ package com.cg.service.inventoryDetail;
 
 import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
-import com.cg.service.IGeneralService;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface InventoryDetailService extends IGeneralService<InventoryDetail> {
+public interface InventoryDetailService {
     List<InventoryDetailDTO> getInventoryOverView();
     List<InventoryDetailDTO> getProductDetail(String productId);
     int getInventoryTotalQuantity();
