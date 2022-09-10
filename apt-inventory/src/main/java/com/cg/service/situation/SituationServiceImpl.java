@@ -28,29 +28,57 @@ public class SituationServiceImpl implements SituationService{
                     countDelivery++;
                 }
                 if (countDelivery == 0) {
+                    situationDTOListRes.add(situationDTOList.get(i - 1));
                     situationDTOListRes.add(situationDTOList.get(i));
                 }
                 if (countDelivery == 1) {
-                    SituationDTO tempSituationDTO = situationDTOList.get(i);
+                    SituationDTO tempSituationDTO = situationDTOList.get(i-1);
                     String valueStatus = tempSituationDTO.getStrValue();
-                    if (!valueStatus.equals(ESituationValue.CANCELLED.getValue())){
+                    if (!valueStatus.equals(ESituationValue.CANCELLED.getValue()) && !valueStatus.equals(ESituationValue.PENDING.getValue())){
+                        situationDTOListRes.add(situationDTOList.get(i-1));
+                    }
+                    if (!(situationDTOList.get(i).getStrValue()).equals(ESituationValue.CANCELLED.getValue()) && !valueStatus.equals(ESituationValue.CANCELLED.getValue())) {
                         situationDTOListRes.add(situationDTOList.get(i));
                     }
+                }
+                if (countDelivery == 2) {
+                    situationDTOListRes.add(situationDTOList.get(i));
                 }
             }else {
                 if (temOrderId.equals(situationDTOList.get(i).getOrder().getId())) {
                     countDelivery++;
                 }else {
+                    if (countDelivery == 0) {
+                        situationDTOListRes.add(situationDTOList.get(i-1));
+                    }
                     if (countDelivery == 1) {
-                        if (!(situationDTOList.get(i-1).getStrValue()).equals("Đã Hủy")) {
+                        if (i == 1) {
                             situationDTOListRes.add(situationDTOList.get(i-1));
+                        }else {
+                            SituationDTO tempSituationDTO = situationDTOList.get(i-1);
+                            String valueStatus = tempSituationDTO.getStrValue();
+                            if (!valueStatus.equals(ESituationValue.CANCELLED.getValue())) {
+                                if (valueStatus.equals(ESituationValue.PENDING.getValue())) {
+                                    if (!(situationDTOList.get(i-2).getStrValue()).equals(ESituationValue.CANCELLED.getValue())) {
+                                        situationDTOListRes.add(situationDTOList.get(i-2));
+                                    }
+                                }else {
+                                    situationDTOListRes.add(situationDTOList.get(i-1));
+                                }
+                            }
                         }
                     }
                     if (countDelivery == 2) {
-                        SituationDTO tempSituationDTO = situationDTOList.get(i-1);
-                        String valueStatus = tempSituationDTO.getStrValue();
-                        if (!valueStatus.equals("Đã Hủy") && !valueStatus.equals("Hoàn Thành")){
-                            situationDTOListRes.add(situationDTOList.get(i-1));
+                        if (i == 2) {
+                            SituationDTO tempSituationDTO = situationDTOList.get(i-1);
+                            String valueStatus = tempSituationDTO.getStrValue();
+                            if (!valueStatus.equals(ESituationValue.CANCELLED.getValue()) && !valueStatus.equals(ESituationValue.PENDING.getValue())){
+                                situationDTOListRes.add(situationDTOList.get(i-1));
+                            }else {
+                                if ((situationDTOList.get(i-2).getStrValue()).equals(ESituationValue.DELIVERY.getValue())){
+                                    situationDTOListRes.add(situationDTOList.get(i-2));
+                                }
+                            }
                         }
                     }
                     temOrderId = situationDTOList.get(i).getOrder().getId();

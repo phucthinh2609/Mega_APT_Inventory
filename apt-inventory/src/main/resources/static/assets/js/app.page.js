@@ -182,11 +182,11 @@ class App {
                         <td>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="input_${obj.order.id}">
-                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                <label class="custom-control-label" for="input_${obj.order.id}">&nbsp;</label>
                             </div>
                         </td>
                         <td><a href="javascript: void(0);" class="text-body font-weight-bold">#${obj.order.id}</a> </td>
-                        <td>${obj.order.totalAmount}VNĐ</td>
+                        <td>${obj.order.totalAmount} VNĐ</td>
                         <td>
                             ${obj.order.quantityTotal}
                         </td>

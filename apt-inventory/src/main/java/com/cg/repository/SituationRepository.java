@@ -21,7 +21,7 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
             ") " +
             "FROM Situation AS s " +
             "WHERE s.employee.id = :id OR s.employee.id is null " +
-            "ORDER BY s.order.id"
+            "ORDER BY s.order.id DESC "
     )
     List<SituationDTO> findAllSituationDTO(String id);
 }
