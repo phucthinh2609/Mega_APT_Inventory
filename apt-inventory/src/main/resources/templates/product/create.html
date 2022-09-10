@@ -90,21 +90,37 @@
                                     </div>
                                 </form>
 
+                                <!-- start upload image form -->
                                 <div class="form-group">
                                     <label >Image</label>
-                                    <input type="file" id="imageFile" accept="image/jpeg, image/png" required multiple />
 
-                                    <form action="/upload" method="post" class="dropzone dz-clickable form-group">
+                                    <div class="d-flex align-items-center my-upload-container row" id="imageContainer">
+                                        <div class="col-lg-2">
+                                            <div class="my-upload-container-clickable" id="imageClickable" style="border: dot-dash 1px red;">
+                                                <div class="mb-3">
+                                                    <i class="display-4 text-muted bx bxs-cloud-upload"></i>
+                                                </div>
+                                                <h4>Click to upload</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="d-flex justify-content-start" id="imagePreview"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-4 hidden">
+                                            <form action="#" class="form" method="post" id="frmMyUpload">
+                                                <input
+                                                        type="file"
+                                                        class="d-none"
+                                                        multiple
+                                                        id="inputImage"
+                                                />
+                                            </form>
+                                        </div>
+                                    </div>
 
-<!--                                        <div class="dz-message needsclick">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <i class="display-4 text-muted bx bxs-cloud-upload"></i>-->
-<!--                                            </div>-->
-
-<!--                                            <h4>Drop files here or click to upload.</h4>-->
-<!--                                        </div>-->
-                                    </form>
                                 </div>
+                                <!-- end upload image form -->
+
                             </div>
 
                         </div>
@@ -222,7 +238,16 @@
             page.elements.footerContent = $(".footer section.accordion .content");
             page.elements.accordionCollapse = $('input[name=collapse]');
 
+            page.elements.inputImage = $('#inputImage');
+
+            page.elements.imagePreview = $('#imagePreview');
+            page.elements.frmMyUpload = $('#frmMyUpload');
+            page.elements.imageClickable = $('#imageClickable');
+            page.elements.imageContainer = $('#imageContainer');
+
+            let images = [];
             let computerConfigurationParameters = [];
+            let fileInputImages = [];
 
             let computerConfiguration = {
                 id: null,
@@ -233,6 +258,38 @@
                 slug:null,
                 purchaseOrderPrice: null,
                 configurationDetail: {}
+            }
+
+            page.commands.imageSelect = () =>  {
+
+                let fileInput = page.elements.inputImage[0].files;
+
+                for (let i = 0; i < fileInput.length; i++) {
+                    images.push({
+                        "name": fileInput[i].name,
+                        "url": URL.createObjectURL(fileInput[i]),
+                        "file": fileInput[i],
+                    });
+
+                    fileInputImages.push(fileInput[i])
+                }
+
+                page.elements.imagePreview.empty()
+
+                let str = App.renderInputImage(images);
+                page.elements.imagePreview.append(str);
+
+                console.log("Images: " + images)
+            }
+
+            function deleteImage (i)  {
+                images.splice(i, 1);
+                fileInputImages.splice(i, 1);
+
+                page.elements.imagePreview.empty()
+
+                let str = App.renderInputImage(images);
+                page.elements.imagePreview.append(str);
             }
 
             page.commands.getAllComputerConfigurationParameters = () => {
@@ -317,15 +374,13 @@
 
                 let formData  = new FormData();
 
-                let fileInput = $('#imageFile')[0].files;
-
                 formData.append("brand", computerConfiguration.brand);
                 formData.append("model", computerConfiguration.model);
                 formData.append("title", computerConfiguration.title);
                 formData.append("description", computerConfiguration.description);
                 formData.append("configurationDetail", JSON.stringify(computerConfiguration.configurationDetail));
 
-                fileInput.forEach((file) => {
+                fileInputImages.forEach((file) => {
                     formData.append("files", file);
                 })
 
@@ -392,6 +447,14 @@
             }
 
             page.initializeControlEvent = () => {
+                page.elements.imageClickable.on("click", () => {
+                    page.elements.inputImage.trigger("click");
+                })
+
+                page.elements.inputImage.on('change', () => {
+                    page.commands.imageSelect();
+                })
+
                 page.elements.btnShowTechSpecForm.on('click', () => {
                     page.elements.modalCreateTechSpec.modal('show');
                 });

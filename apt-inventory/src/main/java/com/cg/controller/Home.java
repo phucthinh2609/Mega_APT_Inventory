@@ -46,6 +46,14 @@ public class Home {
         return modelAndView;
     }
 
+    @GetMapping("/products/update/{slug}")
+    public ModelAndView showProductUpdatelPage(@PathVariable String slug) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("product/update");
+        modelAndView.addObject("slug", slug);
+        return modelAndView;
+    }
+
     @GetMapping("/products/create-description")
     public ModelAndView showCreateDescriptionProductPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -134,13 +142,6 @@ public class Home {
     public ModelAndView showBlogListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("blog/list");
-        return modelAndView;
-    }
-
-    @GetMapping("/demo")
-    public ModelAndView showBlogListPagee() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("demoImage");
         return modelAndView;
     }
 

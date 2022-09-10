@@ -128,6 +128,19 @@ class App {
         return str;
     }
 
+    static renderInputImage(arr) {
+        let str = "";
+        arr.forEach((i) => {
+            str += `
+                    <div class="my-upload d-flex justify-content-center position-relative col-lg-2">
+                        <img class="my-upload-img" src="` + i.url + `"  alt="" />
+                        <span class="my-upload-delete position-absolute" onclick="deleteImage(` + arr.indexOf(i) + `)">&times;</span>
+                    </div>
+                `;
+        })
+        return str;
+    }
+
     static renderProduct(obj) {
         let strImg = "";
 
@@ -244,5 +257,20 @@ class App {
         return image;
     }
 
+    static renderInputTechSpecFormDetail(obj) {
+        let str = `
+            <div class="form-group row mb-4">
+                <label class="col-form-label col-lg-2">${obj.explanation} : </label>
+                <div class="col-lg-10">
+                    ${obj.multiline
+            ? `<textarea class="form-control" id="${obj.name}" data-name="${obj.name}" data-explanation="${obj.explanation}" rows="1" style="resize: none;"></textarea>`
+            : `<input type="text" class="form-control" id="${obj.name}" data-name="${obj.name}" data-explanation="${obj.explanation}">`
+        }
+                </div>
+            </div>
+        `;
+
+        return str;
+    }
 
 }

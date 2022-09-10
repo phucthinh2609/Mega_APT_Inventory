@@ -44,7 +44,7 @@
 
                                     <div class="page-title-right">
                                         <a href="/products" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-keyboard-return"></i>  Product List</a>
-                                        <a href="/products/update" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-pencil-box"></i>  Edit</a>
+                                        <a href="/" id="btnEdit" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-pencil-box"></i>  Edit</a>
                                     </div>
 
                                 </div>
@@ -266,6 +266,8 @@
 
         page.elements.slug = $('#slug');
 
+        page.elements.btnEdit = $('#btnEdit')
+
         page.elements.tbTechSpec = $('#tbTechSpec');
 
         page.elements.pillImage = $('#v-pills-tab');
@@ -314,6 +316,8 @@
                 page.elements.monitor.text(product.configurationDetail.monitor.content);
                 page.elements.graphicCard.text(product.configurationDetail.graphicCard.content);
 
+                page.elements.btnEdit.attr('href', `/products/update/${slug}`)
+
                 let str = App.renderTechSpecTable(product);
                 page.elements.tbTechSpec.append(str);
 
@@ -336,7 +340,6 @@
             page.elements.btnShowTechSpecForm.on('click', () => {
                 page.elements.modalCreateTechSpec.modal('show');
             });
-
         }
 
         $(() => {

@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -34,6 +35,9 @@ public class ProductMedia {
 
     @Column(name = "file_type")
     private String fileType;
+
+    @Column(columnDefinition = "BIGINT(20) DEFAULT 0")
+    private Long ts = new Date().getTime();
 
     @Column(name = "cloud_id")
     private String cloudId;
