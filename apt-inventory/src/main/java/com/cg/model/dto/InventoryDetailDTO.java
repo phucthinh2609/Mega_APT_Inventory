@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class InventoryDetailDTO {
     private String title;
     private String productCode;
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal salePrice;
     private BigDecimal stockInPrice;
     private LocalDate stockInDate;
     private boolean selled;

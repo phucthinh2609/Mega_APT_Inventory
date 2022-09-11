@@ -16,7 +16,8 @@ public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, S
                 "s.companyName, " +
                 "p.totalQuantity, " +
                 "p.totalAmount, " +
-                "e.id " +
+                "e.id, " +
+                "p.status " +
             ") " +
             "FROM PurchaseOrder AS p, Employee AS e, Supplier AS s " +
             "WHERE p.employee.id = e.id " +

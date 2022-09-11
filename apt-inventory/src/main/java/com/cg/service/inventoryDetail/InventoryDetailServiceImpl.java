@@ -1,6 +1,5 @@
 package com.cg.service.inventoryDetail;
 
-import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
 import com.cg.repository.InventoryDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

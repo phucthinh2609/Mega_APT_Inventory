@@ -21,7 +21,7 @@ public class ProductRender {
     private String model;
     private String title;
     private String slug;
-    private BigDecimal price;
+    private BigDecimal salePrice;
     private String description;
     private Map<String, Object> configurationDetail;
     private List<ComputerConfigurationParameter> computerConfigurationParameters;

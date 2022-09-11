@@ -1,5 +1,6 @@
 package com.cg.model.dto;
 
+import com.cg.model.enums.EPurchaseOrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,17 @@ public class PurchaseOrderDTO {
     private int quantity;
     private BigDecimal amount;
     private String employeeCode;
+    private EPurchaseOrderStatus eStatus;
+    private String statusValue;
+
+    public PurchaseOrderDTO(String purchaseOrderId, LocalDate stockInDate, String supplierName, int quantity, BigDecimal amount, String employeeCode, EPurchaseOrderStatus eStatus) {
+        this.purchaseOrderId = purchaseOrderId;
+        this.stockInDate = stockInDate;
+        this.supplierName = supplierName;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.employeeCode = employeeCode;
+        this.eStatus = eStatus;
+        this.statusValue = eStatus.getValue();
+    }
 }

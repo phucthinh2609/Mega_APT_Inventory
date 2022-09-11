@@ -230,7 +230,7 @@ class App {
             str += `
                 <tr>
                     <th scope="row" style="width: 400px;">${value.explanation}</th>
-                    <td id="cpu">${prd.configurationDetail[value.name].content}</td>
+                    <td>${prd.configurationDetail[value.name].content}</td>
                 </tr>
             `;
         })

@@ -17,6 +17,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
     private PurchaseOrderRepository purchaseOrderRepository;
 
     @Override
+    public Optional<PurchaseOrder> findById(String purchaseOrderId) {
+        return purchaseOrderRepository.findById(purchaseOrderId);
+    }
+
+    @Override
     public List<PurchaseOrderDTO> getAllPurchaseOrderDTO() {
         return purchaseOrderRepository.getAllPurchaseOrderDTO();
     }
