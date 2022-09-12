@@ -30,6 +30,9 @@ public class Situation {
 
     private LocalDate date;
 
+    @Column(columnDefinition = "boolean default true")
+    private boolean active;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

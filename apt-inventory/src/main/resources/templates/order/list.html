@@ -11,6 +11,8 @@
     <!-- Main -->
     <th:block th:replace="/layout/head/main :: main"/>
 
+    <link rel="stylesheet" href="/assets/css/tooltip.css">
+
 </head>
 
 <body data-sidebar="dark">
@@ -133,6 +135,8 @@
 <th:block th:replace="/layout/right-bar :: right-bar"/>
 <!-- End right-bar -->
 
+<th:block th:replace="/order/modal-details :: modal-details"/>
+
 <!-- JAVASCRIPT -->
 <th:block th:replace="/layout/script/javascript :: javascript"/>
 <!-- App js -->
@@ -142,7 +146,8 @@
 <script>
     let page = {
         urls: {
-            getAllOrders: App.BASER_URL + "/orders"
+            getAllOrders: App.BASER_URL + "/orders",
+            getAllDetailByOrderId : App.BASER_URL + "/order-detail/"
         },
         elements: {
         },
@@ -165,27 +170,43 @@
         page.elements.btnShowDetail.on('click',function (){
             let orderId = $(this).data("id");
             console.log(orderId);
-            page.elements.modalDetail.modal('show');
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllDetailByOrderId + orderId
+            })
+            .done((data) => {
+                console.log(data);
+                page.elements.modalDetail.modal('show');
+            })
+            .fail((jqXHR) => {
+                console.log("Fail");
+                console.log(jqXHR);
+            })
         })
     }
 
     let orders = [];
 
     page.commands.getAllOrders = () => {
+        let employeeId = 1;
         return $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: page.urls.getAllOrders
+            url: page.urls.getAllOrders + "/" + employeeId
         })
-            .done((data) => {
-                orders = data;
-            })
-            .fail((jqXHR) => {
-                console.log(jqXHR);
-            })
+        .done((data) => {
+            orders = data;
+        })
+        .fail((jqXHR) => {
+            console.log(jqXHR);
+        })
     }
 
     $(() => {

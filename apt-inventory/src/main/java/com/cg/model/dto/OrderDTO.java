@@ -1,15 +1,14 @@
 package com.cg.model.dto;
 
 import com.cg.model.Customer;
+import com.cg.model.LocationDelivery;
 import com.cg.model.Order;
-import com.cg.model.OrderDetail;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Data
 @Getter
@@ -25,6 +24,13 @@ public class OrderDTO implements Validator {
     private CustomerDTO customer;
     private LocationDeliveryDTO locationRegionDelivery;
 
+    public OrderDTO(String id, int quantityTotal, BigDecimal totalAmount, Customer customer, LocationDelivery locationRegionDelivery) {
+        this.id = id;
+        this.quantityTotal = String.valueOf(quantityTotal);
+        this.totalAmount = totalAmount.toString();
+        this.customer = customer.toCustomerDTO();
+        this.locationRegionDelivery = locationRegionDelivery.toLocationDeliveryDTO();
+    }
 
     public Order toOrder(){
         return new Order()
