@@ -214,10 +214,39 @@ class App {
                         </td>
                         ${obj.strValue === "Đang Chờ Xử Lý" ? `<td>
                                                                     <a href="/purchase-orders/update/${obj.order.id}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
-                                                                </td>` : `<td></td>`
+                                                                    <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                                                </td>` : `
+                                                                <td>
+                                                                    <a href="javascript:void(0);" data-id="${obj.order.id}" class="mr-3 text-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-pencil-box-multiple font-size-18"></i></a>
+                                                                    <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                                                </td>`
         }
                     </tr>
+                   `;
+        return str;
+    }
+
+    static renderOrderDetail(obj) {
+        let shortTitle = obj.product.title;
+        let title = shortTitle.substring(0,50);
+        let str = `
+                  <tr>
+                    <td>
+                      <img src="${obj.product.fileUrl}" alt="product-img" title="product-img" class="avatar-md">
+                    </td>
+                    <td>
+                      <div class="myTooltip">
+                        ${title} ...
+                        <span class="myTooltiptext">${obj.product.title}</span>
+                      </div>
+                    </td>
+                    <td>
+                      ${obj.price} VNĐ
+                    </td>
+                    <td>
+                      ${obj.productCode}
+                    </td>
+                  </tr>
                    `;
         return str;
     }

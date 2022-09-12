@@ -137,6 +137,8 @@
 
 <th:block th:replace="/order/modal-details :: modal-details"/>
 
+<th:block th:replace="/order/modal-description :: modal-description"/>
+
 <!-- JAVASCRIPT -->
 <th:block th:replace="/layout/script/javascript :: javascript"/>
 <!-- App js -->
@@ -162,35 +164,65 @@
 
 
     page.elements.modalDetail = $('#modalDetail');
+    page.elements.modalDescription = $('#mdDescription');
 
-    page.elements.tbodOrder = $('#tablePurchaseOrder tbody');
+    page.elements.tbodyOrder = $('#tablePurchaseOrder tbody');
+
+    page.elements.tbodyDetail = $('#tableDetails tbody');
+
+    page.elements.btnCloseModal = $('.closeModal');
+    page.elements.btnSaveDescription = $('#btnCancelOrder');
+
+    page.elements.orderId = $('#orderId');
+    page.elements.customer = $('#customer');
+    page.elements.quantityTotal = $('#quantityTotal');
+    page.elements.totalAmount = $('#totalAmount');
 
     page.commands.showModalDetails = () => {
         page.elements.btnShowDetail = $('#tablePurchaseOrder tbody tr td .showDetail');
         page.elements.btnShowDetail.on('click',function (){
             let orderId = $(this).data("id");
-            console.log(orderId);
-            $.ajax({
-                headers: {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                type: "GET",
-                url: page.urls.getAllDetailByOrderId + orderId
-            })
-            .done((data) => {
-                console.log(data);
+            page.elements.tbodyDetail.html("");
+            page.commands.getAllOrderDetails(orderId).then(() => {
+                $.each(orderDetail, (i, item) => {
+                    let str = App.renderOrderDetail(item);
+                    page.elements.tbodyDetail.append(str);
+                })
+                page.elements.orderId.text(orderDetail[0].order.id);
+                page.elements.customer.text(orderDetail[0].order.customer.fullName);
+                page.elements.quantityTotal.text(orderDetail[0].order.quantityTotal);
+                page.elements.totalAmount.text(orderDetail[0].order.totalAmount + " VNĐ");
                 page.elements.modalDetail.modal('show');
-            })
-            .fail((jqXHR) => {
-                console.log("Fail");
-                console.log(jqXHR);
             })
         })
     }
 
-    let orders = [];
+    page.commands.closeModal = () => {
+        page.elements.btnCloseModal.on('click',() => {
+            page.elements.modalDetail.modal('hide');
+        })
+    }
 
+    let orders = [];
+    let orderDetail = [];
+
+    page.commands.getAllOrderDetails = (orderId) => {
+        console.log(orderId);
+        return $.ajax({
+                        headers: {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: page.urls.getAllDetailByOrderId + orderId
+                    })
+                    .done((data) => {
+                        orderDetail = data;
+                    })
+                    .fail((jqXHR) => {
+                        console.log(jqXHR);
+                    })
+    }
     page.commands.getAllOrders = () => {
         let employeeId = 1;
         return $.ajax({
@@ -209,17 +241,27 @@
         })
     }
 
+    page.commands.showModalDescription = () => {
+        page.elements.btnShowDescription = $('.cancelled');
+        page.elements.btnShowDescription.on('click',function () {
+            let orderId = $(this).data("id");
+            console.log(orderId);
+            page.elements.btnSaveDescription.data("id",orderId);
+            page.elements.modalDescription.modal("show");
+        })
+    }
+
     $(() => {
         page.commands.getAllOrders().then(() => {
             $.each(orders, (i, item) => {
                 let str = App.renderOrders(item);
-                page.elements.tbodOrder.append(str);
+                page.elements.tbodyOrder.append(str);
             })
             page.commands.showModalDetails();
+            page.commands.showModalDescription();
+            page.commands.closeModal();
         })
     })
-
-
 </script>
 
 </body>

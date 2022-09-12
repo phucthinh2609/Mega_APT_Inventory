@@ -20,7 +20,7 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
             "s.order" +
             ") " +
             "FROM Situation AS s " +
-            "WHERE (s.employee.id = :id OR s.employee.id IS NULL) AND s.active IS TRUE AND s.value <> 'COMPLETE' " +
+            "WHERE (s.employee.id = :id OR s.employee.id IS NULL) AND s.active IS TRUE AND (s.value <> 'COMPLETE' AND s.value <> 'CANCELLED') " +
             "ORDER BY s.order.id DESC "
     )
     List<SituationDTO> findAllSituationDTO(String id);

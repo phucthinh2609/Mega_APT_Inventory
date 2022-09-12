@@ -6,90 +6,41 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p class="mb-2">Order Id : <span class="text-primary">#SK2540</span></p>
-          <p class="mb-2">Customer : <span class="text-primary">Trương Văn Phôn</span></p>
-          <p class="mb-4">Delivery Date : <span class="text-primary">2022-09-10</span></p>
+          <p class="mb-2">Order Id : <span class="text-primary" id="orderId"></span></p>
+          <p class="mb-2">Customer : <span class="text-primary" id="customer"></span></p>
           <div class="table-responsive">
-            <table class="table table-centered mb-0 table-nowrap">
+            <table id="tableDetails" class="table table-centered mb-0 table-nowrap">
               <thead class="thead-light">
               <tr>
                 <th>Product</th>
                 <th>Title</th>
                 <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
+                <th>Product Code</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>
-                  <img src="assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
-                </td>
-                <td>
-                  <div class="myTooltip">
-                    Dell Inspiron Core i5-1235U ...
-                    <span class="myTooltiptext">Dell Inspiron Core i5-1235U/ 8GB DDR4/ 512GB SSD/ GeForce MX550/ Silver/ 14 FHD</span>
-                  </div>
-                </td>
-                <td>
-                  $ 12.000.000
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  $ 36.0000.000
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="assets\images\product\img-6.png" alt="product-img" title="product-img" class="avatar-md">
-                </td>
-                <td>
-                  <div class="myTooltip">
-                    Dell Inspiron Core i5-1235U ...
-                    <span class="myTooltiptext">Dell Inspiron Core i5-1235U/ 8GB DDR4/ 512GB SSD/ GeForce MX550/ Silver/ 14 FHD</span>
-                  </div>
-                </td>
-                <td>
-                  $ 12.000.000
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  $ 36.000.000
-                </td>
-              </tr>
+
               </tbody>
               <tfoot>
               <tr>
                 <td colspan="1">
                   <h6>Quantity Total:</h6>
                 </td>
-                <td colspan="3">
-                  1
-                </td>
-              </tr>
-              <tr>
-                <td colspan="1">
-                  <h6>Shipping:</h6>
-                </td>
-                <td colspan="3">
-                  Free
+                <td colspan="3" id="quantityTotal">
+
                 </td>
               </tr>
               <tr>
                 <td colspan="1">
                   <h6>Total Amount:</h6>
                 </td>
-                <td colspan="3">
-                  $ 400
+                <td colspan="3" id="totalAmount">
+
                 </td>
               </tr>
               </tfoot>
@@ -97,7 +48,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
