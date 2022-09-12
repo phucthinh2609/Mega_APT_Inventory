@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -38,21 +39,14 @@ public class ProductDTO implements Serializable {
     @NotBlank(message = "Description is required")
     @Size(max = 50, message = "The length of description must be between 5 and 50 characters")
     private String description;
-
     private String configurationDetail;
-
     private EBussinessStatus businessStatus;
 
     private String blogId;
-
     private String fileName;
-
     private String fileFolder;
-
     private String fileUrl;
-
     private String cloudId;
-
     private String fileProductId;
 
     private List<MultipartFile> files;
@@ -90,8 +84,5 @@ public class ProductDTO implements Serializable {
                 .setCloudId(cloudId)
                 .setFileType(fileType)
                 .setProduct(product);
-    }
-
-    public static class SituationDTO {
     }
 }

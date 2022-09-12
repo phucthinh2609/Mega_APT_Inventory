@@ -152,8 +152,7 @@ class App {
         })
 
         let shortTitle = obj.title;
-        let index = shortTitle.indexOf("/");
-        let title = shortTitle.substring(0,index);
+        let title = shortTitle.substring(0,50);
 
         let str = `
             <tr>

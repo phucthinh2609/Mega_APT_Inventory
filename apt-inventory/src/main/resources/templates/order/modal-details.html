@@ -1,8 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <th:block th:fragment="modal-details">
-  <div id="modalDetail" class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <div id="modalDetail" class="modal  fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
@@ -11,14 +11,15 @@
           </button>
         </div>
         <div class="modal-body">
-          <p class="mb-2">Product id : <span class="text-primary">#SK2540</span></p>
-          <p class="mb-4">Title : <span class="text-primary">Dell Inspiron Core i5-1235U/ 8GB DDR4/ 512GB SSD/ GeForce MX550/ Silver/ 14 FHD</span></p>
-
+          <p class="mb-2">Order Id : <span class="text-primary">#SK2540</span></p>
+          <p class="mb-2">Customer : <span class="text-primary">Trương Văn Phôn</span></p>
+          <p class="mb-4">Delivery Date : <span class="text-primary">2022-09-10</span></p>
           <div class="table-responsive">
             <table class="table table-centered mb-0 table-nowrap">
               <thead class="thead-light">
               <tr>
                 <th>Product</th>
+                <th>Title</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
@@ -28,6 +29,12 @@
               <tr>
                 <td>
                   <img src="assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
+                </td>
+                <td>
+                  <div class="myTooltip">
+                    Dell Inspiron Core i5-1235U ...
+                    <span class="myTooltiptext">Dell Inspiron Core i5-1235U/ 8GB DDR4/ 512GB SSD/ GeForce MX550/ Silver/ 14 FHD</span>
+                  </div>
                 </td>
                 <td>
                   $ 12.000.000
@@ -44,6 +51,12 @@
                   <img src="assets\images\product\img-6.png" alt="product-img" title="product-img" class="avatar-md">
                 </td>
                 <td>
+                  <div class="myTooltip">
+                    Dell Inspiron Core i5-1235U ...
+                    <span class="myTooltiptext">Dell Inspiron Core i5-1235U/ 8GB DDR4/ 512GB SSD/ GeForce MX550/ Silver/ 14 FHD</span>
+                  </div>
+                </td>
+                <td>
                   $ 12.000.000
                 </td>
                 <td>
@@ -57,10 +70,10 @@
               <tfoot>
               <tr>
                 <td colspan="1">
-                  <h6>Sub Total:</h6>
+                  <h6>Quantity Total:</h6>
                 </td>
                 <td colspan="3">
-                  $ 400
+                  1
                 </td>
               </tr>
               <tr>

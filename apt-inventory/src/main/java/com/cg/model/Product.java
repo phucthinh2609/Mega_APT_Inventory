@@ -76,6 +76,7 @@ public class Product {
                 .setModel(model)
                 .setTitle(title)
                 .setSalePrice(salePrice)
-                .setDescription(description);
+                .setDescription(description)
+                .setConfigurationDetail(configurationDetail.toString());
     }
 }

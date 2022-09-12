@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.ProductMediaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,4 +46,17 @@ public class ProductMedia {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    public ProductMediaDTO toProductMediaDTO() {
+        return new ProductMediaDTO()
+                .setId(id)
+                .setCloudId(cloudId)
+                .setFileFolder(fileFolder)
+                .setFileName(fileName)
+                .setFileType(fileType)
+                .setFileUrl(fileUrl)
+                .setProduct(product.toProductDTO());
+    }
+
+
 }
