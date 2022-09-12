@@ -27,7 +27,7 @@ public class OrderDetailDTO implements Validator {
 
     private String id;
 
-    private String quantity;
+    private String productCode;
 
     private String  price;
 
@@ -37,9 +37,9 @@ public class OrderDetailDTO implements Validator {
 
     private OrderDTO order;
 
-    public OrderDetailDTO(String id, int quantity, BigDecimal price, BigDecimal amount, Product product, Order order) {
+    public OrderDetailDTO(String id, String productCode, BigDecimal price, BigDecimal amount, Product product, Order order) {
         this.id = id;
-        this.quantity = String.valueOf(quantity);
+        this.productCode = productCode;
         this.price = price.toString();
         this.amount = amount.toString();
         this.product = product.toProductDTO();
@@ -49,7 +49,7 @@ public class OrderDetailDTO implements Validator {
     public OrderDetail toOrderDetail() {
         return new OrderDetail()
                 .setId(id)
-                .setQuantity(Integer.parseInt(quantity))
+                .setProductCode(productCode)
                 .setPrice(new BigDecimal(price))
                 .setAmount(new BigDecimal(amount))
                 .setProduct(product.toProduct())

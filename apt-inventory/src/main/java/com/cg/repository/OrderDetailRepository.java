@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {
     @Query("SELECT new com.cg.model.dto.OrderDetailDTO (" +
             "o.id, " +
-            "o.quantity, " +
+            "o.productCode, " +
             "o.price," +
             "o.amount," +
             "o.product," +
