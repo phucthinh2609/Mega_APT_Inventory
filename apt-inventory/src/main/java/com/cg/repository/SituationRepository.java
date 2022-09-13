@@ -24,4 +24,6 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
             "ORDER BY s.order.id DESC "
     )
     List<SituationDTO> findAllSituationDTO(String id);
+
+
 }

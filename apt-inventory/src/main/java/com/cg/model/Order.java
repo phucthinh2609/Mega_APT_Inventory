@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -37,6 +38,17 @@ public class Order {
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)
     private LocationDelivery locationRegionDelivery;
+
+    private String description;
+
+    @Column(name = "order_date")
+    private LocalDate orderDate;
+
+    @Column(name = "inventory_delivery_date")
+    private LocalDate inventoryDeliveryDate;
+
+    @Column(name = "delivery_date")
+    private LocalDate deliveryDate;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)

@@ -20,9 +20,8 @@ import java.util.Set;
 @Table(name = "location_deliveries")
 public class LocationDelivery {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "province_id")
     private Long provinceId;
@@ -49,12 +48,12 @@ public class LocationDelivery {
 
     public LocationDeliveryDTO toLocationDeliveryDTO() {
         return new LocationDeliveryDTO()
-                .setId(id)
+                .setId(id.toString())
                 .setProvinceId(provinceId.toString())
                 .setProvinceName(provinceName)
                 .setDistrictId(districtId.toString())
                 .setDistrictName(districtName)
-                .setWardId(id.toString())
+                .setWardId(wardId.toString())
                 .setWardName(wardName)
                 .setAddress(address);
     }

@@ -40,6 +40,7 @@ public class SituationDTO implements Validator {
         this.order = order.toOrderDTO();
     }
 
+
     public Situation toSituation() {
         return new Situation()
                 .setId(id)

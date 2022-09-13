@@ -20,4 +20,5 @@ public class SituationServiceImpl implements SituationService{
     public List<SituationDTO> findAllSituationDTO(String employeeId) {
        return situationRepository.findAllSituationDTO(employeeId);
     }
+
 }

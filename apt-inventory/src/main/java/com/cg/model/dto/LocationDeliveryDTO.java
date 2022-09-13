@@ -30,7 +30,7 @@ public class LocationDeliveryDTO implements Validator {
 
     public LocationDelivery toLocationDelivery() {
         return new LocationDelivery()
-                .setId(id)
+                .setId(Long.parseLong(id))
                 .setProvinceId(Long.parseLong(provinceId))
                 .setProvinceName(provinceName)
                 .setDistrictId(Long.parseLong(districtId))
@@ -39,6 +39,8 @@ public class LocationDeliveryDTO implements Validator {
                 .setWardName(wardName)
                 .setAddress(address);
     }
+
+
 
     @Override
     public boolean supports(Class<?> clazz) {

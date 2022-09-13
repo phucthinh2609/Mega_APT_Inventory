@@ -1,8 +1,10 @@
 package com.cg.controller.api;
 
 import com.cg.model.ProductMedia;
+import com.cg.model.dto.OrderDTO;
 import com.cg.model.dto.ProductRender;
 import com.cg.model.dto.SituationDTO;
+import com.cg.service.order.OrderService;
 import com.cg.service.situation.SituationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,10 @@ import java.util.List;
 @RequestMapping("/api/orders")
 public class OrderAPI {
     @Autowired
-    SituationService situationService;
+    private OrderService orderService;
+
+    @Autowired
+    private SituationService situationService;
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<?> findAll(@PathVariable String employeeId) {
@@ -32,5 +37,16 @@ public class OrderAPI {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<?> getAllOrders() {
+
+            List<OrderDTO> orderDTOS = orderService.getAllOrders();
+            if (orderDTOS == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
+
     }
 }

@@ -14,7 +14,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, String
             "o.id, " +
             "o.productCode, " +
             "o.price," +
-            "o.amount," +
             "o.product," +
             "o.order" +
             ") " +
