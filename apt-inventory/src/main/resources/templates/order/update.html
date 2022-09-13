@@ -8,8 +8,11 @@
   <th:block th:replace="/layout/head/meta :: meta"/>
   <!-- App-favicon -->
   <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
+  <link rel="stylesheet" href="/assets/css/bootstrap/jquery.bootstrap-touchspin.min.css">
   <!-- Main -->
   <th:block th:replace="/layout/head/main :: main"/>
+
+  <link rel="stylesheet" href="/assets/css/tooltip.css">
 
 </head>
 
@@ -60,11 +63,14 @@
             <div class="card">
               <div class="card-body">
                 <div class="table-responsive">
+                  <p class="mb-2">Order id : <span class="text-primary">#OD2540</span></p>
+                  <p class="mb-2">Customer : <span class="text-primary">Trương Văn Phôn</span></p>
+                  <p class="mb-4">Create At : <span class="text-primary">02/02/2022</span></p>
                   <table class="table table-centered mb-0 table-nowrap">
                     <thead class="thead-light">
                     <tr>
                       <th>Product</th>
-                      <th>Product Desc</th>
+                      <th>Title</th>
                       <th>Price</th>
                       <th>Quantity</th>
                       <th colspan="2">Total</th>
@@ -73,22 +79,24 @@
                     <tbody>
                     <tr>
                       <td>
-                        <img src="\assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
+                        <img src="/assets/images/product/img-1.png" alt="product-img" title="product-img" class="avatar-md">
                       </td>
                       <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Half sleeve T-shirt</a></h5>
-                        <p class="mb-0">Color : <span class="font-weight-medium">Maroon</span></p>
-                      </td>
-                      <td>
-                        $ 450
-                      </td>
-                      <td>
-                        <div style="width: 120px;">
-                          <input type="text" value="02" name="demo_vertical">
+                        <div class="myTooltip">
+                          HP Pavilion Intel Core I3-1115G4 ...
+                          <span class="myTooltiptext">HP Pavilion Intel Core I3-1115G4/ 8GB/ SSD 256GB/ Intel Iris Xe Graphics/ Silver/ 14.0</span>
                         </div>
                       </td>
                       <td>
-                        $ 900
+                        $ 12.000.000
+                      </td>
+                      <td>
+                        <div style="width: 120px;">
+                          <div class="input-group  bootstrap-touchspin bootstrap-touchspin-injected"><input type="text" value="02" name="demo_vertical" class="form-control"><span class="input-group-btn-vertical"><button class="btn btn-primary bootstrap-touchspin-up " type="button">+</button><button class="btn btn-primary bootstrap-touchspin-down " type="button">-</button></span></div>
+                        </div>
+                      </td>
+                      <td>
+                        $ 12.000.000
                       </td>
                       <td>
                         <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
@@ -96,114 +104,24 @@
                     </tr>
                     <tr>
                       <td>
-                        <img src="\assets\images\product\img-2.png" alt="product-img" title="product-img" class="avatar-md">
+                        <img src="/assets/images/product/img-2.png" alt="product-img" title="product-img" class="avatar-md">
                       </td>
                       <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Light blue T-shirt</a></h5>
-                        <p class="mb-0">Color : <span class="font-weight-medium">Light blue</span></p>
-                      </td>
-                      <td>
-                        $ 225
-                      </td>
-                      <td>
-                        <div style="width: 120px;">
-                          <input type="text" value="01" name="demo_vertical">
+                        <div class="myTooltip">
+                          HP Pavilion Intel Core I3-1115G4 ...
+                          <span class="myTooltiptext">HP Pavilion Intel Core I3-1115G4/ 8GB/ SSD 256GB/ Intel Iris Xe Graphics/ Silver/ 14.0</span>
                         </div>
                       </td>
                       <td>
-                        $ 225
-                      </td>
-                      <td>
-                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="\assets\images\product\img-3.png" alt="product-img" title="product-img" class="avatar-md">
-                      </td>
-                      <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Black Color T-shirt</a></h5>
-                        <p class="mb-0">Color : <span class="font-weight-medium">Black</span></p>
-                      </td>
-                      <td>
-                        $ 152
+                        $ 12.000.000
                       </td>
                       <td>
                         <div style="width: 120px;">
-                          <input type="text" value="02" name="demo_vertical">
+                          <div class="input-group  bootstrap-touchspin bootstrap-touchspin-injected"><input type="text" value="02" name="demo_vertical" class="form-control"><span class="input-group-btn-vertical"><button class="btn btn-primary bootstrap-touchspin-up " type="button">+</button><button class="btn btn-primary bootstrap-touchspin-down " type="button">-</button></span></div>
                         </div>
                       </td>
                       <td>
-                        $ 304
-                      </td>
-                      <td>
-                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="\assets\images\product\img-4.png" alt="product-img" title="product-img" class="avatar-md">
-                      </td>
-                      <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Hoodie (Blue)</a></h5>
-                        <p class="mb-0">Color : <span class="font-weight-medium">Blue</span></p>
-                      </td>
-                      <td>
-                        $ 145
-                      </td>
-                      <td>
-                        <div style="width: 120px;">
-                          <input type="text" value="02" name="demo_vertical">
-                        </div>
-                      </td>
-                      <td>
-                        $ 290
-                      </td>
-                      <td>
-                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="\assets\images\product\img-5.png" alt="product-img" title="product-img" class="avatar-md">
-                      </td>
-                      <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Half sleeve T-Shirt</a></h5>
-                        <p class="mb-0">Color : <span class="font-weight-medium">Light orange</span></p>
-                      </td>
-                      <td>
-                        $ 138
-                      </td>
-                      <td>
-                        <div style="width: 120px;">
-                          <input type="text" value="01" name="demo_vertical">
-                        </div>
-                      </td>
-                      <td>
-                        $ 138
-                      </td>
-                      <td>
-                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="\assets\images\product\img-6.png" alt="product-img" title="product-img" class="avatar-md">
-                      </td>
-                      <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Green color T-shirt</a></h5>
-                        <p class="mb-0">Color : <span class="font-weight-medium">Green</span></p>
-                      </td>
-                      <td>
-                        $ 152
-                      </td>
-                      <td>
-                        <div style="width: 120px;">
-                          <input type="text" value="02" name="demo_vertical">
-                        </div>
-                      </td>
-                      <td>
-                        $ 304
+                        $ 12.000.000
                       </td>
                       <td>
                         <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
@@ -214,13 +132,12 @@
                 </div>
                 <div class="row mt-4">
                   <div class="col-sm-6">
-                    <a href="ecommerce-products.html" class="btn btn-secondary">
-                      <i class="mdi mdi-arrow-left mr-1"></i> Continue Shopping </a>
+                    <a href="/purchase-orders" class="btn btn-secondary">
+                      <i class="mdi mdi-arrow-left mr-1"></i> Back to list </a>
                   </div> <!-- end col -->
                   <div class="col-sm-6">
                     <div class="text-sm-right mt-2 mt-sm-0">
-                      <a href="ecommerce-checkout.html" class="btn btn-success">
-                        <i class="mdi mdi-cart-arrow-right mr-1"></i> Checkout </a>
+                      <a href="ecommerce-checkout.html" class="btn btn-success">Update</a>
                     </div>
                   </div> <!-- end col -->
                 </div> <!-- end row-->
@@ -231,44 +148,40 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-4">
-                    <h4 class="card-title mb-3">Suppplier</h4>
-                  </div>
-                  <div class="col-sm-8 align-end">
-                    <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i> Add New Supplier</button>
+                  <div class="col-lg-12">
+                    <h4 class="card-title mb-3">Delivery Info</h4>
+                    <div class="form-group">
+                      <label class="control-label">Province</label>
+                      <select class="form-control">
+                        <option value="CT">Thừa Thiên Huế</option>
+                        <option value="DE">Hà Nội</option>
+                        <option value="FL">Hồ Chí Minh</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">District</label>
+                      <select class="form-control">
+                        <option value="CT">Huyện Phú Vang</option>
+                        <option value="DE">Huyện Phú Lộc</option>
+                        <option value="FL">Huyện Phong Điền</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Ward</label>
+                      <select class="form-control">
+                        <option value="CT">Xã Phú Diên</option>
+                        <option value="DE">Xã Vinh Xuân</option>
+                        <option value="FL">Xã Vinh Thanh</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Delivery Date</label>
+                      <input class="form-control" type="date" value="2019-08-19" id="example-date-input">
+                    </div>
                   </div>
                 </div>
 
-                <div class="row">
-                  <select class="form-control">
-                    <option>Select</option>
-                    <option>Shopee</option>
-                    <option>Tiki</option>
-                  </select>
-                </div>
 
-                <div class="table-responsive">
-                  <table class="table mb-0">
-                    <tbody>
-                    <tr>
-                      <td>Address :</td>
-                      <td>28 NTP</td>
-                    </tr>
-                    <tr>
-                      <td>Ward : </td>
-                      <td>Phường Phú Nhuận</td>
-                    </tr>
-                    <tr>
-                      <td>District :</td>
-                      <td>Thành phố Huế</td>
-                    </tr>
-                    <tr>
-                      <td>Province : </td>
-                      <td>Thừa Thiên Huế</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
                 <!-- end table-responsive -->
               </div>
             </div>
@@ -281,24 +194,20 @@
                   <table class="table mb-0">
                     <tbody>
                     <tr>
-                      <td>Grand Total :</td>
-                      <td>$ 1,857</td>
+                      <td>Total Amount :</td>
+                      <td>$ 50.000.000</td>
                     </tr>
                     <tr>
-                      <td>Discount : </td>
-                      <td>- $ 157</td>
+                      <td>Quantity Total : </td>
+                      <td>5</td>
                     </tr>
                     <tr>
                       <td>Shipping Charge :</td>
-                      <td>$ 25</td>
-                    </tr>
-                    <tr>
-                      <td>Estimated Tax : </td>
-                      <td>$ 19.22</td>
+                      <td>$ 0</td>
                     </tr>
                     <tr>
                       <th>Total :</th>
-                      <th>$ 1744.22</th>
+                      <th>$ 50.000.000</th>
                     </tr>
                     </tbody>
                   </table>

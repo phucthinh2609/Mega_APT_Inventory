@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.EmployeeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,5 +47,17 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
     private Set<Comment> comments;
+
+    public EmployeeDTO toEmployeeDTO() {
+        return new EmployeeDTO()
+                .setId(id)
+                .setEmail(email)
+                .setPhone(phone)
+                .setPassword(password)
+                .setFullName(fullName)
+                .setLocationRegion(locationRegion.toLocationRegionDTO())
+                .setRole(role.toRoleDTO())
+                .setUserMedia(userMedia.toUserMediaDTO());
+    }
 
 }

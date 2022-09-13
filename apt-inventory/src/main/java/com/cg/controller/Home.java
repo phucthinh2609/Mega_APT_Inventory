@@ -90,16 +90,30 @@ public class Home {
     }
 
     @GetMapping("/orders/create")
-    public ModelAndView showCreatePurchaseOrderPage() {
+    public ModelAndView showCreateOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("order/create");
         return modelAndView;
     }
 
     @GetMapping("/orders/update")
-    public ModelAndView showUpdatePurchaseOrderPage() {
+    public ModelAndView showUpdateOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("order/update");
+        return modelAndView;
+    }
+
+    @GetMapping("/orders/adminList")
+    public ModelAndView showAdminListPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("order/adminList");
+        return modelAndView;
+    }
+
+    @GetMapping("/purchase-orders/invoice")
+    public ModelAndView showPurchaseOrderInvoicePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("purchase-order/invoice");
         return modelAndView;
     }
 

@@ -5,6 +5,7 @@ import com.cg.model.Product;
 import com.cg.model.PurchaseOrder;
 import com.cg.model.dto.InventoryDetailDTO;
 import com.cg.model.dto.PurchaseOrderDTO;
+import com.cg.model.dto.PurchaseOrderDetailDTO;
 import com.cg.service.purchaseOrder.PurchaseOrderService;
 import com.cg.service.purchaseOrderDetail.PurchaseOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,13 @@ public class PurchaseOrderAPI {
         return new ResponseEntity<>(purchaseOrderDTOList, HttpStatus.OK);
     }
 
-//    @GetMapping("/details/{purchaseOrderId}")
-//    public ResponseEntity<?> getProductDetail(@PathVariable String purchaseOrderId) {
-//        Optional<PurchaseOrder> optionalPurchaseOrder = purchaseOrderService.findById(purchaseOrderId);
-//        if (optionalProduct.isPresent()) {
-//            List<InventoryDetailDTO> inventories = inventoryDetailService.getProductDetail(productId);
-//            return new ResponseEntity<>(inventories, HttpStatus.OK);
-//        } else
-//            throw new ResourceNotFoundException("Invalid Product ID");
-//    }
+    @GetMapping("/details/{purchaseOrderId}")
+    public ResponseEntity<?> getPurchaseOrderDetails(@PathVariable String purchaseOrderId) {
+        Optional<PurchaseOrder> optionalPurchaseOrder = purchaseOrderService.findById(purchaseOrderId);
+        if (optionalPurchaseOrder.isPresent()) {
+            List<PurchaseOrderDetailDTO> purchaseOrderDetails = purchaseOrderDetailService.getPurchaseOrderDetails(purchaseOrderId);
+            return new ResponseEntity<>(purchaseOrderDetails, HttpStatus.OK);
+        } else
+            throw new ResourceNotFoundException("Invalid Purchase Order ID");
+    }
 }
