@@ -33,10 +33,6 @@ public class ProductDTO implements Serializable {
 
     private String title;
     private String slug;
-<<<<<<< HEAD
-=======
-
->>>>>>> 12603202702dab06e7d4ea3e6fdcf0794fd3e1c3
     private BigDecimal salePrice;
 
     @NotBlank(message = "Description is required")
@@ -72,7 +68,7 @@ public class ProductDTO implements Serializable {
                 .setModel(model)
                 .setTitle(title)
                 .setSlug(slug)
-                .setPrice(salePrice)
+                .setSalePrice(salePrice)
                 .setDescription(description)
                 .setConfigurationDetail(JsonToMapConverter.convertToDatabaseColumn(configurationDetail))
                 .setBusinessStatus(businessStatus);

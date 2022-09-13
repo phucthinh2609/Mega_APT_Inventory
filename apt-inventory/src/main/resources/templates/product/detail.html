@@ -79,14 +79,14 @@
                                                     <h4 class="mt-1 mb-3" id="title"></h4>
 
                                                     <h5 class="mb-4">Sale Price : <b id="salePrice"></b></h5>
-                                                    <span class="badge badge-pill badge-soft-success font-size-12 mb-4" id="businessStatus"></span>
+                                                    <span class="badge badge-pill font-size-12 mb-4" id="businessStatus"></span>
                                                     <p class="text-muted mb-4">Description: <span id="description"></span></p>
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <div>
                                                                 <p class="text-muted"><i class="bx bxs-package font-size-16 align-middle text-primary mr-1"></i> <b>CPU :</b> <span id="processor"></span></p>
                                                                 <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary mr-1"></i> <b>RAM :</b> <span id="memory"></span></p>
-                                                                <p class="text-muted"><i class="bx bx-memory-card font-size-16 align-middle text-primary mr-1"></i> <b>Storage :</b> <span id="storage"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-memory-card font-size-16 align-middle text-primary mr-1"></i> <b>Memory :</b> <span id="storage"></span></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -282,8 +282,8 @@
         page.elements.salePrice = $('#salePrice')
 
         page.elements.processor = $('#processor');
-        page.elements.storage = $('#storage');
         page.elements.memory = $('#memory');
+        page.elements.storage = $('#storage');
         page.elements.monitor = $('#monitor');
         page.elements.graphicCard = $('#graphicCard');
         page.elements.color = $('#color');
@@ -330,11 +330,27 @@
                 page.elements.title.text(product.title);
                 page.elements.description.text(product.description);
                 page.elements.businessStatus.text(product.businessStatus);
+
+                switch (product.businessStatus) {
+                    case "Mới Ra Mắt":
+                        page.elements.businessStatus.addClass('badge-soft-primary');
+                        break;
+                    case "Hàng Mới Về":
+                        page.elements.businessStatus.addClass('badge-soft-success');
+                        break;
+                    case "Tạm Hết Hàng":
+                        page.elements.businessStatus.addClass('badge-soft-warning');
+                        break;
+                    case "Ngừng Kinh Doanh":
+                        page.elements.businessStatus.addClass('badge-soft-danger');
+                        break;
+                }
+
                 page.elements.salePrice.text(product.salePrice);
 
-                page.elements.processcer.text(configurationDetail.processcer.content);
-                page.elements.capacity.text(configurationDetail.capacity.content);
+                page.elements.processor.text(configurationDetail.processor.content);
                 page.elements.memory.text(configurationDetail.memory.content);
+                page.elements.storage.text(configurationDetail.storage.content);
                 page.elements.monitor.text(configurationDetail.monitor.content);
                 page.elements.graphicCard.text(configurationDetail.graphicCard.content);
                 page.elements.color.text(configurationDetail.color.content);
