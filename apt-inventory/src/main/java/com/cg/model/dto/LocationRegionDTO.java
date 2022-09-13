@@ -26,6 +26,7 @@ public class LocationRegionDTO implements Validator {
     private String districtName;
     private String wardId;
     private String wardName;
+
     public LocationRegion toLocationRegion() {
         return new LocationRegion()
                 .setId(Long.parseLong(id))

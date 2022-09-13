@@ -1,6 +1,8 @@
 class App {
     static DOMAIN = location.origin;
     static BASER_URL = this.DOMAIN + "/api";
+    static GET_PROVINCES = "https://vapi.vnappmob.com/api/province";
+
 
     static ERROR_400 = "Thao tác không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Access Denied! Invalid credentials.";

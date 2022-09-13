@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "purchase_orders")
@@ -26,7 +27,7 @@ public class PurchaseOrder {
     private int totalQuantity;
 
     @Column(name = "stock_in_date")
-    private LocalDate stockInDate;
+    private LocalDateTime stockInDate;
 
     @Enumerated(EnumType.STRING)
     private EPurchaseOrderStatus status;

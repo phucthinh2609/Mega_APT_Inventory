@@ -1,9 +1,11 @@
 package com.cg.model.dto;
 
+import com.cg.model.Product;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Getter
@@ -11,9 +13,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseOrderDetailDTO {
-    LocalDate stockInDate;
+    LocalDateTime stockInDate;
     String productTitle;
     BigDecimal stockInPrice;
     int quantity;
     BigDecimal amount;
+
+
 }
