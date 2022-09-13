@@ -11,6 +11,8 @@
     <!-- Main -->
     <th:block th:replace="/layout/head/main :: main"/>
 
+    <link rel="stylesheet" href="/assets/css/tooltip.css">
+
 </head>
 
 <body data-sidebar="dark">
@@ -57,16 +59,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-2">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-10">
                                         <div class="search-box mr-2 mb-2 d-inline-block">
                                             <div class="position-relative">
                                                 <span>Tên sản phẩm: </span>
                                                 <input type="search" class="form-control" placeholder="Nhập tên sản phẩm..." id="keySearch">
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
                                         <div class="search-box mr-2 mb-2 d-inline-block">
                                             <div class="position-relative">
                                                 <span>Từ ngày: </span>
@@ -214,17 +213,27 @@
         let groupAmount = 0;
         let groupPercent = 0;
         $.each(details, (index, value) => {
+            let shortTitle;
+            if (value.title.length > 50)
+                shortTitle = value.title.substring(0,50);
+            else
+                shortTitle = value.title;
             let str = `
                             <tr>
                                 <td>
                                     <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
                                 </td>
                                 <td>${value.stockInDate}</td>
-                                <td>${value.title}</td>
+                                <td>
+                                   <div class="myTooltip">
+                                      ${shortTitle} ...
+                                      <span class="myTooltiptext">${value.title}</span>
+                                    </div>
+                                </td>
                                 <td>${value.stockInPrice}</td>
                                 <td>${value.quantity}</td>
                                 <td>${value.stockInPrice * value.quantity}</td>
-                                <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                                <td>${(value.stockInPrice * value.quantity * 100 / totalAmount).toFixed(2) + '%'}</td>
                             </tr>
                         `;
             tbsBody.append(str);
@@ -237,7 +246,7 @@
                 <td colSpan="4">TỔNG</td>
                 <td>${groupQuantity}</td>
                 <td>${groupAmount}</td>
-                <td>${groupPercent}</td>
+                <td>${(groupPercent * 100).toFixed(2) + '%'}</td>
             `;
         tbsFoot.append(footStr);
     }

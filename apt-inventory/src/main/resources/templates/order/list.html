@@ -1,17 +1,17 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Purchase Order List Page</title>
+    <title>Home Page</title>
 
     <!-- Meta -->
     <th:block th:replace="/layout/head/meta :: meta"/>
     <!-- App-favicon -->
     <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
     <!-- Main -->
-    <link rel="stylesheet" href="/assets/css/bootstrap/jquery.bootstrap-touchspin.min.css">
-
     <th:block th:replace="/layout/head/main :: main"/>
+
+    <link rel="stylesheet" href="/assets/css/tooltip.css">
 
 </head>
 
@@ -96,59 +96,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body font-weight-bold">#SK2540</a> </td>
-                                            <td>12.000.000 VNĐ</td>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>Trương Văn Phôn</td>
-                                            <td>
-                                                <span class="badge badge-pill badge-soft-warning font-size-12">Đang chờ xử lý</span>
-                                            </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail">View Details</a>
-                                            </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded">Change</a>
-                                            </td>
-                                            <td>
-                                                <a href="/purchase-orders/update" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body font-weight-bold">#SK2540</a> </td>
-                                            <td>12.000.000 VNĐ</td>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>Trương Văn Phôn</td>
-                                            <td>
-                                                <span class="badge badge-pill badge-soft-info font-size-12">Đang giao hàng</span>
-                                            </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail">View Details</a>
-                                            </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded">Change</a>
-                                            </td>
-                                            <td>
 
-                                            </td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -175,11 +123,11 @@
                 </div>
                 <!-- end row -->
             </div>
+
             <!-- container-fluid -->
         </div>
     </div>
     <!-- End Page-content -->
-    <th:block th:replace="/purchase-order/modal-details :: modal-details"/>
 </div>
 <!-- END layout-wrapper -->
 
@@ -187,15 +135,19 @@
 <th:block th:replace="/layout/right-bar :: right-bar"/>
 <!-- End right-bar -->
 
+<th:block th:replace="/order/modal-details :: modal-details"/>
+
 <!-- JAVASCRIPT -->
 <th:block th:replace="/layout/script/javascript :: javascript"/>
 <!-- App js -->
 <th:block th:replace="/layout/script/app-js :: app-js"/>
 
+
 <script>
     let page = {
         urls: {
-            getAllProduct: App.BASER_URL + "/products"
+            getAllOrders: App.BASER_URL + "/orders",
+            getAllDetailByOrderId : App.BASER_URL + "/order-detail/"
         },
         elements: {
         },
@@ -209,22 +161,66 @@
     }
 
 
-    page.elements.modalDetail= $('#modalDetail');
+    page.elements.modalDetail = $('#modalDetail');
 
-    page.elements.btnShowDetail= $('#tablePurchaseOrder tbody tr td .showDetail');
+    page.elements.tbodOrder = $('#tablePurchaseOrder tbody');
 
-    page.elements.btnShowDetail.on('click',() => {
-        page.elements.modalDetail.modal('show');
+    page.commands.showModalDetails = () => {
+        page.elements.btnShowDetail = $('#tablePurchaseOrder tbody tr td .showDetail');
+        page.elements.btnShowDetail.on('click',function (){
+            let orderId = $(this).data("id");
+            console.log(orderId);
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: page.urls.getAllDetailByOrderId + orderId
+            })
+            .done((data) => {
+                console.log(data);
+                page.elements.modalDetail.modal('show');
+            })
+            .fail((jqXHR) => {
+                console.log("Fail");
+                console.log(jqXHR);
+            })
+        })
+    }
+
+    let orders = [];
+
+    page.commands.getAllOrders = () => {
+        let employeeId = 1;
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllOrders + "/" + employeeId
+        })
+        .done((data) => {
+            orders = data;
+        })
+        .fail((jqXHR) => {
+            console.log(jqXHR);
+        })
+    }
+
+    $(() => {
+        page.commands.getAllOrders().then(() => {
+            $.each(orders, (i, item) => {
+                let str = App.renderOrders(item);
+                page.elements.tbodOrder.append(str);
+            })
+            page.commands.showModalDetails();
+        })
     })
 
 
 </script>
 
-
-
-
-
-
 </body>
-
 </html>

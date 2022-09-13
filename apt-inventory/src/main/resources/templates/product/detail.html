@@ -84,14 +84,14 @@
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <div>
-                                                                <p class="text-muted"><i class="bx bxs-package font-size-16 align-middle text-primary mr-1"></i> <b>CPU :</b> <span id="processcer"></span></p>
-                                                                <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary mr-1"></i> <b>RAM :</b> <span id="capacity"></span></p>
-                                                                <p class="text-muted"><i class="bx bx-memory-card font-size-16 align-middle text-primary mr-1"></i> <b>Memory :</b> <span id="memory"></span></p>
+                                                                <p class="text-muted"><i class="bx bxs-package font-size-16 align-middle text-primary mr-1"></i> <b>CPU :</b> <span id="processor"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary mr-1"></i> <b>RAM :</b> <span id="memory"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-memory-card font-size-16 align-middle text-primary mr-1"></i> <b>Storage :</b> <span id="storage"></span></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div>
-                                                                <p class="text-muted"><i class="bx bx-card font-size-16 align-middle text-primary mr-1"></i> <b>Screen size :</b> <span id="monitor"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-card font-size-16 align-middle text-primary mr-1"></i> <b>Monitor :</b> <span id="monitor"></span></p>
                                                                 <p class="text-muted"><i class="bx bx-wallet-alt font-size-16 align-middle text-primary mr-1"></i> <b>Graphic card :</b> <span id="graphicCard"></span></p>
                                                                 <p class="text-muted"><i class="bx bx-palette font-size-16 align-middle text-primary mr-1"></i><b>Color :</b> <span id="color"></span></p>
                                                             </div>
@@ -269,7 +269,7 @@
 
         page.elements.btnEdit = $('#btnEdit')
 
-        page.elements.tbTechSpec = $('#tbTechSpec');
+        page.elements.tbTechSpec = $('#tbTechSpec tbody');
 
         page.elements.pillImage = $('#v-pills-tab');
         page.elements.mainImage = $('#v-pills-tabContent');
@@ -281,8 +281,8 @@
         page.elements.businessStatus = $('#businessStatus');
         page.elements.salePrice = $('#salePrice')
 
-        page.elements.processcer = $('#processcer');
-        page.elements.capacity = $('#capacity');
+        page.elements.processor = $('#processor');
+        page.elements.storage = $('#storage');
         page.elements.memory = $('#memory');
         page.elements.monitor = $('#monitor');
         page.elements.graphicCard = $('#graphicCard');
@@ -304,14 +304,11 @@
                 url: page.urls.getProductBySlug + slug,
             })
             .done((data) => {
-                product = data[0];
-
+                console.log(data)
                 product = data[0];
                 configurationDetail = product.configurationDetail;
                 configurationParams = product.computerConfigurationParameters;
                 computerConfigurationParameters = product.computerConfigurationParameters;
-
-
             })
             .fail((jqxHR) => {
                 // $.each(jqxHR.responseJSON, (key, item) => {

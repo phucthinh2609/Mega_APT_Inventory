@@ -25,13 +25,11 @@ public class OrderDetail {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private int quantity;
+    private String productCode;
 
     @Digits(integer = 12, fraction = 0)
     private BigDecimal price;
 
-    @Digits(integer = 12, fraction = 0)
-    private BigDecimal amount;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

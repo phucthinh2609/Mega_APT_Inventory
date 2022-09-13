@@ -36,9 +36,9 @@ public class InventoryDetail {
     @Digits(integer = 12, fraction = 0)
     private BigDecimal stockInPrice;
 
-    @Column(name = "purchase_order_price")
+    @Column(name = "sale_price")
     @Digits(integer = 12, fraction = 0)
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal salePrice;
 
     private boolean selled;
 

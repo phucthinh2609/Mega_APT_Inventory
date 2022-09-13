@@ -152,8 +152,7 @@ class App {
         })
 
         let shortTitle = obj.title;
-        let index = shortTitle.indexOf("/");
-        let title = shortTitle.substring(0,index);
+        let title = shortTitle.substring(0,50);
 
         let str = `
             <tr>
@@ -189,6 +188,40 @@ class App {
         return str;
     }
 
+    static renderOrders(obj) {
+        let str = `
+                    <tr>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="input_${obj.order.id}">
+                                <label class="custom-control-label" for="input_${obj.order.id}">&nbsp;</label>
+                            </div>
+                        </td>
+                        <td><a href="javascript: void(0);" class="text-body font-weight-bold">#${obj.order.id}</a> </td>
+                        <td>${obj.order.totalAmount} VNĐ</td>
+                        <td>
+                            ${obj.order.quantityTotal}
+                        </td>
+                        <td>${obj.order.customer.fullName}</td>
+                        <td>
+                            ${obj.strValue === "Đang Chờ Xử Lý" ? `<span class="badge badge-pill badge-soft-warning font-size-12">${obj.strValue}</span>` : `<span class="badge badge-pill badge-soft-info font-size-12">${obj.strValue}</span>`}
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail" data-id="${obj.order.id}" >View Details</a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded change" data-id="${obj.order.id}">Change</a>
+                        </td>
+                        ${obj.strValue === "Đang Chờ Xử Lý" ? `<td>
+                                                                    <a href="/purchase-orders/update/${obj.order.id}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                                                </td>` : `<td></td>`
+        }
+                    </tr>
+                   `;
+        return str;
+    }
+
     static renderTechSpecTable(prd) {
         let str = "";
 
@@ -196,7 +229,7 @@ class App {
             str += `
                 <tr>
                     <th scope="row" style="width: 400px;">${value.explanation}</th>
-                    <td id="cpu">${prd.configurationDetail[value.name].content}</td>
+                    <td>${prd.configurationDetail[value.name].content}</td>
                 </tr>
             `;
         })
