@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
 @Accessors(chain = true)
 public class LocationRegionDTO implements Validator {
     private String id;
+
+    @NotBlank(message = "Address is required")
     private String address;
     private String provinceId;
     private String provinceName;
