@@ -156,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
 
         productDTO.setTitle(title);
         productDTO.setSlug(slug);
-        productDTO.setBusinessStatus(EBussinessStatus.NEW_RELEASES);
+        productDTO.setBusinessStatus(EBussinessStatus.valueOf(productDTO.getBusinessStatus().name()));
 
         Product product = productRepository.save(productDTO.toProduct());
 
