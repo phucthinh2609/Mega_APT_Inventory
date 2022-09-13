@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Getter
@@ -27,9 +27,9 @@ public class OrderDTO implements Validator {
     private String customerName;
     private LocationDeliveryDTO locationRegionDelivery;
 
-    private LocalDate orderDate;
-    private LocalDate inventoryDeliveryDate;
-    private LocalDate deliveryDate;
+    private LocalDateTime orderDate;
+    private LocalDateTime inventoryDeliveryDate;
+    private LocalDateTime deliveryDate;
     private String description;
     private String situationValue;
 
@@ -41,7 +41,7 @@ public class OrderDTO implements Validator {
         this.locationRegionDelivery = locationRegionDelivery.toLocationDeliveryDTO();
     }
 
-    public OrderDTO(String id, String customerName, LocationDelivery locationRegionDelivery,LocalDate orderDate, LocalDate inventoryDeliveryDate, LocalDate deliveryDate, int quantityTotal, BigDecimal totalAmount, String description, ESituationValue value) {
+    public OrderDTO(String id, String customerName, LocationDelivery locationRegionDelivery, LocalDateTime orderDate, LocalDateTime inventoryDeliveryDate, LocalDateTime deliveryDate, int quantityTotal, BigDecimal totalAmount, String description, ESituationValue value) {
         this.id = id;
         this.customerName = customerName;
         this.locationRegionDelivery = locationRegionDelivery.toLocationDeliveryDTO();

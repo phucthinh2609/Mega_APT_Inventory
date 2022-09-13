@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -28,6 +29,15 @@ public class Order {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @Column(name = "order_date")
+    private LocalDateTime orderDate;
+
+    @Column(name = "inventory_delivery_date")
+    private LocalDateTime inventoryDeliveryDate;
+
+    @Column(name = "delivery_date")
+    private LocalDateTime deliveryDate;
+
     @Digits(integer = 15, fraction = 0)
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
@@ -37,26 +47,9 @@ public class Order {
 
     private String description;
 
-    @Column(name = "inventory_delivery_date")
-    private LocalDate inventoryDeliveryDate;
-
-    @Column(name = "delivery_date")
-    private LocalDate deliveryDate;
-
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)
     private LocationDelivery locationRegionDelivery;
-
-    private String description;
-
-    @Column(name = "order_date")
-    private LocalDate orderDate;
-
-    @Column(name = "inventory_delivery_date")
-    private LocalDate inventoryDeliveryDate;
-
-    @Column(name = "delivery_date")
-    private LocalDate deliveryDate;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
