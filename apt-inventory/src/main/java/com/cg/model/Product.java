@@ -74,7 +74,7 @@ public class Product {
                 .setBrand(brand)
                 .setModel(model)
                 .setTitle(title)
-                .setPrice(price)
+                .setSalePrice(price)
                 .setDescription(description);
     }
 }

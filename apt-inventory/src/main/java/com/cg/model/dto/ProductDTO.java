@@ -32,7 +32,7 @@ public class ProductDTO implements Serializable {
 
     private String title;
     private String slug;
-    private BigDecimal price;
+    private BigDecimal salePrice;
 
     @NotBlank(message = "Description is required")
     @Size(max = 50, message = "The length of description must be between 5 and 50 characters")
@@ -63,7 +63,7 @@ public class ProductDTO implements Serializable {
     public ProductDTO(String id, String title, BigDecimal price, String description) {
         this.id = id;
         this.title = title;
-        this.price = price;
+        this.salePrice = price;
         this.description = description;
     }
 
@@ -74,7 +74,7 @@ public class ProductDTO implements Serializable {
                 .setModel(model)
                 .setTitle(title)
                 .setSlug(slug)
-                .setPrice(price)
+                .setPrice(salePrice)
                 .setDescription(description)
                 .setConfigurationDetail(JsonToMapConverter.convertToDatabaseColumn(configurationDetail))
                 .setBusinessStatus(businessStatus);
