@@ -35,6 +35,14 @@ public class Order {
     @Column(name = "quantity_total")
     private int quantityTotal;
 
+    private String description;
+
+    @Column(name = "inventory_delivery_date")
+    private LocalDate inventoryDeliveryDate;
+
+    @Column(name = "delivery_date")
+    private LocalDate deliveryDate;
+
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)
     private LocationDelivery locationRegionDelivery;
