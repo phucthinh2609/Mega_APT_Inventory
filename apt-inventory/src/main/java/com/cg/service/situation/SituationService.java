@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SituationService {
     List<SituationDTO> findAllSituationDTO(String employeeId);
+    List<SituationDTO> getOrderHistory(String orderId);
+
 }

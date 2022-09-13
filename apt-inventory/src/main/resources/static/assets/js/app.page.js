@@ -85,6 +85,10 @@ class App {
 
     }
 
+    static formatNumber(x) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(x)
+    }
+
     // static formatNumber() {
     //     $(".num-space").number(true, 0, ',', ' ');
     //     $(".num-point").number(true, 0, ',', '.');
@@ -109,8 +113,6 @@ class App {
     //     $('[data-toggle="tooltip"]').tooltip();
     // }
 
-
-    renderInputTechSpecForm
 
     static renderInputTechSpecForm(obj) {
         let str = `

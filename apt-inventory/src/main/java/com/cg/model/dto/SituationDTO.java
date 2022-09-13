@@ -1,6 +1,7 @@
 package com.cg.model.dto;
 
 import com.cg.model.Employee;
+import com.cg.model.LocationDelivery;
 import com.cg.model.Order;
 import com.cg.model.Situation;
 import com.cg.model.enums.ESituationValue;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Getter
@@ -28,16 +30,30 @@ public class SituationDTO implements Validator {
     private ESituationValue value;
 
     private String strValue;
-    private LocalDate date;
+    private LocalDateTime date;
 
     private OrderDTO order;
 
     private EmployeeDTO employee;
 
+    private String employeeId;
+
+    private String description;
+
+    private LocationDeliveryDTO locationDeliveryDTO;
+
+
     public SituationDTO(String id, ESituationValue value, Order order) {
         this.id = id;
         this.strValue = value.getValue();
         this.order = order.toOrderDTO();
+    }
+
+    public SituationDTO(LocalDateTime date, ESituationValue value, String employeeId, String description) {
+        this.date = date;
+        this.strValue = value.getValue();
+        this.employeeId = employeeId;
+        this.description = description;
     }
 
 

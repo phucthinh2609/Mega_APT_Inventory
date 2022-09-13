@@ -45,8 +45,6 @@ public class Order {
     @Column(name = "quantity_total")
     private int quantityTotal;
 
-    private String description;
-
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)
     private LocationDelivery locationRegionDelivery;

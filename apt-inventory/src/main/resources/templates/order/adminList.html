@@ -81,8 +81,6 @@
                       <th>Mã Đơn</th>
                       <th>Khách Hàng</th>
                       <th>Ngày Tạo Đơn</th>
-                      <th>Ngày Xuất Kho</th>
-                      <th>Ngày Giao Hàng</th>
                       <th>Số Lượng</th>
                       <th>Thành Tiền</th>
                       <th>Trạng Thái</th>
@@ -122,6 +120,43 @@
     </div>
   </div>
   <!-- End Page-content -->
+
+  <!-- Modal -->
+  <div id="modalOrderHistory" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lịch Sử Đơn Hàng</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2">Mã Đơn Hàng: <span id="orderId" class="text-primary"></span></p>
+          <div class="table-responsive">
+            <table id="tbsOrderHistory" class="table table-centered table-nowrap">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ngày Cập Nhật</th>
+                <th scope="col">Trạng Thái</th>
+                <th scope="col">Nhân Viên Xử Lý</th>
+                <th scope="col">Ghi Chú</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+              <tfoot>
+
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- END layout-wrapper -->
 
@@ -138,7 +173,7 @@
   let page = {
     urls: {
       getAllOrders: App.BASER_URL + "/orders/admin",
-      // getAllDetailByOrderId : App.BASER_URL + "/order-detail/"
+      getOrderHistory : App.BASER_URL + "/orders/admin/history/"
     },
     elements: {
     },
@@ -156,29 +191,47 @@
 
   page.elements.tbsOrder = $('#tbsOrder tbody');
 
-  // page.commands.showModalDetails = () => {
-  //   page.elements.btnShowDetail = $('#tablePurchaseOrder tbody tr td .showDetail');
-  //   page.elements.btnShowDetail.on('click',function (){
-  //     let orderId = $(this).data("id");
-  //     console.log(orderId);
-  //     $.ajax({
-  //       headers: {
-  //         "accept": "application/json",
-  //         "content-type": "application/json"
-  //       },
-  //       type: "GET",
-  //       url: page.urls.getAllDetailByOrderId + orderId
-  //     })
-  //             .done((data) => {
-  //               console.log(data);
-  //               page.elements.modalDetail.modal('show');
-  //             })
-  //             .fail((jqXHR) => {
-  //               console.log("Fail");
-  //               console.log(jqXHR);
-  //             })
-  //   })
-  // }
+  page.commands.handleShowOrderHistory = () => {
+    $('button.viewOrderHistory').on('click', function () {
+      let orderId = $(this).attr("id");
+      $.ajax({
+        headers: {
+          "accept": "application/json",
+          "content-type": "application/json"
+        },
+        type: "GET",
+        url: page.urls.getOrderHistory + orderId
+      })
+              .done((data) => {
+                $('#modalOrderHistory').modal('show');
+                $('#orderId').text(orderId);
+                let tbsBody = $('#tbsOrderHistory tbody');
+                tbsBody.html('')
+
+                $.each(data, (index, value) => {
+                  let str = `
+                          <tr>
+                              <td>
+                                  <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
+                              </td>
+                              <td>${value.date}</td>
+                              <td>${value.strValue}</td>
+                              <td>${value.employeeId}</td>
+                              <td>${value.description}</td>
+                          </tr>
+                      `;
+                  tbsBody.append(str);
+                })
+
+              })
+              .fail((jqXHR) => {
+                // App.SweetAlert.showErrorAlert(jqXHR.responseJSON.message);
+                // console.log(jqXHR);
+              })
+
+
+    });
+  }
 
   let orders = [];
 
@@ -212,10 +265,8 @@
                   <td>${value.id}</td>
                   <td>${value.customerName}</td>
                   <td>${value.orderDate}</td>
-                  <td>${value.inventoryDeliveryDate}</td>
-                  <td>${value.deliveryDate}</td>
                   <td>${value.quantityTotal}</td>
-                  <td>${value.totalAmount}</td>
+                  <td>${App.formatNumber(value.totalAmount)}</td>
                   <td id="td_${index}">
                       <span class="font-size-12 badge badge-pill ">${value.situationValue}</span>
                   </td>
@@ -236,13 +287,14 @@
           break;
         case "Hoàn Thành":
           $(`#td_${index} span`).addClass('badge-soft-success');
+          console.log(11111)
           break;
         case "Đã Hủy":
           $(`#td_${index} span`).addClass('badge-soft-danger');
           break;
       }
     })
-    // page.commands.handleShowOrderDetails();
+    page.commands.handleShowOrderHistory();
   }
 
   $(() => {

@@ -25,5 +25,15 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
     )
     List<SituationDTO> findAllSituationDTO(String id);
 
-
+    @Query("SELECT new com.cg.model.dto.SituationDTO (" +
+            "s.date, " +
+            "s.value, " +
+            "s.employee.id, " +
+            "s.description" +
+            ") " +
+            "FROM Situation AS s " +
+            "WHERE s.order.id = :orderId " +
+            "ORDER BY s.date "
+    )
+    List<SituationDTO> getOrderHistory(String orderId);
 }

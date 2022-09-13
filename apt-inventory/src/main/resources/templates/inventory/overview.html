@@ -167,6 +167,7 @@
             let inventoryDetails = [];
             let inventorySearchDetails = [];
             let keySearch = "";
+            let keys = [];
             let totalAmount;
 
             page.commands.getInventoryOverView = () => {
@@ -205,10 +206,24 @@
 
             $('#keySearch').on('input', () => {
                 keySearch = $('#keySearch').val().toLowerCase();
-                inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
-                if (keySearch) {
+                keys = keySearch.split(' ');
+                console.log(keys)
+                $.each(keys, (index, value) => {
+                    if (value) {
+                        if (index !== 0) {
+                            inventorySearchDetails = inventorySearchDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(value));
+                        } else {
+                            inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(value));
+                        }
+                    }
                     page.commands.renderDetails(inventorySearchDetails);
-                }
+                })
+
+
+                // inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
+                // if (keySearch) {
+                //     page.commands.renderDetails(inventorySearchDetails);
+                // }
             })
 
             page.commands.handleShowProductDetail = () => {
