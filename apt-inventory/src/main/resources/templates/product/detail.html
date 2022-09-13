@@ -78,9 +78,9 @@
                                                     <p class="text-primary" id="brand"></p>
                                                     <h4 class="mt-1 mb-3" id="title"></h4>
 
-                                                    <h5 class="mb-4">Purchase Order Price : <b id="purchaseOrderPrice">30.800.000₫</b></h5>
+                                                    <h5 class="mb-4">Sale Price : <b id="salePrice"></b></h5>
                                                     <span class="badge badge-pill badge-soft-success font-size-12 mb-4" id="businessStatus"></span>
-                                                    <p class="text-muted mb-4">Description: <span>id="description"</span></p>
+                                                    <p class="text-muted mb-4">Description: <span id="description"></span></p>
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <div>
@@ -93,6 +93,7 @@
                                                             <div>
                                                                 <p class="text-muted"><i class="bx bx-card font-size-16 align-middle text-primary mr-1"></i> <b>Screen size :</b> <span id="monitor"></span></p>
                                                                 <p class="text-muted"><i class="bx bx-wallet-alt font-size-16 align-middle text-primary mr-1"></i> <b>Graphic card :</b> <span id="graphicCard"></span></p>
+                                                                <p class="text-muted"><i class="bx bx-palette font-size-16 align-middle text-primary mr-1"></i><b>Color :</b> <span id="color"></span></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -278,13 +279,14 @@
         page.elements.title = $('#title');
         page.elements.description = $('#description');
         page.elements.businessStatus = $('#businessStatus');
-        page.elements.purchaseOrderPrice = $('#purchaseOrderPrice')
+        page.elements.salePrice = $('#salePrice')
 
         page.elements.processcer = $('#processcer');
         page.elements.capacity = $('#capacity');
         page.elements.memory = $('#memory');
         page.elements.monitor = $('#monitor');
         page.elements.graphicCard = $('#graphicCard');
+        page.elements.color = $('#color');
 
 
         let slug = page.elements.slug.val();
@@ -304,28 +306,11 @@
             .done((data) => {
                 product = data[0];
 
-                page.elements.brand.text(product.brand);
-                page.elements.title.text(product.title);
-                page.elements.description.text(product.description);
-                page.elements.businessStatus.text(product.businessStatus)
-                page.elements.purchaseOrderPrice.text(product.purchaseOrderPrice);
+                product = data[0];
+                configurationDetail = product.configurationDetail;
+                configurationParams = product.computerConfigurationParameters;
+                computerConfigurationParameters = product.computerConfigurationParameters;
 
-                page.elements.processcer.text(product.configurationDetail.processcer.content);
-                page.elements.capacity.text(product.configurationDetail.capacity.content);
-                page.elements.memory.text(product.configurationDetail.memory.content);
-                page.elements.monitor.text(product.configurationDetail.monitor.content);
-                page.elements.graphicCard.text(product.configurationDetail.graphicCard.content);
-
-                page.elements.btnEdit.attr('href', `/products/update/${slug}`)
-
-                let str = App.renderTechSpecTable(product);
-                page.elements.tbTechSpec.append(str);
-
-                let image = App.renderImageDetail(product.fileUrls);
-                page.elements.pillImage.append(image.strPillImg);
-                page.elements.mainImage.append(image.strMainImg);
-
-                console.log(image.strMainImg)
 
             })
             .fail((jqxHR) => {
@@ -343,7 +328,29 @@
         }
 
         $(() => {
-            page.commands.getProductBySlug();
+            page.commands.getProductBySlug().then(() => {
+                page.elements.brand.text(product.brand);
+                page.elements.title.text(product.title);
+                page.elements.description.text(product.description);
+                page.elements.businessStatus.text(product.businessStatus);
+                page.elements.salePrice.text(product.salePrice);
+
+                page.elements.processcer.text(configurationDetail.processcer.content);
+                page.elements.capacity.text(configurationDetail.capacity.content);
+                page.elements.memory.text(configurationDetail.memory.content);
+                page.elements.monitor.text(configurationDetail.monitor.content);
+                page.elements.graphicCard.text(configurationDetail.graphicCard.content);
+                page.elements.color.text(configurationDetail.color.content);
+
+                page.elements.btnEdit.attr('href', `/products/update/${slug}`)
+
+                let str = App.renderTechSpecTable(product);
+                page.elements.tbTechSpec.append(str);
+
+                let image = App.renderImageDetail(product.fileUrls);
+                page.elements.pillImage.append(image.strPillImg);
+                page.elements.mainImage.append(image.strMainImg);
+            })
 
             page.initializeControlEvent();
 
