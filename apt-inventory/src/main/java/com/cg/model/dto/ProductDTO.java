@@ -33,7 +33,6 @@ public class ProductDTO implements Serializable {
 
     private String title;
     private String slug;
-
     private BigDecimal salePrice;
 
     @NotBlank(message = "Description is required")

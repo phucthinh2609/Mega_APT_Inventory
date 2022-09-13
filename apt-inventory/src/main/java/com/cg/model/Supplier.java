@@ -12,16 +12,15 @@ import java.util.Set;
 @Table(name = "suppliers")
 public class Supplier {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "company_name", nullable = false)
     private String companyName;
 
     private String email;
 
-    private  String phone;
+    private String phone;
 
     @Digits(integer = 2, fraction = 3)
     private BigDecimal discount;

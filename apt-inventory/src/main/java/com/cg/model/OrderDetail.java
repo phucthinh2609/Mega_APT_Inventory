@@ -30,7 +30,6 @@ public class OrderDetail {
     @Digits(integer = 12, fraction = 0)
     private BigDecimal price;
 
-
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;

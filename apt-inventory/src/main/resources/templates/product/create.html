@@ -379,6 +379,21 @@
                 formData.append("description", computerConfiguration.description);
                 formData.append("configurationDetail", JSON.stringify(computerConfiguration.configurationDetail));
 
+                if (fileInputImages.length != 4) {
+
+                    App.IziToast.showErrorAlert(App.ERROR_400);
+
+                    page.elements.loader.addClass("hide");
+                    page.elements.footerAccordion.removeClass("hide").addClass("show");
+                    page.elements.footerContent.empty();
+                    page.elements.accordionCollapse.prop("checked", true);
+                    page.elements.btnCreateProduct.prop('disabled', false);
+
+                    let str = `<label id="message-error" class="error">Should be have 4 images</label>`;
+
+                    return page.elements.footerContent.html(str);
+                }
+
                 fileInputImages.forEach((file) => {
                     formData.append("files", file);
                 })
@@ -398,6 +413,11 @@
                     page.elements.brand.val("");
                     page.elements.model.val("");
                     page.elements.description.val("");
+
+
+                    fileInputImages = [];
+                    images = [];
+                    page.elements.imagePreview.empty()
 
                     $.each(computerConfiguration.configurationDetail, function (key, value) {
                         computerConfiguration.configurationDetail[key].content = $("#" + key).val("");
@@ -437,7 +457,6 @@
                     }
 
                     console.log(str)
-
 
                     page.elements.footerContent.html(str);
                 })
