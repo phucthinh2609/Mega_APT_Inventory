@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -35,13 +36,14 @@ public class Order {
     @Column(name = "quantity_total")
     private int quantityTotal;
 
-    private String description;
+    @Column(name = "order_date")
+    private LocalDateTime orderDate;
 
     @Column(name = "inventory_delivery_date")
-    private LocalDate inventoryDeliveryDate;
+    private LocalDateTime inventoryDeliveryDate;
 
     @Column(name = "delivery_date")
-    private LocalDate deliveryDate;
+    private LocalDateTime deliveryDate;
 
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)
@@ -60,6 +62,9 @@ public class Order {
                 .setQuantityTotal(String.valueOf(quantityTotal))
                 .setTotalAmount(totalAmount.toString())
                 .setLocationRegionDelivery(locationRegionDelivery.toLocationDeliveryDTO())
-                .setCustomer(customer.toCustomerDTO());
+                .setCustomer(customer.toCustomerDTO())
+                .setDeliveryDate(deliveryDate)
+                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setOrderDate(orderDate);
     }
 }

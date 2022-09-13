@@ -14,7 +14,7 @@ import java.util.Map;
 @Component
 public class AppUtils {
 
-    public ResponseEntity<?> mapErrorToResponse(BindingResult result) {
+    public static ResponseEntity<?> mapErrorToResponse(BindingResult result) {
         List<FieldError> fieldErrors = result.getFieldErrors();
         Map<String, String> errors = new HashMap<>();
         for (FieldError fieldError : fieldErrors) {

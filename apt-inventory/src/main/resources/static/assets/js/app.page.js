@@ -190,7 +190,7 @@ class App {
 
     static renderOrders(obj) {
         let str = `
-                    <tr>
+                    <tr id="tr_${obj.order.id}">
                         <td>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="input_${obj.order.id}">
@@ -210,7 +210,7 @@ class App {
                             <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail" data-id="${obj.order.id}" >View Details</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded change" data-id="${obj.order.id}">Change</a>
+                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded changeOrder" data-id="${obj.order.id}">Change</a>
                         </td>
                         ${obj.strValue === "Đang Chờ Xử Lý" ? `<td>
                                                                     <a href="/purchase-orders/update/${obj.order.id}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>

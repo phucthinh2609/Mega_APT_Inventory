@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+import java.util.Optional;
+import java.util.OptionalInt;
 
 
 @Repository
@@ -24,4 +25,17 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
             "ORDER BY s.order.id DESC "
     )
     List<SituationDTO> findAllSituationDTO(String id);
+
+    @Query("SELECT new com.cg.model.dto.SituationDTO (" +
+            "s.id, " +
+            "s.value, " +
+            "s.date," +
+            "s.order," +
+            "s.description," +
+            "s.active" +
+            ") " +
+            "FROM Situation AS s " +
+            "WHERE (s.employee.id = :employeeId OR s.employee.id IS NULL) AND s.order.id = :orderId AND s.active IS TRUE"
+    )
+    Optional<SituationDTO> findLastSituationDTOByOrderIdAndEmployeeId(String employeeId, String orderId);
 }

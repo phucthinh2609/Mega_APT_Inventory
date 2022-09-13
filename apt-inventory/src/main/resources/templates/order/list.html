@@ -149,7 +149,8 @@
     let page = {
         urls: {
             getAllOrders: App.BASER_URL + "/orders",
-            getAllDetailByOrderId : App.BASER_URL + "/order-detail/"
+            getAllDetailByOrderId : App.BASER_URL + "/order-detail/",
+            cancelledOrder : App.BASER_URL + "/orders" + "/cancelled"
         },
         elements: {
         },
@@ -177,6 +178,7 @@
     page.elements.customer = $('#customer');
     page.elements.quantityTotal = $('#quantityTotal');
     page.elements.totalAmount = $('#totalAmount');
+    page.elements.descriptionText = $('#descriptionText');
 
     page.commands.showModalDetails = () => {
         page.elements.btnShowDetail = $('#tablePurchaseOrder tbody tr td .showDetail');
@@ -248,6 +250,44 @@
             console.log(orderId);
             page.elements.btnSaveDescription.data("id",orderId);
             page.elements.modalDescription.modal("show");
+            page.commands.cancelledOrder();
+        })
+    }
+
+    page.commands.cancelledOrder = () => {
+        page.elements.btnSaveDescription.on('click',() => {
+            let description = page.elements.descriptionText.val();
+            console.log(description);
+            let orderId = page.elements.btnSaveDescription.data("id");
+            let orderCancelled = {
+               employeeId : "",
+               orderId : "",
+               description
+            }
+            orderCancelled.employeeId = "1";
+            orderCancelled.orderId = orderId;
+            orderCancelled.description = description;
+            console.log(orderCancelled);
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "POST",
+                url: page.urls.cancelledOrder,
+                data : JSON.stringify(orderCancelled)
+            })
+            .done((data) => {
+                $(`#tr_${orderId}`).remove();
+                App.SweetAleart.showSuccessAlert("Hủy Đơn Hàng Thành Công");
+                page.elements.descriptionText.val("");
+                page.elements.modalDescription.modal("hide");
+            })
+            .fail((jqXHR) => {
+                console.log("Fail");
+                console.log(jqXHR);
+            })
+            page.commands.unbindAll();
         })
     }
 
@@ -262,6 +302,10 @@
             page.commands.closeModal();
         })
     })
+
+    page.commands.unbindAll = () =>{
+        page.elements.btnSaveDescription.off();
+    }
 </script>
 
 </body>

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Getter
@@ -28,16 +29,29 @@ public class SituationDTO implements Validator {
     private ESituationValue value;
 
     private String strValue;
-    private LocalDate date;
+    private LocalDateTime date;
 
     private OrderDTO order;
 
+    private String description;
+
     private EmployeeDTO employee;
+
+    private boolean active;
 
     public SituationDTO(String id, ESituationValue value, Order order) {
         this.id = id;
         this.strValue = value.getValue();
         this.order = order.toOrderDTO();
+    }
+
+    public SituationDTO(String id, ESituationValue value, LocalDateTime date, Order order, String description, boolean active) {
+        this.id = id;
+        this.value = value;
+        this.date = date;
+        this.order = order.toOrderDTO();
+        this.description = description;
+        this.active = active;
     }
 
     public Situation toSituation() {
@@ -46,7 +60,9 @@ public class SituationDTO implements Validator {
                 .setValue(value)
                 .setDate(date)
                 .setOrder(order.toOrder())
-                .setEmployee(employee.toEmployee());
+                .setEmployee(employee.toEmployee())
+                .setActive(active)
+                .setDescription(description);
     }
 
     @Override
