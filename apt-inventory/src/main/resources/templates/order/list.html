@@ -150,7 +150,8 @@
         urls: {
             getAllOrders: App.BASER_URL + "/orders",
             getAllDetailByOrderId : App.BASER_URL + "/order-detail/",
-            cancelledOrder : App.BASER_URL + "/orders" + "/cancelled"
+            cancelledOrder : App.BASER_URL + "/orders" + "/cancelled",
+            changeOrder : App.BASER_URL + "/orders" + "/change"
         },
         elements: {
         },
@@ -284,10 +285,60 @@
                 page.elements.modalDescription.modal("hide");
             })
             .fail((jqXHR) => {
-                console.log("Fail");
-                console.log(jqXHR);
+                App.SweetAleart.showErrorAlert(jqXHR);
             })
             page.commands.unbindAll();
+        })
+    }
+
+    let orderChangeResult;
+
+    page.commands.callChangeOrder = (order) => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: page.urls.changeOrder,
+            data : JSON.stringify(order)
+        })
+        .done((data) => {
+            orderChangeResult = data;
+        })
+        .fail((jqXHR) => {
+            App.SweetAleart.showErrorAlert(jqXHR);
+        })
+    }
+
+    page.commands.changeOrder = () => {
+        page.elements.btnChangeOrder = $('.changeOrder');
+        page.elements.btnChangeOrder.on('click',function (){
+            console.log("1dsfhadsafdj");
+            let orderId = $(this).data("id");
+            console.log(orderId);
+            let changeOrder = {
+                employeeId : "",
+                orderId : "",
+                description : ""
+            }
+            changeOrder.employeeId = "1";
+            changeOrder.orderId = orderId;
+            changeOrder.description = "Thay Đổi Trạng Thái Đơn Hàng";
+            page.commands.callChangeOrder(changeOrder).then(() => {
+                if (orderChangeResult.value === "DELIVERY") {
+                    let str = App.renderOrdersChange(orderChangeResult);
+                    $(`#tr_${orderId}`).replaceWith(str);
+                    console.log("hello");
+                }else {
+                    $(`#tr_${orderId}`).remove();
+                }
+                App.SweetAleart.showSuccessAlert("Thay Đổi Trạng Thái Đơn Hàng Thành Công");
+                page.commands.showModalDetails();
+                page.commands.showModalDescription();
+                page.commands.changeOrder();
+                page.commands.closeModal();
+            })
         })
     }
 
@@ -299,6 +350,7 @@
             })
             page.commands.showModalDetails();
             page.commands.showModalDescription();
+            page.commands.changeOrder();
             page.commands.closeModal();
         })
     })

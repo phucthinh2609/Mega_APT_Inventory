@@ -251,6 +251,39 @@ class App {
         return str;
     }
 
+    static renderOrdersChange(obj) {
+        let str = `
+                    <tr id="tr_${obj.order.id}">
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="input_${obj.order.id}">
+                                <label class="custom-control-label" for="input_${obj.order.id}">&nbsp;</label>
+                            </div>
+                        </td>
+                        <td><a href="javascript: void(0);" class="text-body font-weight-bold">#${obj.order.id}</a> </td>
+                        <td>${obj.order.totalAmount} VNĐ</td>
+                        <td>
+                            ${obj.order.quantityTotal}
+                        </td>
+                        <td>${obj.order.customer.fullName}</td>
+                        <td>
+                            <span class="badge badge-pill badge-soft-info font-size-12">Đang Giao Hàng</span>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail" data-id="${obj.order.id}" >View Details</a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded changeOrder" data-id="${obj.order.id}">Change</a>
+                        </td>
+                            <td>
+                                <a href="javascript:void(0);" data-id="${obj.order.id}" class="mr-3 text-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-pencil-box-multiple font-size-18"></i></a>
+                                <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                            </td>
+                        </tr>
+                   `;
+        return str;
+    }
+
     static renderTechSpecTable(prd) {
         let str = "";
 

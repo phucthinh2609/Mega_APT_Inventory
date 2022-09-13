@@ -34,6 +34,9 @@ public class OrderAPI {
     @Autowired
     EmployeeService employeeService;
 
+    @Autowired
+    AppUtils appUtils;
+
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<?> findAll(@PathVariable String employeeId) {
@@ -52,7 +55,7 @@ public class OrderAPI {
     public ResponseEntity<?> cancelledOrder(@Valid @RequestBody OrderChangeDTO orderChangeDTO, BindingResult bindingResult){
         new OrderChangeDTO().validate(orderChangeDTO, bindingResult);
         if (bindingResult.hasFieldErrors()){
-            return AppUtils.mapErrorToResponse(bindingResult);
+            return appUtils.mapErrorToResponse(bindingResult);
         }
 
         Optional<EmployeeDTO> employeeDTO = employeeService.findEmployeeDTOById(orderChangeDTO.getEmployeeId());
@@ -92,7 +95,7 @@ public class OrderAPI {
     public ResponseEntity<?> changeOrder(@Valid @RequestBody OrderChangeDTO orderChangeDTO, BindingResult bindingResult) {
         new OrderChangeDTO().validate(orderChangeDTO, bindingResult);
         if (bindingResult.hasFieldErrors()){
-            return AppUtils.mapErrorToResponse(bindingResult);
+            return appUtils.mapErrorToResponse(bindingResult);
         }
 
         Optional<EmployeeDTO> employeeDTO = employeeService.findEmployeeDTOById(orderChangeDTO.getEmployeeId());
