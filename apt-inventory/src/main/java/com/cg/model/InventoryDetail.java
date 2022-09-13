@@ -29,7 +29,7 @@ public class InventoryDetail {
     @Column(name = "stock_in_date")
     private LocalDate stockInDate;
 
-    @Column(name = "product_code")
+    @Column(name = "product_code", unique = true)
     private String productCode;
 
     @Column(name = "stock_in_price")
