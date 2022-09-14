@@ -40,15 +40,19 @@ public class SituationServiceImpl implements SituationService{
     }
 
     @Override
-    public void cancelledOrder(SituationDTO situationDTO,SituationDTO newSituationDTO) {
+    public void cancelledOrder(SituationDTO situationDTO,SituationDTO newSituationDTO,List<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTOList) {
         situationDTO.setActive(false);
         situationDTO.setEmployee(newSituationDTO.getEmployee());
         situationRepository.save(situationDTO.toSituation());
         situationRepository.save(newSituationDTO.toSituation());
+        for (InventoryDetailProductCodeDTO inventoryDetailProductCodeDTO : inventoryDetailProductCodeDTOList) {
+            inventoryDetailProductCodeDTO.setStatus(EInventoryDetailStatus.IN_STOCK);
+            inventoryDetailRepository.save(inventoryDetailProductCodeDTO.toInventoryDetail());
+        }
     }
 
     @Override
-    public SituationDTO changeOrderDelivery(SituationDTO situationDTO, SituationDTO newSituationDTO ,OrderDTO orderDTO) {
+    public SituationDTO changeOrderDelivery(SituationDTO situationDTO, SituationDTO newSituationDTO ,OrderDTO orderDTO, List<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTOList) {
         situationDTO.setActive(false);
         situationDTO.setEmployee(newSituationDTO.getEmployee());
         Order newOrder = orderRepository.save(orderDTO.toOrder());
@@ -56,6 +60,10 @@ public class SituationServiceImpl implements SituationService{
         newSituationDTO.setOrder(newOrder.toOrderDTO());
         situationRepository.save(situationDTO.toSituation());
         Situation situation = situationRepository.save(newSituationDTO.toSituation());
+        for (InventoryDetailProductCodeDTO inventoryDetailProductCodeDTO : inventoryDetailProductCodeDTOList) {
+            inventoryDetailProductCodeDTO.setStatus(EInventoryDetailStatus.SOLD);
+            inventoryDetailRepository.save(inventoryDetailProductCodeDTO.toInventoryDetail());
+        }
         return situation.toSituationDTO();
     }
 
