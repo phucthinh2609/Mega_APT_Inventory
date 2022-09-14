@@ -146,17 +146,23 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
     List<InventoryDetailDTO> getAllInventoryDetails();
 
 
+//    @Query("SELECT new com.cg.model.dto.Statistics (" +
+//            "inDe.stockInDate, " +
+//            "p.title, " +
+//            "inDe.stockInPrice, " +
+//            "COUNT(inDe.product) " +
+//            ") " +
+//            "FROM InventoryDetail AS inDe, Product AS p " +
+//            "WHERE inDe.product.id = p.id " +
+//            "AND inDe.selled = false " +
+//            "GROUP BY inDe.product, inDe.stockInDate " +
+//            "ORDER BY inDe.stockInDate"
+//    )
     @Query("SELECT new com.cg.model.dto.Statistics (" +
-            "inDe.stockInDate, " +
-            "p.title, " +
-            "inDe.stockInPrice, " +
-            "COUNT(inDe.product) " +
+            "inDe.id " +
             ") " +
-            "FROM InventoryDetail AS inDe, Product AS p " +
-            "WHERE inDe.product.id = p.id " +
-            "AND inDe.selled = false " +
-            "GROUP BY inDe.product, inDe.stockInDate " +
-            "ORDER BY inDe.stockInDate"
+            "FROM InventoryDetail AS inDe "
+
     )
     Optional<Statistics> getStatisticsByTime(String startTime);
 
