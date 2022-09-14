@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.SituationDTO;
 import com.cg.model.enums.ESituationValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,5 +44,16 @@ public class Situation {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    public SituationDTO toSituationDTO() {
+        return new SituationDTO()
+                .setId(id)
+                .setValue(value)
+                .setDate(date)
+                .setActive(active)
+                .setEmployee(employee.toEmployeeDTO())
+                .setDescription(description)
+                .setOrder(order.toOrderDTO());
+    }
 
 }

@@ -1,8 +1,8 @@
 package com.cg.service.inventoryDetail;
 
-import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
 import com.cg.model.dto.Statistics;
+import com.cg.model.dto.InventoryDetailProductCodeDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,4 +22,6 @@ public interface InventoryDetailService {
     List<InventoryDetailDTO> getAllInventoryDetails();
 
     Optional<Statistics> getStatisticsByTime(String startTime);
+
+    Optional<InventoryDetailProductCodeDTO> getInventoryDetailByProductCode(String productCode);
 }

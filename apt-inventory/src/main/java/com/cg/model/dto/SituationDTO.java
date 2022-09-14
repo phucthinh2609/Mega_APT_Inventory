@@ -34,19 +34,30 @@ public class SituationDTO implements Validator {
 
     private OrderDTO order;
 
+    private String description;
+
     private EmployeeDTO employee;
 
     private String employeeId;
 
-    private String description;
 
     private LocationDeliveryDTO locationDeliveryDTO;
+
+    private boolean active;
 
 
     public SituationDTO(String id, ESituationValue value, Order order) {
         this.id = id;
         this.strValue = value.getValue();
         this.order = order.toOrderDTO();
+    }
+    public SituationDTO(String id, ESituationValue value, LocalDateTime date, Order order, String description, boolean active) {
+        this.id = id;
+        this.value = value;
+        this.date = date;
+        this.order = order.toOrderDTO();
+        this.description = description;
+        this.active = active;
     }
 
     public SituationDTO(LocalDateTime date, ESituationValue value, String employeeId, String description) {
@@ -63,7 +74,9 @@ public class SituationDTO implements Validator {
                 .setValue(value)
                 .setDate(date)
                 .setOrder(order.toOrder())
-                .setEmployee(employee.toEmployee());
+                .setEmployee(employee.toEmployee())
+                .setActive(active)
+                .setDescription(description);
     }
 
     @Override

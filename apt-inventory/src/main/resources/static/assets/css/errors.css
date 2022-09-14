@@ -44,3 +44,7 @@ label.error {
 input.error {
     border: solid 1px red;
 }
+
+.accordion-modal-lg {
+    width: 47rem;
+}

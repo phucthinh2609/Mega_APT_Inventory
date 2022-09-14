@@ -12,6 +12,10 @@
         <!-- Main -->
         <th:block th:replace="/layout/head/main :: main"/>
 
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Custom css -->
+        <th:block th:replace="/layout/head/custom-css :: custom-css"/>
+
     </head>
 
     <body data-sidebar="dark">
@@ -61,11 +65,11 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-centered mb-0 table-nowrap">
+                                            <table class="table table-centered mb-0 table-nowrap text-center">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th>Product</th>
-                                                        <th>Product Desc</th>
+                                                        <th>Image</th>
+                                                        <th>Title</th>
                                                         <th>Price</th>
                                                         <th>Available</th>
                                                         <th>Quantity</th>
@@ -75,10 +79,11 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <img src="assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
+                                                            <img src="\assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
                                                         </td>
                                                         <td>
-                                                            <h5 class="font-size-14 text-truncate"><a href="/products/details/${slug}" class="text-dark">Half sleeve T-shirt</a></h5>
+                                                            <a href="/products/details/${slug}" class="text-dark text-left">Half sleeve T-shirt</a>
+    
                                                         </td>
                                                         <td>
                                                             $ 450
@@ -91,9 +96,9 @@
                                                                 <div class="input-group  bootstrap-touchspin bootstrap-touchspin-injected">
                                                                     <input type="text" value="02" name="demo_vertical" class="form-control">
                                                                     <span class="input-group-btn-vertical">
-                                                                        <button class="btn btn-primary bootstrap-touchspin-up " type="button">+</button>
-                                                                        <button class="btn btn-primary bootstrap-touchspin-down " type="button">-</button>
-                                                                    </span>
+                                                                            <button class="btn btn-primary bootstrap-touchspin-up " type="button">+</button>
+                                                                            <button class="btn btn-primary bootstrap-touchspin-down " type="button">-</button>
+                                                                        </span>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -134,40 +139,54 @@
                                                 <h4 class="card-title mb-3">Suppplier</h4>
                                             </div>
                                             <div class="col-sm-8 text-sm-right">
-                                                <button id="btnShowCreateSupplierModal" type="button" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2">
+
+                                                <button id="btnShowCreateSupplierModal" type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mb-2 mr-2">
                                                     <i class="mdi mdi-plus mr-1"></i>
-                                                    Add New Supplier
+                                                    Add New
+                                                </button>
+                                                <button id="btnShowUpdateSupplierModal" type="button" class="btn btn-success btn-sm btn-rounded waves-effect waves-light mb-2 mr-2">
+                                                <i class="mdi mdi-pencil mr-1"></i>
+                                                    Update
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <select class="form-control" id="">
-                                                <option>Select</option>
-                                                <option>Shopee</option>
-                                                <option>Tiki</option>
+                                        <div class="row form-group">
+                                            <select class="form-control" id="selectSupplier">
                                             </select>
                                         </div>
 
                                         <div class="table-responsive">
                                             <table class="table mb-0">
                                                 <tbody>
-                                                <tr>
-                                                    <td>Address :</td>
-                                                    <td>28 NTP</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ward : </td>
-                                                    <td>Phường Phú Nhuận</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>District :</td>
-                                                    <td>Thành phố Huế</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Province : </td>
-                                                    <td>Thừa Thiên Huế</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>Email :</td>
+                                                        <td id="email"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phone :</td>
+                                                        <td id="phone"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Discount :</td>
+                                                        <td><span id="discount"></span> %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Address :</td>
+                                                        <td id="address"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ward : </td>
+                                                        <td id="ward"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>District :</td>
+                                                        <td id="district"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Province : </td>
+                                                        <td id="province"></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -209,6 +228,7 @@
         <!-- END layout-wrapper -->
 
         <th:block th:replace="/purchase-order/modal_create_supplier"/>
+        <th:block th:replace="/purchase-order/modal_update_supplier.html"/>
 
         <!-- Right Sidebar -->
         <th:block th:replace="/layout/right-bar :: right-bar"/>
@@ -228,6 +248,11 @@
                 getAllProvinces: App.GET_PROVINCES + "/",
                 getAllDistricts: App.GET_PROVINCES + "/district/",
                 getAllWards: App.GET_PROVINCES + "/ward/",
+
+                getAllSuppliers: App.BASER_URL + "/suppliers",
+                getSupplierById: App.BASER_URL + "/suppliers/",
+                saveSupplier: App.BASER_URL + "/suppliers"
+
             },
             elements: {
                 role: {},
@@ -248,19 +273,26 @@
         }
 
         let locationRegion = {};
+        let supplier = {};
+        let supplierId;
 
         page.elements.btnShowCreateSupplierModal = $('#btnShowCreateSupplierModal');
         page.elements.mdCreateSupplier = $('#mdCreateSupplier');
-        page.elements.btnCreateSupplier = $('#btnCreateSupplier')
 
-        page.elements.codeUnit = $('#codeUnit');
-        page.elements.addressUnit = $('#addressUnit');
+        page.elements.btnShowUpdateSupplierModal = $('#btnShowUpdateSupplierModal');
+        page.elements.mdUpdateSupplier = $('#mdUpdateSupplier');
 
-        page.elements.wardUnit = $('#wardUnit');
-        page.elements.districtUnit = $('#districtUnit');
-        page.elements.provinceUnit = $('#provinceUnit');
+        page.elements.selectSupplier = $('#selectSupplier');
 
-        page.elements.nameUnitCre = $('#companyNameCre');
+        page.elements.email = $('#email');
+        page.elements.phone = $('#phone');
+        page.elements.discount = $('#discount');
+        page.elements.address = $('#address');
+        page.elements.ward = $('#ward');
+        page.elements.district = $('#district');
+        page.elements.province = $('#province');
+
+        page.elements.companyNameCre = $('#companyNameCre');
         page.elements.phoneCre = $('#phoneCre');
         page.elements.emailCre = $('#emailCre');
         page.elements.addressCre = $('#addressCre');
@@ -268,69 +300,44 @@
         page.elements.districtCre = $('#districtCre');
         page.elements.provinceCre = $('#provinceCre');
 
-        page.dialogs.alertDanger.mdCreateSupplier = $("#mdCreateSupplier .modal-alert-danger");
+        page.elements.companyNameUp = $('#companyNameUp');
+        page.elements.phoneUp = $('#phoneUp');
+        page.elements.emailUp = $('#emailUp');
+        page.elements.addressUp = $('#addressUp');
+        page.elements.wardUp = $('#wardUp');
+        page.elements.districtUp = $('#districtUp');
+        page.elements.provinceUp = $('#provinceUp');
 
-        page.commands.addRowCartItem = () =>{
-            let str = App.getTempRowCartItemInCartImportOrder(cartItem);
-            $('#tbListCartItems tbody').prepend(str);
-        }
+        page.elements.btnCreateSupplier = $('#btnCreateSupplier');
+        page.elements.btnUpdateSupplier = $('#btnUpdateSupplier');
 
-        page.commands.clickRowCartItem = () => {
-            $("#tbListCartItems tbody tr").on("click", function () {
-                cartItemId = $(this).attr('id').replace('tr_', '');
+        page.elements.footerAccordion = $(".footer-modal section.accordion");
+        page.elements.footerContent = $(".footer-modal section.accordion .content");
+        page.elements.accordionCollapse = $('input[name=collapse]');
 
-                $('#tbListCartItems tbody tr td span.select-tab').removeClass("selected").addClass("unselected");
-                $(`#tbListCartItems tbody tr#tr_${cartItemId} td span.select-tab`).removeClass("unselected").addClass("selected");
-            });
 
-            page.commands.unbindAll();
-        }
-
-        page.loadData.loadCartItems = () => {
-            return $.ajax({
-                "headers": {
-                    "accept" : "application/json",
-                    "content-type": "application/json"
-                },
-                "type": "POST",
-                "url": page.url.getAllCartItems,
-                "data": userDTOId
-            })
-                .done((data) => {
-                    cart = data.cartDTO;
-
-                    $('#tbListCartItems tbody').html('');
-                    $.each(data.cartItemDTO, (i, item) => {
-                        cartItem = item;
-                        page.commands.addRowCartItem();
-                    })
-
-                    page.elements.quantityTotal.text(cart.quantityTotal);
-                    page.elements.grandTotal.text('$'+cart.grandTotal);
-
-                    page.commands.clickRowCartItem();
-                })
-        };
-
-        page.commands.drawUnits = () => {
+        page.commands.drawSuppliers = () => {
             return $.ajax({
                 "headers": {
                     "accept": "application/json",
                     "content-type": "application/json"
                 },
                 "type": "GET",
-                "url": page.url.getAllUnits
+                "url": page.url.getAllSuppliers
             })
-                .done((data) => {
-                    $.each(data, (i, item) => {
-                        let str = `<option value="${item.id}">${item.name} (${item.code})</option>`;
+            .done((data) => {
+                page.elements.selectSupplier.empty()
 
-                        page.elements.unit.append(str);
-                    })
+                $.each(data, (i, item) => {
+                    let str = `<option value="${item.id}">(${item.id}) ${item.companyName}</option>`;
+
+                    page.elements.selectSupplier.append(str);
                 })
-                .fail((jqxHR) => {
-                    console.log(jqxHR);
-                })
+                console.log(data)
+            })
+            .fail((jqxHR) => {
+                console.log(jqxHR);
+            })
         }
 
         page.commands.drawProvinces = () => {
@@ -346,7 +353,8 @@
                     $.each(data.results, (i, item) => {
                         let str = `<option value="${item.province_id}">${item.province_name}</option>`;
 
-                        page.elements.provinceUnitCre.append(str);
+                        page.elements.provinceCre.append(str);
+                        page.elements.provinceUp.append(str);
                     })
                 })
                 .fail((jqxHR) => {
@@ -363,18 +371,19 @@
                 "type": "GET",
                 "url": page.url.getAllDistricts + provinceId
             })
-                .done((data) => {
+            .done((data) => {
 
-                    if (data.results.length === 0) {
-                        App.IziToast.showErrorAlert("Loading of districts is fail");
-                    }else {
-                        $.each(data.results, (i, item) => {
-                            let str = `<option value="${item.district_id}">${item.district_name}</option>`;
+                if (data.results.length === 0) {
+                    App.IziToast.showErrorAlert("Loading of districts is fail");
+                }else {
+                    $.each(data.results, (i, item) => {
+                        let str = `<option value="${item.district_id}">${item.district_name}</option>`;
 
-                            page.elements.districtUnitCre.append(str)
-                        })
-                    }
-                })
+                        page.elements.districtCre.append(str);
+                        page.elements.districtUp.append(str)
+                    })
+                }
+            })
         }
 
         page.commands.drawWards = (districtId) => {
@@ -394,7 +403,8 @@
                         $.each(data.results, (i, item) => {
                             let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
 
-                            page.elements.wardUnitCre.append(str)
+                            page.elements.wardCre.append(str);
+                            page.elements.wardUp.append(str);
                         })
                     }
                 })
@@ -405,12 +415,14 @@
                 "type": "GET",
                 "url": page.url.getAllDistricts + locationRegion.provinceId
             }).done((data) => {
-                page.elements.districtUnitCre.empty();
+                page.elements.districtCre.empty();
+                page.elements.districtUp.empty();
 
                 $.each(data.results, (i, item) => {
                     let str = `<option value="${item.district_id}">${item.district_name}</option>`;
 
-                    page.elements.districtUnitCre.append(str);
+                    page.elements.districtCre.append(str);
+                    page.elements.districtUp.append(str);
                 });
             }).fail(function () {
                 App.IziToast.showErrorAlert("Loading of districts is fail");
@@ -423,146 +435,97 @@
                 "url": page.url.getAllWards + locationRegion.districtId
 
             }).done((data) => {
-                page.elements.wardUnitCre.empty();
+                page.elements.wardCre.empty();
+                page.elements.wardUp.empty();
 
                 $.each(data.results, (i, item) => {
                     let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
 
-                    page.elements.wardUnitCre.append(str);
+                    page.elements.wardCre.append(str);
+                    page.elements.wardUp.append(str);
                 });
             }).fail(function () {
                 App.IziToast.showErrorAlert("Loading of wards is fail");
             });
         }
 
-        page.commands.unitChange = () => {
+        page.commands.supplierChange = () => {
             $.ajax({
                 "type": "GET",
-                "url": page.url.getUnitById + unitId
+                "url": page.url.getSupplierById + supplierId
 
             }).done((data) => {
-                unit = data;
+                supplier = data;
+                locationRegion = supplier.locationRegion;
 
-                page.elements.codeUnit.text(data.code);
-                page.elements.addressUnit.text(data.locationRegion.address);
-                page.elements.wardUnit.text(data.locationRegion.wardName);
-                page.elements.districtUnit.text(data.locationRegion.districtName);
-                page.elements.provinceUnit.text(data.locationRegion.provinceName);
+                page.elements.email.text(supplier.email);
+                page.elements.phone.text(supplier.phone);
+                page.elements.discount.text(supplier.discount);
+                page.elements.address.text(supplier.locationRegion.address);
+                page.elements.ward.text(supplier.locationRegion.wardName);
+                page.elements.district.text(supplier.locationRegion.districtName);
+                page.elements.province.text(supplier.locationRegion.provinceName);
             })
+        }
+
+        page.commands.handleShowUpdateModal = () => {
+            $.ajax({
+                "type": "GET",
+                "url": page.url.getSupplierById + supplierId
+
+            }).done((data) => {
+                supplier = data;
+
+                page.elements.wardUp = $('#wardUp');
+                page.elements.districtUp = $('#districtUp');
+                page.elements.provinceUp = $('#provinceUp');
+
+                page.elements.companyNameUp.val(supplier.email);
+                page.elements.phoneUp.val(supplier.phone);
+                page.elements.emailUp.val(supplier.discount);
+                page.elements.addressUp.val(supplier.locationRegion.address);
+
+                page.elements.addressUp.val(locationRegion.address);
+                page.elements.provinceUp.val(locationRegion.provinceId);
+                page.elements.districtUp.empty();
+
+                page.commands.drawDistricts(locationRegion.provinceId).then(function () {
+                    page.elements.districtUp.val(locationRegion.districtId);
+                    page.elements.wardUp.empty();
+
+                    page.commands.drawWards(locationRegion.districtId).then(function (){
+                        page.elements.wardUp.val(locationRegion.wardId);
+                    });
+                });
+
+            })
+
+            page.elements.mdUpdateSupplier.modal('show');
+
         }
 
         page.commands.doCreateSupplier = () => {
+            page.elements.footerAccordion.removeClass("show").addClass("hide");
+            page.elements.footerContent.empty();
+            page.elements.accordionCollapse.prop("checked", false);
+            page.elements.footerAccordion.addClass("accordion-modal-lg");
+            page.elements.btnCreateSupplier.prop('disabled', true);
 
             locationRegion.id = "0";
-            locationRegion.provinceId = page.elements.provinceUnitCre.val();
-            locationRegion.provinceName = page.elements.provinceUnitCre.find(":selected").text();
-            locationRegion.districtId = page.elements.districtUnitCre.val();
-            locationRegion.districtName = page.elements.districtUnitCre.find(":selected").text();
-            locationRegion.wardId = page.elements.wardUnitCre.val();
-            locationRegion.wardName = page.elements.wardUnitCre.find(":selected").text();
-            locationRegion.address = page.elements.addressUnitCre.val();
+            locationRegion.provinceId = page.elements.provinceCre.val();
+            locationRegion.provinceName = page.elements.provinceCre.find(":selected").text();
+            locationRegion.districtId = page.elements.districtCre.val();
+            locationRegion.districtName = page.elements.districtCre.find(":selected").text();
+            locationRegion.wardId = page.elements.wardCre.val();
+            locationRegion.wardName = page.elements.wardCre.find(":selected").text();
+            locationRegion.address = page.elements.addressCre.val();
 
-            unit.id = "0";
-            unit.name = page.elements.nameUnitCre.val();
-            unit.code = page.elements.codeUnitCre.val();
-            unit.locationRegion = locationRegion;
-
-            $.ajax({
-                "headers": {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                "type": "POST",
-                "url": page.url.saveUnit,
-                "data": JSON.stringify(unit)
-            })
-                .done((item) => {
-                    unit = item;
-                    console.log(unit);
-
-                    // let str = `
-                    //     <option value="${unit.id}">${unit.name} (${unit.code})</option>
-                    // `
-                    //
-                    // page.elements.unit.prepend(str);
-                    page.commands.drawUnits();
-
-                    page.elements.mdCreateUnit.modal('hide');
-                    App.SweetAleart.showSuccessAlert(App.SUCCESS_CREATED);
-
-                    page.commands.unbindAll();
-                })
-                .fail((jqxHR) => {
-                    console.log(jqxHR)
-                    page.dialogs.alertDanger.mdCreateUnit.html("").removeClass("hide").addClass("show");
-
-                    if (jqxHR.status === 401) {
-                        let msg = App.ERROR_401;
-                        str = `<label id="message-error" class="error" for="message">${msg}</label>`
-
-                        page.dialogs.alertDanger.mdCreateUnit.append(str);
-                    } else {
-                        if (jqxHR.status === 403) {
-                            let msg = App.ERROR_403;
-                            str = `<label id="message-error" class="error" for="message">${msg}</label>`
-
-                            page.dialogs.alertDanger.mdCreateUnit.append(str);
-                        } else {
-                            let str = "";
-
-                            if (jqxHR.responseJSON.message) {
-                                let msg = jqxHR.responseJSON.message;
-
-                                str = `<label id="message-error" class="error" for="message">${msg}</label>`
-
-                                page.dialogs.alertDanger.mdCreateUnit.append(str);
-                            }else if (jqxHR.responseJSON){
-                                $.each(jqxHR.responseJSON, (key, item) => {
-                                    str = `<label id="message-error" class="error" for="${key}">${item}</label>`
-                                    page.dialogs.alertDanger.mdCreateUnit.append(str);
-                                })
-                            }
-                        }
-                    }
-                })
-
-        }
-
-        page.commands.doRemoveCartItem = () => {
-            App.SweetAleart.showSuspendedConfirmAlert()
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            "type": "POST",
-                            "headers": {
-                                'accept': 'application/json',
-                                'content-Type': 'application/json'
-                            },
-                            "url": page.url.delete + cartItemId
-
-                        }).done((data) => {
-                            cart = data;
-
-                            $("#tr_" + cartItem.id).remove();
-                            page.elements.quantityTotal.text(cart.quantityTotal);
-                            page.elements.grandTotal.text(cart.grandTotal);
-
-                            App.IziToast.showSuccessAlert("Delete cart item successful");
-
-                        }).fail( () => {
-                            App.IziToast.showErrorAlert("Delete cart item failed");
-                        });
-                    }
-                })
-        }
-
-        page.commands.doOrder = () => {
-            cart.unit = unit;
-            cart.user.id = userDTOId;
-
-            if (cart.id === undefined) {
-                App.IziToast.showErrorAlertBottom("Cart is empty")
-            }
+            supplier.id = "0";
+            supplier.companyName = page.elements.companyNameCre.val();
+            supplier.email = page.elements.emailCre.val();
+            supplier.phone = page.elements.phoneCre.val();
+            supplier.discount = 0;
+            supplier.locationRegion = locationRegion;
 
             $.ajax({
                 "headers": {
@@ -570,31 +533,59 @@
                     "content-type": "application/json"
                 },
                 "type": "POST",
-                "url": page.url.saveOrder,
-                "data": JSON.stringify(cart)
+                "url": page.url.saveSupplier,
+                "data": JSON.stringify(supplier)
             })
-                .done((item) => {
-                    App.SweetAleart.showSuccessAlert("Successful");
+            .done((item) => {
+                supplier = item;
+                console.log(supplier);
 
-                    window.location.href = page.url.redirectToOrderList;
-                })
-                .fail((jqxHR) => {
-                    if (jqxHR.status === 401) {
-                        App.IziToast.showErrorAlertBottom(App.ERROR_401)
+                page.commands.drawSuppliers();
+
+                page.elements.mdCreateSupplier.modal('hide');
+                App.SweetAleart.showSuccessAlert(App.SUCCESS_CREATED);
+
+                page.commands.unbindAll();
+            })
+            .fail((jqxHR) => {
+                console.log(jqxHR)
+                App.IziToast.showErrorAlert(App.ERROR_400)
+
+                page.elements.footerAccordion.removeClass("hide").addClass("show");
+                page.elements.footerContent.empty();
+                page.elements.accordionCollapse.prop("checked", true);
+
+                let str = ``;
+
+                if (jqxHR.status === 401) {
+                    str += `<label id="message-error" class="error">${App.ERROR_401}</label>`;
+                } else {
+                    if (jqxHR.status === 403) {
+                        str += `<label id="message-error" class="error">${App.ERROR_403}</label>`;
                     } else {
-                        if (jqxHR.status === 403) {
-                            App.IziToast.showErrorAlertBottom(App.ERROR_403)
-                        } else {
+                        if (jqxHR.responseJSON) {
                             if (jqxHR.responseJSON.message) {
-                                App.IziToast.showErrorAlertBottom(jqxHR.responseJSON.message)
-                            }else if (jqxHR.responseJSON){
-                                $.each(jqxHR.responseJSON, (key, item) => {
-                                    App.IziToast.showErrorAlertBottom(item)
-                                })
+                                str += `<label id="message-error" class="error" for="message">${jqxHR.responseJSON.message}</label>`;
+                            } else {
+                                $.each(jqxHR.responseJSON, function (key, value) {
+                                    str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                                    $("#" + key).addClass("error");
+                                });
                             }
+                        } else {
+                            str += `<label id="message-error" class="error">${App.ERROR_500}</label>`;
                         }
                     }
-                })
+                }
+
+                console.log(str)
+
+                page.elements.footerContent.html(str);
+            })
+            .always(function () {
+                page.elements.btnCreateSupplier.prop('disabled', false);
+            });
+
         }
 
         page.commands.unbindAll = () => {
@@ -602,44 +593,61 @@
         }
 
         page.initializeControlEvent = () => {
-            page.elements.provinceUnitCre.on('change', function () {
-                locationRegion.provinceId = page.elements.provinceUnitCre.val();
+            page.elements.btnShowCreateSupplierModal.on('click', () => {
+                page.elements.mdCreateSupplier.modal('show');
+            })
+
+            page.elements.btnShowUpdateSupplierModal.on('click', () => {
+                page.commands.handleShowUpdateModal();
+            })
+
+            page.elements.provinceCre.on('change', function () {
+                locationRegion.provinceId = page.elements.provinceCre.val();
 
                 page.dialogs.commands.provinceChange().done(function () {
-                    locationRegion.districtId = page.elements.districtUnitCre.prop("selectedIndex", 0).val();
+                    locationRegion.districtId = page.elements.districtCre.prop("selectedIndex", 0).val();
                     page.dialogs.commands.districtChange();
                 })
             })
 
-            page.elements.districtUnitCre.on('change', function () {
-                locationRegion.districtId = page.elements.districtUnitCre.val();
+            page.elements.districtCre.on('change', function () {
+                locationRegion.districtId = page.elements.districtCre.val();
                 page.dialogs.commands.districtChange();
             })
 
-            // page.elements.btnCreateUnit.on('click', () => {
-            //     page.commands.doCreateSupplier();
-            // })
-            //
-            // page.elements.btnOrder.on('click', () => {
-            //     page.commands.doOrder();
-            // })
+            page.elements.provinceUp.on('change', function () {
+                locationRegion.provinceId = page.elements.provinceUp.val();
 
-            page.elements.btnShowCreateSupplierModal.on('click', () => {
-                page.elements.mdCreateSupplier.modal('show');
+                page.dialogs.commands.provinceChange().done(function () {
+                    locationRegion.districtId = page.elements.districtUp.prop("selectedIndex", 0).val();
+                    page.dialogs.commands.districtChange();
+                })
             })
+
+            page.elements.districtUp.on('change', function () {
+                locationRegion.districtId = page.elements.districtUp.val();
+                page.dialogs.commands.districtChange();
+            })
+
+            page.elements.selectSupplier.on('change', function () {
+                supplierId = page.elements.selectSupplier.val();
+                page.commands.supplierChange();
+            })
+
+            page.elements.btnCreateSupplier.on('click', () => {
+                page.commands.doCreateSupplier();
+            })
+
         }
 
         $(function () {
-            page.loadData.loadCartItems().then( function () {
-                page.commands.clickRowCartItem();
-            });
 
             page.commands.drawProvinces().then(function (){
-                let provinceId = page.elements.provinceUnitCre.prop("selectedIndex", 0).val();
+                let provinceId = page.elements.provinceCre.prop("selectedIndex", 0).val();
 
                 if (provinceId != null) {
                     page.commands.drawDistricts(provinceId).then(function (){
-                        let districtId = page.elements.districtUnitCre.prop("selectedIndex", 0).val();
+                        let districtId = page.elements.districtCre.prop("selectedIndex", 0).val();
 
                         if (districtId != null){
                             page.commands.drawWards(districtId);
@@ -648,10 +656,9 @@
                 }
             });
 
-            page.commands.drawUnits().then(function (){
-                // unitId = 1;
-
-                page.commands.unitChange();
+            page.commands.drawSuppliers().then(function (){
+                supplierId = 1;
+                page.commands.supplierChange();
             });
 
             page.initializeControlEvent();

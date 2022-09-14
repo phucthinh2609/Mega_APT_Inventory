@@ -137,6 +137,8 @@
 
 <th:block th:replace="/order/modal-details :: modal-details"/>
 
+<th:block th:replace="/order/modal-description :: modal-description"/>
+
 <!-- JAVASCRIPT -->
 <th:block th:replace="/layout/script/javascript :: javascript"/>
 <!-- App js -->
@@ -147,7 +149,9 @@
     let page = {
         urls: {
             getAllOrders: App.BASER_URL + "/orders",
-            getAllDetailByOrderId : App.BASER_URL + "/order-detail/"
+            getAllDetailByOrderId : App.BASER_URL + "/order-detail/",
+            cancelledOrder : App.BASER_URL + "/orders" + "/cancelled",
+            changeOrder : App.BASER_URL + "/orders" + "/change"
         },
         elements: {
         },
@@ -162,35 +166,70 @@
 
 
     page.elements.modalDetail = $('#modalDetail');
+    page.elements.modalDescription = $('#mdDescription');
 
-    page.elements.tbodOrder = $('#tablePurchaseOrder tbody');
+    page.elements.tbodyOrder = $('#tablePurchaseOrder tbody');
+
+    page.elements.tbodyDetail = $('#tableDetails tbody');
+
+    page.elements.btnCloseModal = $('.closeModal');
+    page.elements.btnSaveDescription = $('#btnCancelOrder');
+
+    page.elements.orderId = $('#orderId');
+    page.elements.customer = $('#customer');
+    page.elements.quantityTotal = $('#quantityTotal');
+    page.elements.totalAmount = $('#totalAmount');
+    page.elements.orderDate = $('#orderDate');
+    page.elements.inventoryDeliveryDate = $('#inventoryDeliveryDate');
+    page.elements.descriptionText = $('#descriptionText');
 
     page.commands.showModalDetails = () => {
         page.elements.btnShowDetail = $('#tablePurchaseOrder tbody tr td .showDetail');
         page.elements.btnShowDetail.on('click',function (){
             let orderId = $(this).data("id");
-            console.log(orderId);
-            $.ajax({
-                headers: {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                type: "GET",
-                url: page.urls.getAllDetailByOrderId + orderId
-            })
-            .done((data) => {
-                console.log(data);
+            page.elements.tbodyDetail.html("");
+            page.commands.getAllOrderDetails(orderId).then(() => {
+                $.each(orderDetail, (i, item) => {
+                    let str = App.renderOrderDetail(item);
+                    page.elements.tbodyDetail.append(str);
+                })
+                page.elements.orderId.text(orderDetail[0].order.id);
+                page.elements.customer.text(orderDetail[0].order.customer.fullName);
+                page.elements.quantityTotal.text(orderDetail[0].order.quantityTotal);
+                page.elements.totalAmount.text(orderDetail[0].order.totalAmount + " VNĐ");
+                page.elements.orderDate.text(orderDetail[0].order.orderDate === null ? "" : orderDetail[0].order.orderDate);
+                page.elements.inventoryDeliveryDate.text(orderDetail[0].order.inventoryDeliveryDate === null ? "" : orderDetail[0].order.inventoryDeliveryDate);
                 page.elements.modalDetail.modal('show');
-            })
-            .fail((jqXHR) => {
-                console.log("Fail");
-                console.log(jqXHR);
             })
         })
     }
 
-    let orders = [];
+    page.commands.closeModal = () => {
+        page.elements.btnCloseModal.on('click',() => {
+            page.elements.modalDetail.modal('hide');
+        })
+    }
 
+    let orders = [];
+    let orderDetail = [];
+
+    page.commands.getAllOrderDetails = (orderId) => {
+        console.log(orderId);
+        return $.ajax({
+                        headers: {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: page.urls.getAllDetailByOrderId + orderId
+                    })
+                    .done((data) => {
+                        orderDetail = data;
+                    })
+                    .fail((jqXHR) => {
+                        console.log(jqXHR);
+                    })
+    }
     page.commands.getAllOrders = () => {
         let employeeId = 1;
         return $.ajax({
@@ -209,17 +248,118 @@
         })
     }
 
+    page.commands.showModalDescription = () => {
+        page.elements.btnShowDescription = $('.cancelled');
+        page.elements.btnShowDescription.on('click',function () {
+            let orderId = $(this).data("id");
+            console.log(orderId);
+            page.elements.btnSaveDescription.data("id",orderId);
+            page.elements.modalDescription.modal("show");
+            page.commands.cancelledOrder();
+        })
+    }
+
+    page.commands.cancelledOrder = () => {
+        page.elements.btnSaveDescription.on('click',() => {
+            let description = page.elements.descriptionText.val();
+            console.log(description);
+            let orderId = page.elements.btnSaveDescription.data("id");
+            let orderCancelled = {
+               employeeId : "",
+               orderId : "",
+               description
+            }
+            orderCancelled.employeeId = "1";
+            orderCancelled.orderId = orderId;
+            orderCancelled.description = description;
+            console.log(orderCancelled);
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "POST",
+                url: page.urls.cancelledOrder,
+                data : JSON.stringify(orderCancelled)
+            })
+            .done((data) => {
+                $(`#tr_${orderId}`).remove();
+                App.SweetAleart.showSuccessAlert("Hủy Đơn Hàng Thành Công");
+                page.elements.descriptionText.val("");
+                page.elements.modalDescription.modal("hide");
+            })
+            .fail((jqXHR) => {
+                App.SweetAleart.showErrorAlert(jqXHR);
+            })
+            page.commands.unbindAll();
+        })
+    }
+
+    let orderChangeResult;
+
+    page.commands.callChangeOrder = (order) => {
+        return $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: page.urls.changeOrder,
+            data : JSON.stringify(order)
+        })
+        .done((data) => {
+            orderChangeResult = data;
+        })
+        .fail((jqXHR) => {
+            App.SweetAleart.showErrorAlert(jqXHR);
+        })
+    }
+
+    page.commands.changeOrder = () => {
+        page.elements.btnChangeOrder = $('.changeOrder');
+        page.elements.btnChangeOrder.on('click',function (){
+            let orderId = $(this).data("id");
+            let changeOrder = {
+                employeeId : "",
+                orderId : "",
+                description : ""
+            }
+            changeOrder.employeeId = "1";
+            changeOrder.orderId = orderId;
+            changeOrder.description = "Thay Đổi Trạng Thái Đơn Hàng";
+            page.commands.callChangeOrder(changeOrder).then(() => {
+                if (orderChangeResult.value === "DELIVERY") {
+                    let str = App.renderOrdersChange(orderChangeResult);
+                    $(`#tr_${orderId}`).replaceWith(str);
+                    console.log("hello");
+                }else {
+                    $(`#tr_${orderId}`).remove();
+                }
+                App.SweetAleart.showSuccessAlert("Thay Đổi Trạng Thái Đơn Hàng Thành Công");
+                page.commands.showModalDetails();
+                page.commands.showModalDescription();
+                page.commands.changeOrder();
+                page.commands.closeModal();
+            })
+        })
+    }
+
     $(() => {
         page.commands.getAllOrders().then(() => {
             $.each(orders, (i, item) => {
                 let str = App.renderOrders(item);
-                page.elements.tbodOrder.append(str);
+                page.elements.tbodyOrder.append(str);
             })
             page.commands.showModalDetails();
+            page.commands.showModalDescription();
+            page.commands.changeOrder();
+            page.commands.closeModal();
         })
     })
 
-
+    page.commands.unbindAll = () =>{
+        page.elements.btnSaveDescription.off();
+    }
 </script>
 
 </body>

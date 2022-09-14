@@ -62,6 +62,9 @@ public class Order {
                 .setQuantityTotal(String.valueOf(quantityTotal))
                 .setTotalAmount(totalAmount.toString())
                 .setLocationRegionDelivery(locationRegionDelivery.toLocationDeliveryDTO())
-                .setCustomer(customer.toCustomerDTO());
+                .setCustomer(customer.toCustomerDTO())
+                .setDeliveryDate(deliveryDate)
+                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setOrderDate(orderDate);
     }
 }
