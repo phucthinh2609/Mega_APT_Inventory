@@ -82,6 +82,13 @@ public class Home {
         return modelAndView;
     }
 
+    @GetMapping("/purchase-orders/invoice")
+    public ModelAndView showPurchaseOrderInvoicePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("purchase-order/invoice");
+        return modelAndView;
+    }
+
     @GetMapping("/orders")
     public ModelAndView showOrderListPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -107,13 +114,6 @@ public class Home {
     public ModelAndView showAdminListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("order/adminList");
-        return modelAndView;
-    }
-
-    @GetMapping("/purchase-orders/invoice")
-    public ModelAndView showPurchaseOrderInvoicePage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("purchase-order/invoice");
         return modelAndView;
     }
 
@@ -158,12 +158,4 @@ public class Home {
         modelAndView.setViewName("blog/list");
         return modelAndView;
     }
-
-    @GetMapping("/demo")
-    public ModelAndView showDemoPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("order/demo-create");
-        return modelAndView;
-    }
-
 }

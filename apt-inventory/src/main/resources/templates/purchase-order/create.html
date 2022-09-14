@@ -10,12 +10,11 @@
         <th:block th:replace="/layout/head/app-favicon"/>
         <!-- Touch-spin-css -->
         <th:block th:replace="/layout/head/bootstrap-touchspin-css"/>
-
+        <!-- twitter-bootstrap-wizard css -->
+        <th:block th:replace="/layout/head/twitter-bootstrap-wizard"/>
         <!-- Main -->
         <th:block th:replace="/layout/head/main"/>
-
-<!--        <link href="/assets/libs/font-awesome-v.4.7.0/font-awesome-v.4.7.0.min.css" rel="stylesheet" type="text/css">-->
-
+        <!-- Font-awesome-css -->
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <!-- Custom css -->
         <th:block th:replace="/layout/head/custom-css"/>
@@ -57,149 +56,184 @@
                                     </div>
 
                                 </div>
-                                <div class="position-relative col-sm-8 mb-3">
-                                    <input type="text" class="form-control" placeholder="Search product...">
-                                </div>
                             </div>
                         </div>
                         <!-- end page title -->
 
                         <div class="row">
-                            <div class="col-xl-8">
+                            <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-centered mb-0 table-nowrap text-center">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>Image</th>
-                                                        <th>Title</th>
-                                                        <th>Price</th>
-                                                        <th>Quantity</th>
-                                                        <th>Total</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <img src="\assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
-                                                        </td>
-                                                        <td>
-                                                            <a href="/products/details/${slug}" class="text-dark text-left">Half sleeve T-shirt</a>
-    
-                                                        </td>
-                                                        <td>
-                                                            <input id="price" name="price" type="text" class="form-control" style="width: 100px;">                                                        </td>
-                                                        <td>
-                                                            <div style="width: 120px;">
-                                                                <div class="input-group  bootstrap-touchspin ">
-                                                                    <input type="text" value="02" name="demo_vertical" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>$ 900</td>
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="4"></td>
-                                                        <td>Total Quantity: </td>
-                                                        <td class="text-right" colspan="2" id="totalQuantity">10</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4"></td>
-                                                        <td>Total Amount: </td>
-                                                        <td class="text-right font-size-15" colspan="2"><b id="totalAmount">1,857</b> ₫</td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div class="row mt-4">
-                                            <div class="col-sm-6">
-                                                <a href="/purchase-orders/list" class="btn btn-secondary">
-                                                    <i class="mdi mdi-arrow-left mr-1"></i>
-                                                    Purchase Order List
-                                                </a>
-                                            </div> <!-- end col -->
-                                            <div class="col-sm-6">
-                                                <div class="text-sm-right mt-2 mt-sm-0">
-                                                    <button id="btnCreatePurchaseOrder" type="button" class="btn btn-success">
-                                                        <i class="mdi mdi-cart-arrow-right mr-1"></i>
-                                                        Checkout
-                                                    </button>
+                                        <div id="basic-pills-wizard" class="twitter-bs-wizard">
+                                            <ul class="twitter-bs-wizard-nav">
+                                                <li class="nav-item">
+                                                    <a href="#select-product" class="nav-link" data-toggle="tab">
+                                                        <span class="step-number mr-2">01</span>
+                                                        Select product
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#supplier-info" class="nav-link" data-toggle="tab">
+                                                        <span class="step-number mr-2">02</span>
+                                                        <span>Supplier infomation</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="#order-status" class="nav-link" data-toggle="tab">
+                                                        <span class="step-number mr-2">03</span>
+                                                        Order status
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content twitter-bs-wizard-tab-content">
+                                                <div class="tab-pane form-group" id="select-product">
+                                                    <div class="position-relative col-sm-12 mb-3">
+                                                        <input type="text" class="form-control" placeholder="Search product...">
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-centered mb-0 table-nowrap text-center">
+                                                            <thead class="thead-light">
+                                                            <tr>
+                                                                <th>Image</th>
+                                                                <th>Title</th>
+                                                                <th>Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Total</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="\assets\images\product\img-1.png" alt="product-img" title="product-img" class="avatar-md">
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/products/details/${slug}" class="text-dark text-left">Half sleeve T-shirt</a>
+
+                                                                </td>
+                                                                <td>
+                                                                    <input id="price" name="price" type="text" class="form-control" style="width: 132px;display: inline-block;margin: 0 auto;">                                                     </td>
+                                                                <td>
+                                                                    <div style="width: 120px;display: inline-block;margin: 0 auto;">
+                                                                        <div class="input-group bootstrap-touchspin">
+                                                                            <input type="text" value="02" name="demo_vertical" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>$ 900</td>
+                                                                <td>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <td colspan="4"></td>
+                                                                <td>Total Quantity: </td>
+                                                                <td class="text-right" colspan="2" id="totalQuantity">10</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4"></td>
+                                                                <td>Total Amount: </td>
+                                                                <td class="text-right font-size-15" colspan="2"><b id="totalAmount">1,857</b> ₫</td>
+                                                            </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+
                                                 </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row-->
+                                                <div class="tab-pane active" id="supplier-info">
+                                                    <div class="row mb-2">
+                                                        <div class="col-sm-4">
+                                                            <h4 class="card-title mb-3">Suppplier</h4>
+                                                        </div>
+                                                        <div class="col-sm-8 text-sm-right">
+
+                                                            <button id="btnShowCreateSupplierModal" type="button" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 mr-2">
+                                                                <i class="mdi mdi-plus mr-1"></i>
+                                                                Add New
+                                                            </button>
+                                                            <button id="btnShowUpdateSupplierModal" type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2">
+                                                                <i class="mdi mdi-pencil mr-1"></i>
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-4">
+                                                        <select class="form-control" id="selectSupplier"><option value="1">(1) Tiki</option><option value="2">(2) Lazada</option><option value="3">(3) Shopee</option><option value="4">(4) Sen đỏ</option></select>
+                                                    </div>
+
+                                                    <div class="table-responsive col-sm-6 table-hover">
+                                                        <table class="table  mb-0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <th>Email :</th>
+                                                                <td id="email">tiki@co.cc</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Phone :</th>
+                                                                <td id="phone">0123456789</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Discount :</th>
+                                                                <td><span id="discount">0.01</span> %</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Address :</th>
+                                                                <td id="address">28 NTP</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Ward : </th>
+                                                                <td id="ward">Thị trấn Hòa Bình</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>District :</th>
+                                                                <td id="district">Huyện Hoà Bình</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Province : </th>
+                                                                <td id="province">Tỉnh Bạc Liêu</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="order-status">
+                                                    <div class="row mt-3">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Order Status</label>
+                                                                <select class="custom-select">
+                                                                    <option value="PENDING">Đang chờ xử lý</option>
+                                                                    <option value="COMPLETE">Hoàn tất</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="pager wizard twitter-bs-wizard-pager-link">
+                                                <li class="previous"><a href="#">Previous</a></li>
+                                                <li class="next"><a href="#">Next</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h4 class="card-title mb-3">Suppplier</h4>
-                                            </div>
-                                            <div class="col-sm-8 text-sm-right">
-
-                                                <button id="btnShowCreateSupplierModal" type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mb-2 mr-2">
-                                                    <i class="mdi mdi-plus mr-1"></i>
-                                                    Add New
-                                                </button>
-                                                <button id="btnShowUpdateSupplierModal" type="button" class="btn btn-success btn-sm btn-rounded waves-effect waves-light mb-2 mr-2">
-                                                <i class="mdi mdi-pencil mr-1"></i>
-                                                    Update
-                                                </button>
-                                            </div>
+                                <div class="row mt-4">
+                                    <div class="col-sm-6">
+                                    </div> <!-- end col -->
+                                    <div class="col-sm-6">
+                                        <div class="text-sm-right mt-2 mt-sm-0">
+                                            <button id="btnCreatePurchaseOrder" type="button" class="btn btn-success">
+                                                <i class="mdi mdi-cart-arrow-right mr-1"></i>
+                                                Checkout
+                                            </button>
                                         </div>
-
-                                        <div class="row form-group">
-                                            <select class="form-control" id="selectSupplier">
-                                            </select>
-                                        </div>
-
-                                        <div class="table-responsive">
-                                            <table class="table mb-0">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Email :</td>
-                                                        <td id="email"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Phone :</td>
-                                                        <td id="phone"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Discount :</td>
-                                                        <td><span id="discount"></span> %</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Address :</td>
-                                                        <td id="address"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Ward : </td>
-                                                        <td id="ward"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>District :</td>
-                                                        <td id="district"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Province : </td>
-                                                        <td id="province"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- end table-responsive -->
-                                    </div>
+                                    </div> <!-- end col -->
                                 </div>
-                                <!-- end card -->
                             </div>
                         </div>
                         <!-- end row -->
@@ -228,6 +262,11 @@
         <th:block th:replace="/layout/script/javascript"/>
         <!-- Touch-spin Js -->
         <th:block th:replace="/layout/script/bootrstrap-touchspin-js"/>
+
+        <!-- twitter-bootstrap-wizard js -->
+        <th:block th:replace="/layout/script/twitter-bootstrap-wizard"/>
+        <!-- form wizard init -->
+        <th:block th:replace="/layout/script/form-wizard"/>
         <!-- App js -->
         <th:block th:replace="/layout/script/app-js"/>
     </body>
