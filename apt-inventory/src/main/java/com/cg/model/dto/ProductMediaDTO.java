@@ -40,6 +40,9 @@ public class ProductMediaDTO implements Validator {
                 .setProduct(product.toProduct());
     }
 
+    public ProductMediaDTO(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

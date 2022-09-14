@@ -23,7 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
             "ord.deliveryDate, " +
             "ord.quantityTotal, " +
             "ord.totalAmount, " +
-            "ord.description, " +
+            "s.description, " +
             "s.value " +
             ") " +
             "FROM Situation AS s, Order AS ord " +

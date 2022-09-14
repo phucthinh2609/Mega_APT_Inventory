@@ -2,9 +2,11 @@ package com.cg.service.inventoryDetail;
 
 import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.InventoryDetailProductCodeDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface InventoryDetailService {
     List<InventoryDetailDTO> getInventoryOverView();
@@ -19,4 +21,6 @@ public interface InventoryDetailService {
 //    List<InventoryDetailDTO> getInventoryGroupByRam();
 //    List<InventoryDetailDTO> getInventoryGroupByCapacity();
     List<InventoryDetailDTO> getAllInventoryDetails();
+
+    Optional<InventoryDetailProductCodeDTO> getInventoryDetailByProductCode(String productCode);
 }
