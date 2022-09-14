@@ -159,4 +159,11 @@ public class Home {
         return modelAndView;
     }
 
+    @GetMapping("/demo")
+    public ModelAndView showDemoPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("order/demo-create");
+        return modelAndView;
+    }
+
 }
