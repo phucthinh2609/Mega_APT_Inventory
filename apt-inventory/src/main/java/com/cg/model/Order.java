@@ -11,7 +11,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -32,8 +31,8 @@ public class Order {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @Column(name = "inventory_delivery_date")
-    private LocalDateTime inventoryDeliveryDate;
+    @Column(name = "export_date")
+    private LocalDateTime exportDate;
 
     @Column(name = "delivery_date")
     private LocalDateTime deliveryDate;
@@ -46,8 +45,8 @@ public class Order {
     private int quantityTotal;
 
     @OneToOne
-    @JoinColumn(name = "location_region_delivery_id", nullable = false)
-    private LocationDelivery locationRegionDelivery;
+    @JoinColumn(name = "delivery_info_id")
+    private DeliveryInfo deliveryInfo;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -61,10 +60,10 @@ public class Order {
                 .setId(id)
                 .setQuantityTotal(String.valueOf(quantityTotal))
                 .setTotalAmount(totalAmount.toString())
-                .setLocationRegionDelivery(locationRegionDelivery.toLocationDeliveryDTO())
+                .setDeliveryInfoDTO(deliveryInfo.toDeliveryInfoDTO())
                 .setCustomer(customer.toCustomerDTO())
                 .setDeliveryDate(deliveryDate)
-                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setExportDate(exportDate)
                 .setOrderDate(orderDate);
     }
 }

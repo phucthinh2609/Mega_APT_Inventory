@@ -1,21 +1,13 @@
 package com.cg.model.dto;
 
-import com.cg.model.Employee;
-import com.cg.model.LocationDelivery;
 import com.cg.model.Order;
 import com.cg.model.Situation;
 import com.cg.model.enums.ESituationValue;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -41,7 +33,7 @@ public class SituationDTO implements Validator {
     private String employeeId;
 
 
-    private LocationDeliveryDTO locationDeliveryDTO;
+    private DeliveryInfoDTO deliveryInfoDTO;
 
     private boolean active;
 

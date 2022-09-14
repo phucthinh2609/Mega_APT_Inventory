@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.InventoryDetailProductCodeDTO;
 import com.cg.model.enums.EInventoryDetailStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,7 +30,10 @@ public class InventoryDetail {
     private String id;
 
     @Column(name = "stock_in_date")
-    private LocalDate stockInDate;
+    private LocalDateTime stockInDate;
+
+    @Column(name = "sell_by_date")
+    private LocalDateTime sellByDate;
 
     @Column(name = "product_code", unique = true)
     private String productCode;
@@ -52,4 +57,16 @@ public class InventoryDetail {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    public InventoryDetailProductCodeDTO toInventoryDetailProductCodeDTO() {
+        return new InventoryDetailProductCodeDTO()
+                .setId(id)
+                .setStockInDate(stockInDate)
+                .setProductCode(productCode)
+                .setStockInPrice(stockInPrice)
+                .setSalePrice(salePrice)
+                .setStatus(status)
+                .setGrossProfit(grossProfit)
+                .setProduct(product.toProductDTO());
+    }
 }

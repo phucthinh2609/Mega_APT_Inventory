@@ -1,5 +1,6 @@
 package com.cg.service.inventoryDetail;
 
+import com.cg.model.dto.InventoryDTO;
 import com.cg.model.dto.InventoryDetailDTO;
 import com.cg.model.dto.Statistics;
 import com.cg.model.dto.InventoryDetailProductCodeDTO;
@@ -24,4 +25,5 @@ public interface InventoryDetailService {
     Optional<Statistics> getStatisticsByTime(String startTime);
 
     Optional<InventoryDetailProductCodeDTO> getInventoryDetailByProductCode(String productCode);
+
 }

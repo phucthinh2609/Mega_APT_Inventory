@@ -8,22 +8,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class InventoryDetailProductCodeDTO {
 
     private String id;
 
-    private LocalDate stockInDate;
+    private LocalDateTime stockInDate;
+
+    private LocalDateTime sellByDate;
 
     private String productCode;
 
@@ -37,7 +42,7 @@ public class InventoryDetailProductCodeDTO {
 
     private ProductDTO product;
 
-    public InventoryDetailProductCodeDTO(String id, LocalDate stockInDate, String productCode, BigDecimal stockInPrice, BigDecimal salePrice, EInventoryDetailStatus status, BigDecimal grossProfit, Product product) {
+    public InventoryDetailProductCodeDTO(String id, LocalDateTime stockInDate, String productCode, BigDecimal stockInPrice, BigDecimal salePrice, EInventoryDetailStatus status, BigDecimal grossProfit, Product product) {
         this.id = id;
         this.stockInDate = stockInDate;
         this.productCode = productCode;

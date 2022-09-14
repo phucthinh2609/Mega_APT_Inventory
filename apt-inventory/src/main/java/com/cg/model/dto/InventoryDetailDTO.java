@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,20 +15,20 @@ public class InventoryDetailDTO {
     private String productCode;
     private BigDecimal salePrice;
     private BigDecimal stockInPrice;
-    private LocalDate stockInDate;
+    private LocalDateTime stockInDate;
     private boolean selled;
     private BigDecimal grossProfit;
     private Long quantity;
     private String productId;
 
-    public InventoryDetailDTO(String title, String productCode, BigDecimal stockInPrice, LocalDate stockInDate) {
+    public InventoryDetailDTO(String title, String productCode, BigDecimal stockInPrice, LocalDateTime stockInDate) {
         this.title = title;
         this.productCode = productCode;
         this.stockInPrice = stockInPrice;
         this.stockInDate = stockInDate;
     }
 
-    public InventoryDetailDTO(LocalDate stockInDate, String title, BigDecimal stockInPrice, Long quantity) {
+    public InventoryDetailDTO(LocalDateTime stockInDate, String title, BigDecimal stockInPrice, Long quantity) {
         this.stockInDate = stockInDate;
         this.title = title;
         this.stockInPrice = stockInPrice;

@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.InventoryDTO;
 import com.cg.model.dto.ProductDTO;
 import com.cg.model.enums.EBussinessStatus;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -36,5 +37,12 @@ public class Inventory {
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    public InventoryDTO toInventoryDTO() {
+        return new InventoryDTO()
+                .setId(id)
+                .setAvailable(available)
+                .setProduct(product.toProductDTO());
+    }
 
 }

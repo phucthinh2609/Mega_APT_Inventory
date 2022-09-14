@@ -180,7 +180,7 @@
     page.elements.quantityTotal = $('#quantityTotal');
     page.elements.totalAmount = $('#totalAmount');
     page.elements.orderDate = $('#orderDate');
-    page.elements.inventoryDeliveryDate = $('#inventoryDeliveryDate');
+    page.elements.exportDate = $('#exportDate');
     page.elements.descriptionText = $('#descriptionText');
 
     page.commands.showModalDetails = () => {
@@ -196,9 +196,9 @@
                 page.elements.orderId.text(orderDetail[0].order.id);
                 page.elements.customer.text(orderDetail[0].order.customer.fullName);
                 page.elements.quantityTotal.text(orderDetail[0].order.quantityTotal);
-                page.elements.totalAmount.text(orderDetail[0].order.totalAmount + " VNĐ");
+                page.elements.totalAmount.text(App.formatNumber(orderDetail[0].order.totalAmount));
                 page.elements.orderDate.text(orderDetail[0].order.orderDate === null ? "" : orderDetail[0].order.orderDate);
-                page.elements.inventoryDeliveryDate.text(orderDetail[0].order.inventoryDeliveryDate === null ? "" : orderDetail[0].order.inventoryDeliveryDate);
+                page.elements.exportDate.text(orderDetail[0].order.exportDate === null ? "" : orderDetail[0].order.exportDate);
                 page.elements.modalDetail.modal('show');
             })
         })
@@ -311,7 +311,15 @@
             orderChangeResult = data;
         })
         .fail((jqXHR) => {
-            App.SweetAleart.showErrorAlert(jqXHR);
+            if (jqXHR.responseJSON.error){
+                App.IziToast.showErrorAlert(jqXHR.responseJSON.error);
+                let listCode = jqXHR.responseJSON.listErr;
+                for (let i = 0 ; i < listCode.length ; i++) {
+                    App.IziToast.showErrorAlert("Mã Code : " + listCode[i].productCode);
+                }
+            }else {
+                App.SweetAleart.showErrorAlert(jqXHR);
+            }
         })
     }
 

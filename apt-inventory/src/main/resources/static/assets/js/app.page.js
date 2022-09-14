@@ -1,4 +1,4 @@
-class App {
+ss App {
     static DOMAIN = location.origin;
     static BASER_URL = this.DOMAIN + "/api";
     static GET_PROVINCES = "https://vapi.vnappmob.com/api/province";
@@ -53,7 +53,7 @@ class App {
             iziToast.success({
                 title: 'SUCCESS',
                 position: 'topRight',
-                timeout: 1000,
+                timeout: 3000,
                 message: title
             })
         }
@@ -202,7 +202,7 @@ class App {
                             </div>
                         </td>
                         <td><a href="javascript: void(0);" class="text-body font-weight-bold">#${obj.order.id}</a> </td>
-                        <td>${obj.order.totalAmount} VNĐ</td>
+                        <td>${App.formatNumber(obj.order.totalAmount)}</td>
                         <td>
                             ${obj.order.quantityTotal}
                         </td>
@@ -244,7 +244,7 @@ class App {
                       </div>
                     </td>
                     <td>
-                      ${obj.price} VNĐ
+                      ${App.formatNumber(obj.price)}
                     </td>
                     <td>
                       ${obj.productCode}
