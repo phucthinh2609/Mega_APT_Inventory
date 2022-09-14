@@ -4,8 +4,6 @@ import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -13,34 +11,6 @@ import java.util.List;
 
 @Repository
 public interface InventoryDetailRepository extends JpaRepository<InventoryDetail, String> {
-
-
-
-//    @Query("SELECT new com.cg.model.dto.InventoryDetailDTO (" +
-//            "inDe.stockInDate, " +
-//            "p.title, " +
-//            "inDe.stockInPrice, " +
-//            "COUNT(inDe.product) " +
-//            ") " +
-//            "FROM InventoryDetail AS inDe, Product AS p " +
-//            "WHERE inDe.product.id = p.id " +
-//            "AND inDe.selled = false " +
-//            "GROUP BY inDe.product, inDe.stockInDate " +
-//            "ORDER BY inDe.stockInDate"
-//    )
-//    List<InventoryDetailDTO> getInventoryOverView();
-
-    @Query("SELECT new com.cg.model.dto.InventoryDetailDTO (" +
-                "p.id, " +
-                "p.title, " +
-                "COUNT(inDe.product) " +
-            ") " +
-            "FROM InventoryDetail AS inDe, Product AS p " +
-            "WHERE inDe.product.id = p.id " +
-            "AND inDe.selled = false " +
-            "GROUP BY inDe.product "
-    )
-    List<InventoryDetailDTO> getInventoryOverView();
 
     @Query("SELECT new com.cg.model.dto.InventoryDetailDTO (" +
             "inDe.stockInDate, " +

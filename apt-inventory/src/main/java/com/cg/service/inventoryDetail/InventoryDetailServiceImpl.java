@@ -17,11 +17,6 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
     private InventoryDetailRepository inventoryDetailRepository;
 
     @Override
-    public List<InventoryDetailDTO> getInventoryOverView() {
-        return inventoryDetailRepository.getInventoryOverView();
-    }
-
-    @Override
     public List<InventoryDetailDTO> getProductDetail(String productId) {
         return inventoryDetailRepository.getProductDetail(productId);
     }

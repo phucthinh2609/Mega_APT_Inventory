@@ -2,7 +2,9 @@ package com.cg.controller.api;
 
 import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.Product;
+import com.cg.model.dto.InventoryDTO;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.service.inventory.InventoryService;
 import com.cg.service.inventoryDetail.InventoryDetailService;
 import com.cg.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/inventories")
 public class InventoryAPI {
-
+    @Autowired
+    private InventoryService inventoryService;
     @Autowired
     private InventoryDetailService inventoryDetailService;
 
@@ -30,7 +32,7 @@ public class InventoryAPI {
 
     @GetMapping("")
     public ResponseEntity<?> getInventoryOverview() {
-        List<InventoryDetailDTO> inventories = inventoryDetailService.getInventoryOverView();
+        List<InventoryDTO> inventories = inventoryService.getInventoryOverView();
         return new ResponseEntity<>(inventories, HttpStatus.OK);
     }
 

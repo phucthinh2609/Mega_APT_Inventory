@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface InventoryDetailService {
-    List<InventoryDetailDTO> getInventoryOverView();
     List<InventoryDetailDTO> getProductDetail(String productId);
     int getInventoryTotalQuantity();
 
