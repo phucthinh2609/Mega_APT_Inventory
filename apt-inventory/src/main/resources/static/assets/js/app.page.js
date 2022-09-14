@@ -87,6 +87,10 @@ class App {
 
     }
 
+    static formatNumber(x) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(x)
+    }
+
     // static formatNumber() {
     //     $(".num-space").number(true, 0, ',', ' ');
     //     $(".num-point").number(true, 0, ',', '.');
@@ -111,8 +115,6 @@ class App {
     //     $('[data-toggle="tooltip"]').tooltip();
     // }
 
-
-    renderInputTechSpecForm
 
     static renderInputTechSpecForm(obj) {
         let str = `
@@ -192,7 +194,7 @@ class App {
 
     static renderOrders(obj) {
         let str = `
-                    <tr>
+                    <tr id="tr_${obj.order.id}">
                         <td>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="input_${obj.order.id}">
@@ -212,14 +214,74 @@ class App {
                             <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail" data-id="${obj.order.id}" >View Details</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded change" data-id="${obj.order.id}">Change</a>
+                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded changeOrder" data-id="${obj.order.id}">Change</a>
                         </td>
-                        ${obj.strValue === "Đang Chờ Xử Lý" ? `<td>
+                        ${obj.strValue === "Đang Chờ Xử Lý" ? `<td class="text-right">
                                                                     <a href="/purchase-orders/update/${obj.order.id}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
-                                                                </td>` : `<td></td>`
+                                                                    <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                                                </td>` : `
+                                                                <td class="text-right">
+                                                                    <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                                                                </td>`
         }
                     </tr>
+                   `;
+        return str;
+    }
+
+    static renderOrderDetail(obj) {
+        let shortTitle = obj.product.title;
+        let title = shortTitle.substring(0,50);
+        let str = `
+                  <tr>
+                    <td>
+                      <img src="${obj.product.fileUrl}" alt="product-img" title="product-img" class="avatar-md">
+                    </td>
+                    <td>
+                      <div class="myTooltip">
+                        ${title} ...
+                        <span class="myTooltiptext">${obj.product.title}</span>
+                      </div>
+                    </td>
+                    <td>
+                      ${obj.price} VNĐ
+                    </td>
+                    <td>
+                      ${obj.productCode}
+                    </td>
+                  </tr>
+                   `;
+        return str;
+    }
+
+    static renderOrdersChange(obj) {
+        let str = `
+                    <tr id="tr_${obj.order.id}">
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="input_${obj.order.id}">
+                                <label class="custom-control-label" for="input_${obj.order.id}">&nbsp;</label>
+                            </div>
+                        </td>
+                        <td><a href="javascript: void(0);" class="text-body font-weight-bold">#${obj.order.id}</a> </td>
+                        <td>${obj.order.totalAmount} VNĐ</td>
+                        <td>
+                            ${obj.order.quantityTotal}
+                        </td>
+                        <td>${obj.order.customer.fullName}</td>
+                        <td>
+                            <span class="badge badge-pill badge-soft-info font-size-12">Đang Giao Hàng</span>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-rounded showDetail" data-id="${obj.order.id}" >View Details</a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded changeOrder" data-id="${obj.order.id}">Change</a>
+                        </td>
+                            <td class="text-right">
+                                <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
+                            </td>
+                        </tr>
                    `;
         return str;
     }

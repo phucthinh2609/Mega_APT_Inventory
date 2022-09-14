@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -28,7 +29,9 @@ public class OrderDTO implements Validator {
     private LocationDeliveryDTO locationRegionDelivery;
 
     private LocalDateTime orderDate;
+
     private LocalDateTime inventoryDeliveryDate;
+
     private LocalDateTime deliveryDate;
     private String description;
     private String situationValue;
@@ -60,8 +63,10 @@ public class OrderDTO implements Validator {
                 .setTotalAmount(new BigDecimal(totalAmount))
                 .setQuantityTotal(Integer.parseInt(quantityTotal))
                 .setLocationRegionDelivery(locationRegionDelivery.toLocationDelivery())
-                .setCustomer(customer.toCustomer());
-
+                .setCustomer(customer.toCustomer())
+                .setDeliveryDate(deliveryDate)
+                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setOrderDate(orderDate);
     }
 
     @Override

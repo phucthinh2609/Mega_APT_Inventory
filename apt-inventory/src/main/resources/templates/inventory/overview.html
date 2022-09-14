@@ -167,6 +167,7 @@
             let inventoryDetails = [];
             let inventorySearchDetails = [];
             let keySearch = "";
+            let keys = [];
             let totalAmount;
 
             page.commands.getInventoryOverView = () => {
@@ -205,10 +206,24 @@
 
             $('#keySearch').on('input', () => {
                 keySearch = $('#keySearch').val().toLowerCase();
-                inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
-                if (keySearch) {
+                keys = keySearch.split(' ');
+                console.log(keys)
+                $.each(keys, (index, value) => {
+                    if (value) {
+                        if (index !== 0) {
+                            inventorySearchDetails = inventorySearchDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(value));
+                        } else {
+                            inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(value));
+                        }
+                    }
                     page.commands.renderDetails(inventorySearchDetails);
-                }
+                })
+
+
+                // inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
+                // if (keySearch) {
+                //     page.commands.renderDetails(inventorySearchDetails);
+                // }
             })
 
             page.commands.handleShowProductDetail = () => {
@@ -281,8 +296,8 @@
                                 <td>
                                     <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
                                 </td>
-                                <td>${value.title}</td>
-                                <td>${value.quantity}</td>
+                                <td>${value.productTitle}</td>
+                                <td>${value.available}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm btn-rounded viewProductDetail" id="${value.productId}" data-toggle="modal" data-target=".exampleModal">
                                         Xem

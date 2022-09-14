@@ -45,8 +45,6 @@ public class Order {
     @Column(name = "quantity_total")
     private int quantityTotal;
 
-    private String description;
-
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)
     private LocationDelivery locationRegionDelivery;
@@ -64,6 +62,9 @@ public class Order {
                 .setQuantityTotal(String.valueOf(quantityTotal))
                 .setTotalAmount(totalAmount.toString())
                 .setLocationRegionDelivery(locationRegionDelivery.toLocationDeliveryDTO())
-                .setCustomer(customer.toCustomerDTO());
+                .setCustomer(customer.toCustomerDTO())
+                .setDeliveryDate(deliveryDate)
+                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setOrderDate(orderDate);
     }
 }
