@@ -66,8 +66,12 @@ public class Product {
     @OneToMany(targetEntity = InventoryDetail.class, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<InventoryDetail> inventoryDetails;
 
-    @OneToOne(mappedBy = "product")
+    @ManyToOne
+    @JoinColumn(name = "blog_id")
     private Blog blog;
+
+    @OneToOne(mappedBy = "product")
+    private Inventory inventory;
 
     public ProductDTO toProductDTO() {
         return new ProductDTO()

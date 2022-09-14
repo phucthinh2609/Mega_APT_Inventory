@@ -35,8 +35,10 @@ public class OrderDetailDTO implements Validator {
 
     private OrderDTO order;
 
-    public OrderDetailDTO(String id, BigDecimal price,Product product, Order order , String productCode) {
+
+    public OrderDetailDTO(String id, String productCode, BigDecimal price, Product product, Order order) {
         this.id = id;
+        this.productCode = productCode;
         this.price = price.toString();
         this.product = product.toProductDTO();
         this.order = order.toOrderDTO();
@@ -46,6 +48,7 @@ public class OrderDetailDTO implements Validator {
     public OrderDetail toOrderDetail() {
         return new OrderDetail()
                 .setId(id)
+                .setProductCode(productCode)
                 .setPrice(new BigDecimal(price))
                 .setProduct(product.toProduct())
                 .setOrder(order.toOrder());

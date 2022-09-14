@@ -51,6 +51,7 @@ public class LocationRegion {
     public LocationRegionDTO toLocationRegionDTO() {
         return new LocationRegionDTO()
                 .setId(String.valueOf(id))
+                .setAddress(address)
                 .setProvinceId(provinceId.toString())
                 .setProvinceName(provinceName)
                 .setDistrictId(districtId.toString())

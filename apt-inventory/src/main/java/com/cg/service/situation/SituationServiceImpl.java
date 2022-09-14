@@ -1,9 +1,12 @@
 package com.cg.service.situation;
 import com.cg.model.Order;
 import com.cg.model.Situation;
+import com.cg.model.dto.InventoryDetailProductCodeDTO;
 import com.cg.model.dto.OrderDTO;
 import com.cg.model.dto.OrderDetailDTO;
 import com.cg.model.dto.SituationDTO;
+import com.cg.model.enums.EInventoryDetailStatus;
+import com.cg.repository.InventoryDetailRepository;
 import com.cg.repository.OrderRepository;
 import com.cg.repository.SituationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ public class SituationServiceImpl implements SituationService{
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    InventoryDetailRepository inventoryDetailRepository;
 
     @Override
     public List<SituationDTO> findAllSituationDTO(String employeeId) {
@@ -54,7 +60,7 @@ public class SituationServiceImpl implements SituationService{
     }
 
     @Override
-    public SituationDTO changeOrderPending(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO, List<OrderDetailDTO> orderDetailDTOList) {
+    public SituationDTO changeOrderPending(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO, List<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTOList) {
         situationDTO.setActive(false);
         situationDTO.setEmployee(newSituationDTO.getEmployee());
         Order newOrder = orderRepository.save(orderDTO.toOrder());
@@ -62,6 +68,10 @@ public class SituationServiceImpl implements SituationService{
         newSituationDTO.setOrder(newOrder.toOrderDTO());
         situationRepository.save(situationDTO.toSituation());
         Situation situation = situationRepository.save(newSituationDTO.toSituation());
+        for (InventoryDetailProductCodeDTO inventoryDetailProductCodeDTO : inventoryDetailProductCodeDTOList) {
+            inventoryDetailProductCodeDTO.setStatus(EInventoryDetailStatus.EXPORTED);
+            inventoryDetailRepository.save(inventoryDetailProductCodeDTO.toInventoryDetail());
+        }
         return situation.toSituationDTO();
     }
 }

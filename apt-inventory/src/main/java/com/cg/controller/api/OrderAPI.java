@@ -1,14 +1,23 @@
 package com.cg.controller.api;
 
+
 import com.cg.exception.DataInputException;
 import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.OrderDetail;
 import com.cg.model.dto.*;
+import com.cg.model.enums.EInventoryDetailStatus;
 import com.cg.model.enums.ESituationValue;
 import com.cg.service.employee.EmployeeService;
 import com.cg.service.inventoryDetail.InventoryDetailService;
 import com.cg.service.order.OrderService;
 import com.cg.service.orderDetail.OrderDetailService;
+
+import com.cg.model.ProductMedia;
+import com.cg.model.dto.OrderDTO;
+import com.cg.model.dto.ProductRender;
+import com.cg.model.dto.SituationDTO;
+import com.cg.service.order.OrderService;
+
 import com.cg.service.situation.SituationService;
 import com.cg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +28,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderAPI {
     @Autowired
-    SituationService situationService;
+    private OrderService orderService;
 
     @Autowired
-    OrderService orderService;
+    private SituationService situationService;
 
     @Autowired
     OrderDetailService orderDetailService;
@@ -137,16 +144,25 @@ public class OrderAPI {
                 List<OrderDetailDTO> orderDetailDTOList = orderDetailService.findAllOrderDetailDTO(newSituationDTO.getOrder().getId());
                 boolean flag = true;
                 List<InventoryDetailProductCodeDTO> listProductCodeErr = new ArrayList<>();
+                List<InventoryDetailProductCodeDTO> listProductCode = new ArrayList<>();
                 for (OrderDetailDTO orderDetailDTO : orderDetailDTOList ) {
                     Optional<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTO = inventoryDetailService.getInventoryDetailByProductCode(orderDetailDTO.getProductCode());
-                    if(inventoryDetailProductCodeDTO.get().isSelled()) {
-
+                    if(inventoryDetailProductCodeDTO.get().getStatus().equals(EInventoryDetailStatus.EXPORTED)) {
                         flag = false;
+                        listProductCodeErr.add(inventoryDetailProductCodeDTO.get());
+                    }else {
+                        listProductCode.add(inventoryDetailProductCodeDTO.get());
                     }
                 }
 
-
-                SituationDTO situationDTOCreate = situationService.changeOrderPending(situationDTO.get(),newSituationDTO,orderDTO,orderDetailDTOList);
+                if (listProductCodeErr.size() > 0) {
+                    Map<String,Object> result = new HashMap<>();
+                    String error = "Mã Code Đã Được Xuất Kho Trước Đó";
+                    result.put("error",error);
+                    result.put("listErr",listProductCodeErr);
+                    return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
+                }
+                SituationDTO situationDTOCreate = situationService.changeOrderPending(situationDTO.get(),newSituationDTO,orderDTO,listProductCode);
                 return new ResponseEntity<>(situationDTOCreate,HttpStatus.CREATED);
             }catch (Exception e) {
                 throw new DataInputException("Liên Hệ Quản Trị Viên Hệ Thống Để Được Giải Quyết");
@@ -173,6 +189,14 @@ public class OrderAPI {
 
         return null;
     }
+    @GetMapping("/admin")
+    public ResponseEntity<?> getAllOrders() {
 
+            List<OrderDTO> orderDTOS = orderService.getAllOrders();
+            if (orderDTOS == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
 
+    }
 }

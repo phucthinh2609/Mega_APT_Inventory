@@ -3,6 +3,7 @@ package com.cg.model.dto;
 
 import com.cg.model.InventoryDetail;
 import com.cg.model.Product;
+import com.cg.model.enums.EInventoryDetailStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,21 +29,21 @@ public class InventoryDetailProductCodeDTO {
 
     private BigDecimal stockInPrice;
 
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal salePrice;
 
-    private boolean selled;
+    private EInventoryDetailStatus status;
 
     private BigDecimal grossProfit;
 
     private ProductDTO product;
 
-    public InventoryDetailProductCodeDTO(String id, LocalDate stockInDate, String productCode, BigDecimal stockInPrice, BigDecimal purchaseOrderPrice, boolean selled, BigDecimal grossProfit, Product product) {
+    public InventoryDetailProductCodeDTO(String id, LocalDate stockInDate, String productCode, BigDecimal stockInPrice, BigDecimal salePrice, EInventoryDetailStatus status, BigDecimal grossProfit, Product product) {
         this.id = id;
         this.stockInDate = stockInDate;
         this.productCode = productCode;
         this.stockInPrice = stockInPrice;
-        this.purchaseOrderPrice = purchaseOrderPrice;
-        this.selled = selled;
+        this.salePrice = salePrice;
+        this.status = status;
         this.grossProfit = grossProfit;
         this.product = product.toProductDTO();
     }
@@ -53,8 +54,8 @@ public class InventoryDetailProductCodeDTO {
                 .setStockInDate(stockInDate)
                 .setProductCode(productCode)
                 .setStockInPrice(stockInPrice)
-                .setPurchaseOrderPrice(purchaseOrderPrice)
-                .setSelled(selled)
+                .setSalePrice(salePrice)
+                .setStatus(status)
                 .setGrossProfit(grossProfit)
                 .setProduct(product.toProduct());
     }

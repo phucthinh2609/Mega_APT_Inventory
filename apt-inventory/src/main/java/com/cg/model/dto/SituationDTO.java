@@ -44,7 +44,6 @@ public class SituationDTO implements Validator {
         this.strValue = value.getValue();
         this.order = order.toOrderDTO();
     }
-
     public SituationDTO(String id, ESituationValue value, LocalDateTime date, Order order, String description, boolean active) {
         this.id = id;
         this.value = value;
@@ -53,6 +52,7 @@ public class SituationDTO implements Validator {
         this.description = description;
         this.active = active;
     }
+
 
     public Situation toSituation() {
         return new Situation()

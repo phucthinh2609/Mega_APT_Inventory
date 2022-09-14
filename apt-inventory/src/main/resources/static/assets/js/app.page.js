@@ -1,6 +1,8 @@
 class App {
     static DOMAIN = location.origin;
     static BASER_URL = this.DOMAIN + "/api";
+    static GET_PROVINCES = "https://vapi.vnappmob.com/api/province";
+
 
     static ERROR_400 = "Thao tác không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Access Denied! Invalid credentials.";
@@ -289,7 +291,7 @@ class App {
             str += `
                 <tr>
                     <th scope="row" style="width: 400px;">${value.explanation}</th>
-                    <td id="cpu">${prd.configurationDetail[value.name].content}</td>
+                    <td>${prd.configurationDetail[value.name].content}</td>
                 </tr>
             `;
         })

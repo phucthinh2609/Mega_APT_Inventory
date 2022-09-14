@@ -60,19 +60,34 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row mb-2">
-                                            <div class="col-sm-4">
-                                                <div class="search-box mr-2 mb-2 d-inline-block">
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control" placeholder="Search...">
-                                                        <i class="bx bx-search-alt search-icon"></i>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-outline-success" id="btnSearchByDate">Tìm theo ngày</button>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button class="btn btn-outline-success" id="btnSearchByPeriod">Tìm theo giai đoạn</button>
+
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-8">
+                                                <div class="d-none" id="dateGroup">
+                                                    <span>Tìm theo ngày: </span>
+                                                    <div class="search-box mr-2 mb-2 d-inline-block">
+                                                        <input type="date" class="form-control" id="date">
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-none" id="periodGroup">
+                                                    <span>Từ ngày: </span>
+                                                    <div class="search-box mr-2 mb-2 d-inline-block">
+                                                        <input type="date" class="form-control" id="dateFrom">
+                                                    </div>
+                                                    <span>Đến ngày: </span>
+                                                    <div class="search-box mr-2 mb-2 d-inline-block">
+                                                        <input type="date" class="form-control" id="dateTo">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                <div class="text-sm-right">
-                                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2"><i class="mdi mdi-plus mr-1"></i> Add New Order</button>
-                                                </div>
-                                            </div><!-- end col-->
                                         </div>
 
                                         <div class="table-responsive">
@@ -85,6 +100,7 @@
                                                     <th>Số lượng</th>
                                                     <th>Thành tiền</th>
                                                     <th>Mã Nhân Viên</th>
+                                                    <th>Trạng Thái</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -159,7 +175,7 @@
                         <div class="modal-body">
                             <p class="mb-2">Ngày nhập kho: <span id="stockInDate" class="text-primary"></span></p>
                             <div class="table-responsive">
-                                <table id="tbsProductDetail" class="table table-centered table-nowrap">
+                                <table id="tbsDetail" class="table table-centered table-nowrap">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -200,7 +216,7 @@
             let page = {
                 urls: {
                     getAllPurchaseOrders: App.BASER_URL + "/purchaseOrders",
-                    getPurchaseOrderDetail: App.BASER_URL + "/purchaseOrders/details/",
+                    getPurchaseOrderDetails: App.BASER_URL + "/purchaseOrders/details/",
                 },
                 elements: {
                 },
@@ -213,7 +229,8 @@
                 },
             }
 
-            let purchaseOrderList = []
+            let purchaseOrderList = [];
+            let dateFrom, dateTo;
             page.commands.getAllPurchaseOrders = () => {
                 return $.ajax({
                     headers: {
@@ -231,60 +248,105 @@
                     });
             }
 
+            $('#btnSearchByDate').on('click', () => {
+                $('#btnSearchByDate').css("background-color", "yellow");
+                $('#btnSearchByPeriod').css("background-color", "white");
+                $('#dateGroup').removeClass('d-none');
+                $('#periodGroup').addClass('d-none');
+                $('#dateFrom').val('');
+                $('#dateTo').val('');
+                page.commands.renderPurchaseOrders(purchaseOrderList);
+            })
 
-            // $('#keySearch').on('input', () => {
-            //     keySearch = $('#keySearch').val().toLowerCase();
-            //     inventorySearchDetails = inventoryDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(keySearch));
-            //     if (keySearch) {
-            //         page.commands.renderDetails(inventorySearchDetails);
-            //     }
-            // })
+            $('#btnSearchByPeriod').on('click', () => {
+                $('#btnSearchByPeriod').css("background-color", "yellow");
+                $('#btnSearchByDate').css("background-color", "white");
+                $('#dateGroup').addClass('d-none');
+                $('#periodGroup').removeClass('d-none');
+                $('#date').val('');
+                page.commands.renderPurchaseOrders(purchaseOrderList);
+            })
 
-            page.commands.handleShowPurchaseOrderDetail = () => {
-                $('button.viewProductDetail').on('click', function () {
-                    let productId = $(this).attr("id");
+            $('#date').on('input', () => {
+                let date = $('#date').val();
+                let searchList = purchaseOrderList.filter(purchaseOrder => purchaseOrder.stockInDate === date);
+                console.log(searchList)
+                if (date) {
+                    page.commands.renderPurchaseOrders(searchList);
+                }
+            })
+
+            $('#dateFrom').on('input', () => {
+                dateFrom = $('#dateFrom').val();
+                if (dateFrom && !dateTo) {
+                    let searchList = purchaseOrderList.filter(purchaseOrder => purchaseOrder.stockInDate >= dateFrom);
+                    page.commands.renderPurchaseOrders(searchList);
+                }
+                if (dateFrom && dateTo) {
+                    let searchList = purchaseOrderList.filter(purchaseOrder => {
+                        return purchaseOrder.stockInDate >= dateFrom
+                            && purchaseOrder.stockInDate <= dateTo
+                    })
+                    page.commands.renderPurchaseOrders(searchList);
+                }
+            })
+
+            $('#dateTo').on('input', () => {
+                dateTo = $('#dateTo').val();
+                if (!dateFrom && dateTo) {
+                    let searchList = purchaseOrderList.filter(purchaseOrder => purchaseOrder.stockInDate <= dateTo);
+                    page.commands.renderPurchaseOrders(searchList);
+                }
+                if (dateFrom && dateTo) {
+                    let searchList = purchaseOrderList.filter(purchaseOrder => {
+                        return purchaseOrder.stockInDate >= dateFrom
+                            && purchaseOrder.stockInDate <= dateTo
+                    })
+                    page.commands.renderPurchaseOrders(searchList);
+                }
+            })
+
+            page.commands.handleShowPurchaseOrderDetails = () => {
+                $('button.viewPurchaseOrderDetails').on('click', function () {
+                    let purchaseOrderId = $(this).attr("id");
                     $.ajax({
                         headers: {
                             "accept": "application/json",
                             "content-type": "application/json"
                         },
                         type: "GET",
-                        url: page.urls.getProductDetail + productId
+                        url: page.urls.getPurchaseOrderDetails + purchaseOrderId
                     })
                         .done((data) => {
-                            $('#modalProductDetail').modal('show');
-                            $('#productDetailTitle').text(data[0].title);
-                            let tbsBody = $('#tbsProductDetail tbody');
+                            $('#modalPurchaseOrderDetail').modal('show');
+                            $('#stockInDate').text(data[0].stockInDate);
+                            let tbsBody = $('#tbsDetail tbody');
                             tbsBody.html('')
-                            let tbsFoot = $('#tbsProductDetail tfoot');
+                            let tbsFoot = $('#tbsDetail tfoot');
                             tbsFoot.html('');
                             let groupQuantity = 0;
                             let groupAmount = 0;
-                            let groupPercent = 0;
                             $.each(data, (index, value) => {
                                 let str = `
                                     <tr>
                                         <td>
                                             <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
                                         </td>
-                                        <td>${value.stockInDate}</td>
+                                        <td>${value.productTitle}</td>
                                         <td>${value.stockInPrice}</td>
                                         <td>${value.quantity}</td>
-                                        <td>${value.stockInPrice * value.quantity}</td>
-                                        <td>${value.stockInPrice * value.quantity / totalAmount}</td>
+                                        <td>${value.amount}</td>
                                     </tr>
                                 `;
                                 tbsBody.append(str);
 
                                 groupQuantity += value.quantity;
-                                groupAmount += value.stockInPrice * value.quantity;
-                                groupPercent += value.stockInPrice * value.quantity / totalAmount;
+                                groupAmount += value.amount;
                             })
                             let footStr = `
                                 <td colSpan="3">TỔNG</td>
                                 <td>${groupQuantity}</td>
                                 <td>${groupAmount}</td>
-                                <td>${groupPercent}</td>
                             `;
                             tbsFoot.append(footStr);
 
@@ -314,7 +376,11 @@
                                 <td>${value.amount}</td>
                                 <td>${value.employeeCode}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm btn-rounded viewProductDetail" id="${value.purchaseOrderId}" data-toggle="modal" data-target=".exampleModal">
+
+                                    <span class="font-size-12 badge badge-pill ${value.statusValue === "Hoàn Tất"? "badge-soft-success" : "badge-soft-info"}">${value.statusValue}</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded viewPurchaseOrderDetails" id="${value.purchaseOrderId}" data-toggle="modal" data-target=".exampleModal">
                                         Xem
                                     </button>
                                 </td>
@@ -322,7 +388,7 @@
                         `;
                     tbsBody.append(str);
                 })
-                // handleShowProductDetail();
+                page.commands.handleShowPurchaseOrderDetails();
             }
 
             $(() => {
@@ -333,5 +399,4 @@
         </script>
     </body>
 
->>>>>>> dev
 </html>

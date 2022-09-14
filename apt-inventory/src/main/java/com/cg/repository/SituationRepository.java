@@ -26,6 +26,7 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
     )
     List<SituationDTO> findAllSituationDTO(String id);
 
+
     @Query("SELECT new com.cg.model.dto.SituationDTO (" +
             "s.id, " +
             "s.value, " +

@@ -1,6 +1,7 @@
 package com.cg.service.purchaseOrderDetail;
 
 import com.cg.model.PurchaseOrdersDetail;
+import com.cg.model.dto.PurchaseOrderDetailDTO;
 import com.cg.repository.PurchaseOrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class PurchaseOrderDetailServiceImpl implements PurchaseOrderDetailServic
     private PurchaseOrderDetailRepository purchaseOrderDetailRepository;
 
     @Override
-    public Optional<PurchaseOrdersDetail> findByPurchaseOrderId(String purchaseOrderId) {
-        return purchaseOrderDetailRepository.findByPurchaseOrderId(purchaseOrderId);
+    public List<PurchaseOrderDetailDTO> getPurchaseOrderDetails(String purchaseOrderId) {
+        return purchaseOrderDetailRepository.getPurchaseOrderDetails(purchaseOrderId);
     }
 }

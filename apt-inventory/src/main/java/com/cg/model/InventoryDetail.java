@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.enums.EInventoryDetailStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,18 +30,19 @@ public class InventoryDetail {
     @Column(name = "stock_in_date")
     private LocalDate stockInDate;
 
-    @Column(name = "product_code")
+    @Column(name = "product_code", unique = true)
     private String productCode;
 
     @Column(name = "stock_in_price")
     @Digits(integer = 12, fraction = 0)
     private BigDecimal stockInPrice;
 
-    @Column(name = "purchase_order_price")
+    @Column(name = "sale_price")
     @Digits(integer = 12, fraction = 0)
-    private BigDecimal purchaseOrderPrice;
+    private BigDecimal salePrice;
 
-    private boolean selled;
+    @Enumerated(EnumType.STRING)
+    private EInventoryDetailStatus status;
 
     @Column(name = "gross_profit")
     @Digits(integer = 12, fraction = 0)

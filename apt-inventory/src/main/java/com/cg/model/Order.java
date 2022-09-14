@@ -29,13 +29,6 @@ public class Order {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Digits(integer = 15, fraction = 0)
-    @Column(name = "total_amount")
-    private BigDecimal totalAmount;
-
-    @Column(name = "quantity_total")
-    private int quantityTotal;
-
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
@@ -44,6 +37,13 @@ public class Order {
 
     @Column(name = "delivery_date")
     private LocalDateTime deliveryDate;
+
+    @Digits(integer = 15, fraction = 0)
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
+
+    @Column(name = "quantity_total")
+    private int quantityTotal;
 
     @OneToOne
     @JoinColumn(name = "location_region_delivery_id", nullable = false)

@@ -39,7 +39,7 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
             ") " +
             "FROM InventoryDetail AS inDe, Product AS p " +
             "WHERE inDe.product.id = p.id " +
-            "AND inDe.selled = false " +
+            "AND inDe.status = 'IN_STOCK' " +
             "GROUP BY inDe.product "
     )
     List<InventoryDetailDTO> getInventoryOverView();
@@ -52,7 +52,7 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
         ") " +
         "FROM InventoryDetail AS inDe, Product AS p " +
         "WHERE inDe.product.id = ?1 " +
-        "AND inDe.selled = false " +
+        "AND inDe.status = 'IN_STOCK' " +
         "AND inDe.product.id = p.id " +
         "GROUP BY inDe.stockInDate " +
         "ORDER BY inDe.stockInDate"
@@ -62,14 +62,14 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
     @Query("SELECT " +
                 "COUNT(inDe) " +
             "FROM InventoryDetail AS inDe " +
-            "WHERE inDe.selled = false "
+            "WHERE inDe.status = 'IN_STOCK' "
     )
     int getInventoryTotalQuantity();
 
     @Query("SELECT " +
             "SUM(inDe.stockInPrice) " +
             "FROM InventoryDetail AS inDe " +
-            "WHERE inDe.selled = false "
+            "WHERE inDe.status = 'IN_STOCK' "
     )
     BigDecimal getInventoryTotalAmount();
 
@@ -142,7 +142,7 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
         ") " +
         "FROM InventoryDetail AS inDe, Product AS p " +
         "WHERE inDe.product.id = p.id " +
-        "AND inDe.selled = false " +
+        "AND inDe.status = 'IN_STOCK' " +
         "GROUP BY inDe.product, inDe.stockInDate " +
         "ORDER BY inDe.stockInDate"
     )
@@ -153,8 +153,8 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
             "inDe.stockInDate," +
             "inDe.productCode," +
             "inDe.stockInPrice," +
-            "inDe.purchaseOrderPrice," +
-            "inDe.selled," +
+            "inDe.salePrice," +
+            "inDe.status," +
             "inDe.grossProfit," +
             "inDe.product" +
             ") " +
