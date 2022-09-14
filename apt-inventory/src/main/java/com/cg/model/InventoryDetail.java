@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.enums.EInventoryDetailStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,9 @@ public class InventoryDetail {
     @Digits(integer = 12, fraction = 0)
     private BigDecimal salePrice;
 
-    private boolean selled;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255) default 'IN_STOCK'")
+    private EInventoryDetailStatus status;
 
     @Column(name = "gross_profit")
     @Digits(integer = 12, fraction = 0)
@@ -49,5 +52,4 @@ public class InventoryDetail {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
 }

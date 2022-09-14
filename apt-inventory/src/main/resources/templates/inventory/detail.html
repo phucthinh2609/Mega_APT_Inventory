@@ -151,6 +151,7 @@
     let inventoryDetails = [];
     let inventorySearchDetails = [];
     let keySearch = "";
+    let keys = [];
     let dateFrom;
     let dateTo;
     let totalAmount;
@@ -192,11 +193,18 @@
 
     $('#btnSearch').on('click', () => {
         keySearch = $('#keySearch').val().toLowerCase();
+        keys = keySearch.split(' ');
+        inventorySearchDetails = inventoryDetails;
         dateFrom = $('#dateFrom').val();
         dateTo = $('#dateTo').val();
-        inventorySearchDetails = inventoryDetails.filter(inventoryDetail => {
-            return (keySearch? inventoryDetail.title.toLowerCase().includes(keySearch) : true)
-                && (dateFrom? inventoryDetail.stockInDate >= dateFrom : true)
+        $.each(keys, (index, value) => {
+            if (value) {
+                inventorySearchDetails = inventorySearchDetails.filter(inventoryDetail => inventoryDetail.title.toLowerCase().includes(value));
+            }
+        })
+
+        inventorySearchDetails = inventorySearchDetails.filter(inventoryDetail => {
+            return (dateFrom? inventoryDetail.stockInDate >= dateFrom : true)
                 && (dateTo? inventoryDetail.stockInDate <= dateTo : true)
         });
         if (keySearch || dateFrom || dateTo) {
@@ -230,9 +238,9 @@
                                       <span class="myTooltiptext">${value.title}</span>
                                     </div>
                                 </td>
-                                <td>${value.stockInPrice}</td>
+                                <td>${App.formatNumber(value.stockInPrice)}</td>
                                 <td>${value.quantity}</td>
-                                <td>${value.stockInPrice * value.quantity}</td>
+                                <td>${App.formatNumber(value.stockInPrice * value.quantity)}</td>
                                 <td>${(value.stockInPrice * value.quantity * 100 / totalAmount).toFixed(2) + '%'}</td>
                             </tr>
                         `;
@@ -245,7 +253,7 @@
         let footStr = `
                 <td colSpan="4">TỔNG</td>
                 <td>${groupQuantity}</td>
-                <td>${groupAmount}</td>
+                <td>${App.formatNumber(groupAmount)}</td>
                 <td>${(groupPercent * 100).toFixed(2) + '%'}</td>
             `;
         tbsFoot.append(footStr);

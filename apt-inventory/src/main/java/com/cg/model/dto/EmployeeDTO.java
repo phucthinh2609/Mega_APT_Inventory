@@ -25,6 +25,17 @@ public class EmployeeDTO implements Validator {
     private RoleDTO role;
     private UserMediaDTO userMedia;
 
+    public EmployeeDTO(String id, String email, String password, String fullName, String phone, LocationRegion locationRegion, Role role, UserMedia userMedia) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.locationRegion = locationRegion.toLocationRegionDTO();
+        this.role = role.toRoleDTO();
+        this.userMedia = userMedia.toUserMediaDTO();
+    }
+
     public Employee toEmployee() {
         return new Employee()
                 .setId(id)

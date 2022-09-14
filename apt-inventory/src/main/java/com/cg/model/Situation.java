@@ -1,5 +1,6 @@
 package com.cg.model;
 
+import com.cg.model.dto.SituationDTO;
 import com.cg.model.enums.ESituationValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "situation")
@@ -28,10 +29,13 @@ public class Situation {
     @Enumerated(EnumType.STRING)
     private ESituationValue value;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(columnDefinition = "boolean default true")
     private boolean active;
+
+    @Column(columnDefinition = "varchar(255) default '-'")
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -40,5 +44,16 @@ public class Situation {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    public SituationDTO toSituationDTO() {
+        return new SituationDTO()
+                .setId(id)
+                .setValue(value)
+                .setDate(date)
+                .setActive(active)
+                .setEmployee(employee.toEmployeeDTO())
+                .setDescription(description)
+                .setOrder(order.toOrderDTO());
+    }
 
 }
