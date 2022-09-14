@@ -1,18 +1,18 @@
 package com.cg.service.situation;
+import com.cg.model.InventoryDetail;
 import com.cg.model.Order;
 import com.cg.model.Situation;
-import com.cg.model.dto.InventoryDetailProductCodeDTO;
-import com.cg.model.dto.OrderDTO;
-import com.cg.model.dto.OrderDetailDTO;
-import com.cg.model.dto.SituationDTO;
+import com.cg.model.dto.*;
 import com.cg.model.enums.EInventoryDetailStatus;
 import com.cg.repository.InventoryDetailRepository;
+import com.cg.repository.InventoryRepository;
 import com.cg.repository.OrderRepository;
 import com.cg.repository.SituationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +28,9 @@ public class SituationServiceImpl implements SituationService{
 
     @Autowired
     InventoryDetailRepository inventoryDetailRepository;
+
+    @Autowired
+    InventoryRepository inventoryRepository;
 
     @Override
     public List<SituationDTO> findAllSituationDTO(String employeeId) {
@@ -81,9 +84,17 @@ public class SituationServiceImpl implements SituationService{
         newSituationDTO.setOrder(newOrder.toOrderDTO());
         situationRepository.save(situationDTO.toSituation());
         Situation situation = situationRepository.save(newSituationDTO.toSituation());
+        List<InventoryDetailProductCodeDTO> list = new ArrayList<>();
         for (InventoryDetailProductCodeDTO inventoryDetailProductCodeDTO : inventoryDetailProductCodeDTOList) {
             inventoryDetailProductCodeDTO.setStatus(EInventoryDetailStatus.EXPORTED);
-            inventoryDetailRepository.save(inventoryDetailProductCodeDTO.toInventoryDetail());
+            InventoryDetail inventoryDetail = inventoryDetailRepository.save(inventoryDetailProductCodeDTO.toInventoryDetail());
+            list.add(inventoryDetail.toInventoryDetailProductCodeDTO());
+        }
+        for (InventoryDetailProductCodeDTO inventoryDetailProductCodeDTO : list) {
+            Optional<InventoryDTO> inventoryDTOOptional = inventoryRepository.getInventoryByProductId(inventoryDetailProductCodeDTO.getProduct().getId());
+            InventoryDTO inventoryDTO = inventoryDTOOptional.get();
+            inventoryDTO.setAvailable(inventoryDTO.getAvailable() - 1);
+            inventoryRepository.save(inventoryDTO.toInventory());
         }
         return situation.toSituationDTO();
     }

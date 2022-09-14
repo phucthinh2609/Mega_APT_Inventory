@@ -1,4 +1,4 @@
-class App {
+ss App {
     static DOMAIN = location.origin;
     static BASER_URL = this.DOMAIN + "/api";
     static GET_PROVINCES = "https://vapi.vnappmob.com/api/province";

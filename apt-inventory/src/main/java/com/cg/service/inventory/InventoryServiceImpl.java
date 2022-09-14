@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,5 +19,10 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public List<InventoryDTO> getInventoryOverView() {
         return inventoryRepository.getInventoryOverView();
+    }
+
+    @Override
+    public Optional<InventoryDTO> getInventoryByProductId(String productId) {
+        return inventoryRepository.getInventoryByProductId(productId);
     }
 }

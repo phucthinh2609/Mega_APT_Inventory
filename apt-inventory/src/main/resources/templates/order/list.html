@@ -180,7 +180,7 @@
     page.elements.quantityTotal = $('#quantityTotal');
     page.elements.totalAmount = $('#totalAmount');
     page.elements.orderDate = $('#orderDate');
-    page.elements.inventoryDeliveryDate = $('#inventoryDeliveryDate');
+    page.elements.exportDate = $('#exportDate');
     page.elements.descriptionText = $('#descriptionText');
 
     page.commands.showModalDetails = () => {
@@ -198,7 +198,7 @@
                 page.elements.quantityTotal.text(orderDetail[0].order.quantityTotal);
                 page.elements.totalAmount.text(App.formatNumber(orderDetail[0].order.totalAmount));
                 page.elements.orderDate.text(orderDetail[0].order.orderDate === null ? "" : orderDetail[0].order.orderDate);
-                page.elements.inventoryDeliveryDate.text(orderDetail[0].order.inventoryDeliveryDate === null ? "" : orderDetail[0].order.inventoryDeliveryDate);
+                page.elements.exportDate.text(orderDetail[0].order.exportDate === null ? "" : orderDetail[0].order.exportDate);
                 page.elements.modalDetail.modal('show');
             })
         })

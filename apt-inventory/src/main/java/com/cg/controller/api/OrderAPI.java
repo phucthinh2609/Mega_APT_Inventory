@@ -140,7 +140,7 @@ public class OrderAPI {
             try{
                 SituationDTO newSituationDTO = new SituationDTO();
                 OrderDTO orderDTO = situationDTO.get().getOrder();
-                orderDTO.setInventoryDeliveryDate(LocalDateTime.now());
+                orderDTO.setExportDate(LocalDateTime.now());
                 newSituationDTO.setDate(LocalDateTime.now());
                 newSituationDTO.setEmployee(employeeDTO.get());
                 newSituationDTO.setOrder(situationDTO.get().getOrder());
@@ -168,6 +168,7 @@ public class OrderAPI {
                     result.put("listErr",listProductCodeErr);
                     return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
                 }
+
                 SituationDTO situationDTOCreate = situationService.changeOrderPending(situationDTO.get(),newSituationDTO,orderDTO,listProductCode);
                 return new ResponseEntity<>(situationDTOCreate,HttpStatus.CREATED);
             }catch (Exception e) {
