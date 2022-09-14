@@ -4,9 +4,11 @@ import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.Product;
 import com.cg.model.dto.InventoryDTO;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.Statistics;
 import com.cg.service.inventory.InventoryService;
 import com.cg.service.inventoryDetail.InventoryDetailService;
 import com.cg.service.product.ProductService;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,5 +97,17 @@ public class InventoryAPI {
         return new ResponseEntity<>(inventories, HttpStatus.OK);
     }
 
+    @GetMapping("/statistics/{startTime} ")
+    public ResponseEntity<?> getStatisticsByTime(@PathVariable String startTime) {
+        try {
+            Optional<Statistics> statistics = inventoryDetailService.getStatisticsByTime(startTime);
+            if (statistics.isPresent()) {
+                return new ResponseEntity<>(statistics.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
