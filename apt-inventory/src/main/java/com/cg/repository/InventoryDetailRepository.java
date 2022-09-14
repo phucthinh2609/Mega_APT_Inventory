@@ -2,11 +2,10 @@ package com.cg.repository;
 
 import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.Statistics;
 import com.cg.model.dto.InventoryDetailProductCodeDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -15,8 +14,6 @@ import java.util.Optional;
 
 @Repository
 public interface InventoryDetailRepository extends JpaRepository<InventoryDetail, String> {
-
-
 
 //    @Query("SELECT new com.cg.model.dto.InventoryDetailDTO (" +
 //            "inDe.stockInDate, " +
@@ -147,6 +144,27 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
         "ORDER BY inDe.stockInDate"
     )
     List<InventoryDetailDTO> getAllInventoryDetails();
+
+
+//    @Query("SELECT new com.cg.model.dto.Statistics (" +
+//            "inDe.stockInDate, " +
+//            "p.title, " +
+//            "inDe.stockInPrice, " +
+//            "COUNT(inDe.product) " +
+//            ") " +
+//            "FROM InventoryDetail AS inDe, Product AS p " +
+//            "WHERE inDe.product.id = p.id " +
+//            "AND inDe.selled = false " +
+//            "GROUP BY inDe.product, inDe.stockInDate " +
+//            "ORDER BY inDe.stockInDate"
+//    )
+    @Query("SELECT new com.cg.model.dto.Statistics (" +
+            "inDe.id " +
+            ") " +
+            "FROM InventoryDetail AS inDe "
+
+    )
+    Optional<Statistics> getStatisticsByTime(String startTime);
 
     @Query("SELECT new com.cg.model.dto.InventoryDetailProductCodeDTO (" +
             "inDe.id, " +

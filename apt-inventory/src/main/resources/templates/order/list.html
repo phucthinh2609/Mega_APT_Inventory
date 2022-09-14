@@ -196,7 +196,7 @@
                 page.elements.orderId.text(orderDetail[0].order.id);
                 page.elements.customer.text(orderDetail[0].order.customer.fullName);
                 page.elements.quantityTotal.text(orderDetail[0].order.quantityTotal);
-                page.elements.totalAmount.text(orderDetail[0].order.totalAmount + " VNĐ");
+                page.elements.totalAmount.text(App.formatNumber(orderDetail[0].order.totalAmount));
                 page.elements.orderDate.text(orderDetail[0].order.orderDate === null ? "" : orderDetail[0].order.orderDate);
                 page.elements.inventoryDeliveryDate.text(orderDetail[0].order.inventoryDeliveryDate === null ? "" : orderDetail[0].order.inventoryDeliveryDate);
                 page.elements.modalDetail.modal('show');

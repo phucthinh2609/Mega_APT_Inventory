@@ -211,4 +211,15 @@ public class OrderAPI {
             return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
 
     }
+
+    @GetMapping("/admin/history/{orderId}")
+    public ResponseEntity<?> getOrderHistory(@PathVariable String orderId) {
+
+        List<SituationDTO> situationDTOList = situationService.getOrderHistory(orderId);
+        if (situationDTOList == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(situationDTOList, HttpStatus.OK);
+
+    }
 }

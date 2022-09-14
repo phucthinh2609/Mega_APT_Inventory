@@ -87,6 +87,10 @@ class App {
 
     }
 
+    static formatNumber(x) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(x)
+    }
+
     // static formatNumber() {
     //     $(".num-space").number(true, 0, ',', ' ');
     //     $(".num-point").number(true, 0, ',', '.');
@@ -111,8 +115,6 @@ class App {
     //     $('[data-toggle="tooltip"]').tooltip();
     // }
 
-
-    renderInputTechSpecForm
 
     static renderInputTechSpecForm(obj) {
         let str = `
@@ -200,7 +202,7 @@ class App {
                             </div>
                         </td>
                         <td><a href="javascript: void(0);" class="text-body font-weight-bold">#${obj.order.id}</a> </td>
-                        <td>${obj.order.totalAmount} VNĐ</td>
+                        <td>${App.formatNumber(obj.order.totalAmount)}</td>
                         <td>
                             ${obj.order.quantityTotal}
                         </td>
@@ -242,7 +244,7 @@ class App {
                       </div>
                     </td>
                     <td>
-                      ${obj.price} VNĐ
+                      ${App.formatNumber(obj.price)}
                     </td>
                     <td>
                       ${obj.productCode}

@@ -1,6 +1,7 @@
 package com.cg.service.inventoryDetail;
 
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.Statistics;
 import com.cg.model.dto.InventoryDetailProductCodeDTO;
 import com.cg.repository.InventoryDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,6 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
 
     @Autowired
     private InventoryDetailRepository inventoryDetailRepository;
-
-    @Override
-    public List<InventoryDetailDTO> getInventoryOverView() {
-        return inventoryDetailRepository.getInventoryOverView();
-    }
 
     @Override
     public List<InventoryDetailDTO> getProductDetail(String productId) {
@@ -41,6 +37,11 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
     @Override
     public List<InventoryDetailDTO> getAllInventoryDetails() {
         return inventoryDetailRepository.getAllInventoryDetails();
+    }
+
+    @Override
+    public Optional<Statistics> getStatisticsByTime(String startTime) {
+        return inventoryDetailRepository.getStatisticsByTime(startTime);
     }
 
     @Override

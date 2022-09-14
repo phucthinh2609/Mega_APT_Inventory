@@ -2,9 +2,13 @@ package com.cg.controller.api;
 
 import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.Product;
+import com.cg.model.dto.InventoryDTO;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.Statistics;
+import com.cg.service.inventory.InventoryService;
 import com.cg.service.inventoryDetail.InventoryDetailService;
 import com.cg.service.product.ProductService;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/inventories")
 public class InventoryAPI {
-
+    @Autowired
+    private InventoryService inventoryService;
     @Autowired
     private InventoryDetailService inventoryDetailService;
 
@@ -30,7 +34,7 @@ public class InventoryAPI {
 
     @GetMapping("")
     public ResponseEntity<?> getInventoryOverview() {
-        List<InventoryDetailDTO> inventories = inventoryDetailService.getInventoryOverView();
+        List<InventoryDTO> inventories = inventoryService.getInventoryOverView();
         return new ResponseEntity<>(inventories, HttpStatus.OK);
     }
 
@@ -93,5 +97,17 @@ public class InventoryAPI {
         return new ResponseEntity<>(inventories, HttpStatus.OK);
     }
 
+    @GetMapping("/statistics/{startTime} ")
+    public ResponseEntity<?> getStatisticsByTime(@PathVariable String startTime) {
+        try {
+            Optional<Statistics> statistics = inventoryDetailService.getStatisticsByTime(startTime);
+            if (statistics.isPresent()) {
+                return new ResponseEntity<>(statistics.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

@@ -26,6 +26,17 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
     )
     List<SituationDTO> findAllSituationDTO(String id);
 
+    @Query("SELECT new com.cg.model.dto.SituationDTO (" +
+            "s.date, " +
+            "s.value, " +
+            "s.employee.id, " +
+            "s.description" +
+            ") " +
+            "FROM Situation AS s " +
+            "WHERE s.order.id = :orderId " +
+            "ORDER BY s.date "
+    )
+    List<SituationDTO> getOrderHistory(String orderId);
 
     @Query("SELECT new com.cg.model.dto.SituationDTO (" +
             "s.id, " +
@@ -39,4 +50,5 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
             "WHERE (s.employee.id = :employeeId OR s.employee.id IS NULL) AND s.order.id = :orderId AND s.active IS TRUE"
     )
     Optional<SituationDTO> findLastSituationDTOByOrderIdAndEmployeeId(String employeeId, String orderId);
+
 }

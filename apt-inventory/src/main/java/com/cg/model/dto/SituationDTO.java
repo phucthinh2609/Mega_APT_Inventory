@@ -1,6 +1,7 @@
 package com.cg.model.dto;
 
 import com.cg.model.Employee;
+import com.cg.model.LocationDelivery;
 import com.cg.model.Order;
 import com.cg.model.Situation;
 import com.cg.model.enums.ESituationValue;
@@ -37,7 +38,13 @@ public class SituationDTO implements Validator {
 
     private EmployeeDTO employee;
 
+    private String employeeId;
+
+
+    private LocationDeliveryDTO locationDeliveryDTO;
+
     private boolean active;
+
 
     public SituationDTO(String id, ESituationValue value, Order order) {
         this.id = id;
@@ -51,6 +58,13 @@ public class SituationDTO implements Validator {
         this.order = order.toOrderDTO();
         this.description = description;
         this.active = active;
+    }
+
+    public SituationDTO(LocalDateTime date, ESituationValue value, String employeeId, String description) {
+        this.date = date;
+        this.strValue = value.getValue();
+        this.employeeId = employeeId;
+        this.description = description;
     }
 
 

@@ -35,6 +35,11 @@ public class SituationServiceImpl implements SituationService{
     }
 
     @Override
+    public List<SituationDTO> getOrderHistory(String orderId) {
+        return situationRepository.getOrderHistory(orderId);
+    }
+
+    @Override
     public Optional<SituationDTO> findLastSituationDTOByOrderIdAndEmployeeId(String employeeId, String orderId) {
         return situationRepository.findLastSituationDTOByOrderIdAndEmployeeId(employeeId,orderId);
     }

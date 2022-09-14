@@ -11,8 +11,12 @@ import java.util.Optional;
 
 public interface SituationService {
     List<SituationDTO> findAllSituationDTO(String employeeId);
+
+    List<SituationDTO> getOrderHistory(String orderId);
+
     Optional<SituationDTO> findLastSituationDTOByOrderIdAndEmployeeId(String employeeId, String orderId);
     void cancelledOrder(SituationDTO situationDTO,SituationDTO newSituationDTO,List<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTOList);
     SituationDTO changeOrderDelivery(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO, List<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTOList);
     SituationDTO changeOrderPending(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO, List<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTOList);
+
 }

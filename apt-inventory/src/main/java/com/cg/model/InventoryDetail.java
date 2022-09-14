@@ -42,7 +42,7 @@ public class InventoryDetail {
     private BigDecimal salePrice;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(255) default 'IN_STOCK' ")
+    @Column(columnDefinition = "varchar(255) default 'IN_STOCK'")
     private EInventoryDetailStatus status;
 
     @Column(name = "gross_profit")
