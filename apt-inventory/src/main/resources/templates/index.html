@@ -835,5 +835,16 @@
 
         <!-- App js -->
         <th:block th:replace="/layout/script/app-js :: app-js"/>
+
+        <script type="text/javascript" src="/assets/js/date.js"></script>
+
+        <script>
+            let firstdayOfMonth = Date.today().clearTime().moveToFirstDayOfMonth();
+            console.log(firstdayOfMonth.toLocaleDateString());
+
+            let firstMondayOfWeek = Date.today().previous().monday();
+            console.log(firstMondayOfWeek.toLocaleDateString());
+
+        </script>
     </body>
 </html>

@@ -11,13 +11,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Statistics {
     private String id;
-    private int totalOrder;
-    private int totalSales;
+    private Long totalOrder;
+    private Long totalSales;
     private BigDecimal revenue;
     private BigDecimal grossProfit;
 
     public Statistics(String id) {
         this.id = id;
+    }
+
+    public Statistics(Long totalOrder, Long totalSales, BigDecimal revenue) {
+        this.totalOrder = totalOrder;
+        this.totalSales = totalSales;
+        this.revenue = revenue;
     }
 
 }

@@ -4,6 +4,7 @@ package com.cg.repository;
 import com.cg.model.ProductMedia;
 import com.cg.model.Situation;
 import com.cg.model.dto.SituationDTO;
+import com.cg.model.dto.Statistics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -50,5 +51,8 @@ public interface SituationRepository extends JpaRepository<Situation, String> {
             "WHERE (s.employee.id = :employeeId OR s.employee.id IS NULL) AND s.order.id = :orderId AND s.active IS TRUE"
     )
     Optional<SituationDTO> findLastSituationDTOByOrderIdAndEmployeeId(String employeeId, String orderId);
+
+
+
 
 }

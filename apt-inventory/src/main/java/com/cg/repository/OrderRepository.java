@@ -5,6 +5,7 @@ import com.cg.model.ProductMedia;
 import com.cg.model.dto.OrderDTO;
 import com.cg.model.dto.OrderDetailDTO;
 import com.cg.model.dto.SituationDTO;
+import com.cg.model.dto.Statistics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -45,4 +46,6 @@ public interface OrderRepository extends JpaRepository<Order, String> {
             "WHERE o.id = :id"
     )
     Optional<OrderDTO> findOrderDTOById(String id);
+
+
 }

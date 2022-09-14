@@ -254,9 +254,9 @@
                                             <a href="javascript: void(0);" class="text-body font-weight-bold">${index + 1}</a>
                                         </td>
                                         <td>${value.stockInDate}</td>
-                                        <td>${value.stockInPrice}</td>
+                                        <td>${App.formatNumber(value.stockInPrice)}</td>
                                         <td>${value.quantity}</td>
-                                        <td>${value.stockInPrice * value.quantity}</td>
+                                        <td>${App.formatNumber(value.stockInPrice * value.quantity)}</td>
                                         <td>${(value.stockInPrice * value.quantity * 100 / totalAmount).toFixed(2) + '%'}</td>
                                     </tr>
                                 `;
@@ -269,7 +269,7 @@
                             let footStr = `
                                 <td colSpan="3">TỔNG</td>
                                 <td>${groupQuantity}</td>
-                                <td>${groupAmount}</td>
+                                <td>${App.formatNumber(groupAmount)}</td>
                                 <td>${(groupPercent * 100).toFixed(2) + '%'}</td>
                             `;
                             tbsFoot.append(footStr);
@@ -307,7 +307,7 @@
                         `;
                     tbsBody.append(str);
 
-                    groupQuantity += value.quantity;
+                    groupQuantity += value.available;
                 })
                 let footStr = `
                                 <td colSpan="2">TỔNG</td>
