@@ -53,7 +53,7 @@ class App {
             iziToast.success({
                 title: 'SUCCESS',
                 position: 'topRight',
-                timeout: 1000,
+                timeout: 3000,
                 message: title
             })
         }

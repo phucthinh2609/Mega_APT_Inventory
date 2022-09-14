@@ -311,7 +311,15 @@
             orderChangeResult = data;
         })
         .fail((jqXHR) => {
-            App.SweetAleart.showErrorAlert(jqXHR);
+            if (jqXHR.responseJSON.error){
+                App.IziToast.showErrorAlert(jqXHR.responseJSON.error);
+                let listCode = jqXHR.responseJSON.listErr;
+                for (let i = 0 ; i < listCode.length ; i++) {
+                    App.IziToast.showErrorAlert("Mã Code : " + listCode[i].productCode);
+                }
+            }else {
+                App.SweetAleart.showErrorAlert(jqXHR);
+            }
         })
     }
 
