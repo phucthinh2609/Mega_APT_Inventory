@@ -49,6 +49,10 @@ public class SupplierServiceImpl implements SupplierService{
 
     @Override
     public Supplier update(SupplierDTO supplierDTO) {
-        return null;
+        LocationRegion createdLocationRegion = locationRegionRepository.save(supplierDTO.getLocationRegion().toLocationRegion());
+
+        supplierDTO.setLocationRegion(createdLocationRegion.toLocationRegionDTO());
+
+        return supplierRepository.save(supplierDTO.toSupplier());
     }
 }

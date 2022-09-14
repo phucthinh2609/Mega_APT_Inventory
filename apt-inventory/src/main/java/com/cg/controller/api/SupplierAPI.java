@@ -58,4 +58,29 @@ public class SupplierAPI {
 
         return new ResponseEntity<>(createdSupplier.toSupplierDTO(), HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @Validated @RequestBody SupplierDTO supplierDTO, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return appUtils.mapErrorToResponse(bindingResult);
+        }
+
+        Optional<SupplierDTO> currentSupplierDTO = supplierService.getSupplierDTOById(id);
+
+        if (!currentSupplierDTO.isPresent()) {
+            throw new DataInputException("Invalid supplier!!!");
+        }
+
+        Optional<SupplierDTO> emailExistsSupplierDTO = supplierService.getSupplierDTOByEmailAndIdIsNot(supplierDTO.getEmail(), id);
+
+        if (emailExistsSupplierDTO.isPresent()) {
+            throw new DataInputException("Email already exists!!!");
+        }
+
+        supplierDTO.setId(String.valueOf(id));
+
+        Supplier updatedSupplier = supplierService.update(supplierDTO);
+
+        return new ResponseEntity<>(updatedSupplier, HttpStatus.OK);
+    }
 }
