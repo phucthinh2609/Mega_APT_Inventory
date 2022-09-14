@@ -31,8 +31,8 @@ public class Order {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @Column(name = "inventory_delivery_date")
-    private LocalDateTime inventoryDeliveryDate;
+    @Column(name = "export_date")
+    private LocalDateTime exportDate;
 
     @Column(name = "delivery_date")
     private LocalDateTime deliveryDate;
@@ -63,7 +63,7 @@ public class Order {
                 .setDeliveryInfoDTO(deliveryInfo.toDeliveryInfoDTO())
                 .setCustomer(customer.toCustomerDTO())
                 .setDeliveryDate(deliveryDate)
-                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setExportDate(exportDate)
                 .setOrderDate(orderDate);
     }
 }

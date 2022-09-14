@@ -19,7 +19,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
             "ord.customer.fullName, " +
             "ord.deliveryInfo, " +
             "ord.orderDate, " +
-            "ord.inventoryDeliveryDate, " +
+            "ord.exportDate, " +
             "ord.deliveryDate, " +
             "ord.quantityTotal, " +
             "ord.totalAmount, " +

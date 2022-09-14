@@ -29,7 +29,7 @@ public class OrderDTO implements Validator {
 
     private LocalDateTime orderDate;
 
-    private LocalDateTime inventoryDeliveryDate;
+    private LocalDateTime exportDate;
 
     private LocalDateTime deliveryDate;
     private String description;
@@ -42,13 +42,12 @@ public class OrderDTO implements Validator {
         this.customer = customer.toCustomerDTO();
         this.deliveryInfoDTO = deliveryInfo.toDeliveryInfoDTO();
     }
-
     public OrderDTO(String id, String customerName, DeliveryInfo deliveryInfo, LocalDateTime orderDate, LocalDateTime inventoryDeliveryDate, LocalDateTime deliveryDate, int quantityTotal, BigDecimal totalAmount, String description, ESituationValue value) {
         this.id = id;
         this.customerName = customerName;
         this.deliveryInfoDTO = deliveryInfo.toDeliveryInfoDTO();
         this.orderDate = orderDate;
-        this.inventoryDeliveryDate = inventoryDeliveryDate;
+        this.exportDate = exportDate;
         this.deliveryDate = deliveryDate;
         this.quantityTotal = String.valueOf(quantityTotal);
         this.totalAmount = totalAmount.toString();
@@ -64,7 +63,7 @@ public class OrderDTO implements Validator {
                 .setDeliveryInfo(deliveryInfoDTO.toDeliveryInfo())
                 .setCustomer(customer.toCustomer())
                 .setDeliveryDate(deliveryDate)
-                .setInventoryDeliveryDate(inventoryDeliveryDate)
+                .setExportDate(exportDate)
                 .setOrderDate(orderDate);
     }
 

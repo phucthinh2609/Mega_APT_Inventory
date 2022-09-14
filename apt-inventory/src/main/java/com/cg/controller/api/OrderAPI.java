@@ -98,7 +98,13 @@ public class OrderAPI {
             newSituationDTO.setValue(ESituationValue.CANCELLED);
             newSituationDTO.setActive(true);
             newSituationDTO.setDescription(orderChangeDTO.getDescription());
-            situationService.cancelledOrder(situationDTO.get(),newSituationDTO);
+            List<OrderDetailDTO> orderDetailDTOList = orderDetailService.findAllOrderDetailDTO(newSituationDTO.getOrder().getId());
+            List<InventoryDetailProductCodeDTO> listProductCode = new ArrayList<>();
+            for (OrderDetailDTO orderDetailDTO : orderDetailDTOList ) {
+                Optional<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTO = inventoryDetailService.getInventoryDetailByProductCode(orderDetailDTO.getProductCode());
+                listProductCode.add(inventoryDetailProductCodeDTO.get());
+            }
+            situationService.cancelledOrder(situationDTO.get(),newSituationDTO,listProductCode);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (Exception e) {
             throw new DataInputException("Liên Hệ Quản Trị Viên Hệ Thống Để Được Giải Quyết");
@@ -134,7 +140,7 @@ public class OrderAPI {
             try{
                 SituationDTO newSituationDTO = new SituationDTO();
                 OrderDTO orderDTO = situationDTO.get().getOrder();
-                orderDTO.setInventoryDeliveryDate(LocalDateTime.now());
+                orderDTO.setExportDate(LocalDateTime.now());
                 newSituationDTO.setDate(LocalDateTime.now());
                 newSituationDTO.setEmployee(employeeDTO.get());
                 newSituationDTO.setOrder(situationDTO.get().getOrder());
@@ -162,6 +168,7 @@ public class OrderAPI {
                     result.put("listErr",listProductCodeErr);
                     return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
                 }
+
                 SituationDTO situationDTOCreate = situationService.changeOrderPending(situationDTO.get(),newSituationDTO,orderDTO,listProductCode);
                 return new ResponseEntity<>(situationDTOCreate,HttpStatus.CREATED);
             }catch (Exception e) {
@@ -180,7 +187,13 @@ public class OrderAPI {
                 newSituationDTO.setValue(ESituationValue.COMPLETE);
                 newSituationDTO.setActive(true);
                 newSituationDTO.setDescription(orderChangeDTO.getDescription());
-                SituationDTO situationDTOCreate = situationService.changeOrderDelivery(situationDTO.get(),newSituationDTO,orderDTO);
+                List<OrderDetailDTO> orderDetailDTOList = orderDetailService.findAllOrderDetailDTO(newSituationDTO.getOrder().getId());
+                List<InventoryDetailProductCodeDTO> listProductCode = new ArrayList<>();
+                for (OrderDetailDTO orderDetailDTO : orderDetailDTOList ) {
+                    Optional<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTO = inventoryDetailService.getInventoryDetailByProductCode(orderDetailDTO.getProductCode());
+                    listProductCode.add(inventoryDetailProductCodeDTO.get());
+                }
+                SituationDTO situationDTOCreate = situationService.changeOrderDelivery(situationDTO.get(),newSituationDTO,orderDTO,listProductCode);
                 return new ResponseEntity<>(situationDTOCreate,HttpStatus.CREATED);
             }catch (Exception e) {
                 throw new DataInputException("Liên Hệ Quản Trị Viên Hệ Thống Để Được Giải Quyết");
