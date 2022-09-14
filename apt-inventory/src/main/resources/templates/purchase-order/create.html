@@ -5,16 +5,20 @@
         <title>Create Purchase Order Page</title>
 
         <!-- Meta -->
-        <th:block th:replace="/layout/head/meta :: meta"/>
+        <th:block th:replace="/layout/head/meta"/>
         <!-- App-favicon -->
-        <th:block th:replace="/layout/head/app-favicon :: app-favicon"/>
-        <link rel="stylesheet" href="/assets/css/bootstrap/jquery.bootstrap-touchspin.min.css">
+        <th:block th:replace="/layout/head/app-favicon"/>
+        <!-- Touch-spin-css -->
+        <th:block th:replace="/layout/head/bootstrap-touchspin-css"/>
+
         <!-- Main -->
-        <th:block th:replace="/layout/head/main :: main"/>
+        <th:block th:replace="/layout/head/main"/>
+
+<!--        <link href="/assets/libs/font-awesome-v.4.7.0/font-awesome-v.4.7.0.min.css" rel="stylesheet" type="text/css">-->
 
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <!-- Custom css -->
-        <th:block th:replace="/layout/head/custom-css :: custom-css"/>
+        <th:block th:replace="/layout/head/custom-css"/>
 
     </head>
 
@@ -71,9 +75,9 @@
                                                         <th>Image</th>
                                                         <th>Title</th>
                                                         <th>Price</th>
-                                                        <th>Available</th>
                                                         <th>Quantity</th>
-                                                        <th colspan="2">Total</th>
+                                                        <th>Total</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -86,30 +90,32 @@
     
                                                         </td>
                                                         <td>
-                                                            $ 450
-                                                        </td>
-                                                        <td>
-                                                            10
-                                                        </td>
+                                                            <input id="price" name="price" type="text" class="form-control" style="width: 100px;">                                                        </td>
                                                         <td>
                                                             <div style="width: 120px;">
-                                                                <div class="input-group  bootstrap-touchspin bootstrap-touchspin-injected">
+                                                                <div class="input-group  bootstrap-touchspin ">
                                                                     <input type="text" value="02" name="demo_vertical" class="form-control">
-                                                                    <span class="input-group-btn-vertical">
-                                                                            <button class="btn btn-primary bootstrap-touchspin-up " type="button">+</button>
-                                                                            <button class="btn btn-primary bootstrap-touchspin-down " type="button">-</button>
-                                                                        </span>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            $ 900
-                                                        </td>
+                                                        <td>$ 900</td>
                                                         <td>
                                                             <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4"></td>
+                                                        <td>Total Quantity: </td>
+                                                        <td class="text-right" colspan="2" id="totalQuantity">10</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4"></td>
+                                                        <td>Total Amount: </td>
+                                                        <td class="text-right font-size-15" colspan="2"><b id="totalAmount">1,857</b> ₫</td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                         <div class="row mt-4">
@@ -193,28 +199,6 @@
                                         <!-- end table-responsive -->
                                     </div>
                                 </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-3">Order Summary</h4>
-
-                                        <div class="table-responsive">
-                                            <table class="table mb-0">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Total Quantity : </td>
-                                                        <td>10</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Total Amount :</td>
-                                                        <td>$ 1,857</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- end table-responsive -->
-                                    </div>
-                                </div>
                                 <!-- end card -->
                             </div>
                         </div>
@@ -222,26 +206,33 @@
                     </div>
                     <!-- container-fluid -->
                 </div>
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <th:block th:replace="/layout/head/error-collapse"/>
+                </footer>
+                <!-- End Footer -->
             </div>
             <!-- End Page-content -->
         </div>
         <!-- END layout-wrapper -->
+        <div class="loader hide"></div>
 
         <th:block th:replace="/purchase-order/modal_create_supplier"/>
         <th:block th:replace="/purchase-order/modal_update_supplier.html"/>
 
         <!-- Right Sidebar -->
-        <th:block th:replace="/layout/right-bar :: right-bar"/>
+        <th:block th:replace="/layout/right-bar"/>
         <!-- End right-bar -->
 
         <!-- JAVASCRIPT -->
-        <th:block th:replace="/layout/script/javascript :: javascript"/>
+        <th:block th:replace="/layout/script/javascript"/>
+        <!-- Touch-spin Js -->
+        <th:block th:replace="/layout/script/bootrstrap-touchspin-js"/>
         <!-- App js -->
-        <th:block th:replace="/layout/script/app-js :: app-js"/>
+        <th:block th:replace="/layout/script/app-js"/>
     </body>
 
     <script>
-        let userDTOId = $('.userDTO span').attr('id');
 
         let page = {
             url: {
@@ -251,7 +242,8 @@
 
                 getAllSuppliers: App.BASER_URL + "/suppliers",
                 getSupplierById: App.BASER_URL + "/suppliers/",
-                saveSupplier: App.BASER_URL + "/suppliers"
+                saveSupplier: App.BASER_URL + "/suppliers",
+                updateSupplier: App.BASER_URL + "/suppliers/"
 
             },
             elements: {
@@ -292,6 +284,9 @@
         page.elements.district = $('#district');
         page.elements.province = $('#province');
 
+        page.elements.totalAmount = $('#totalAmount');
+        page.elements.totalQuantity = $('#totalQuantity');
+
         page.elements.companyNameCre = $('#companyNameCre');
         page.elements.phoneCre = $('#phoneCre');
         page.elements.emailCre = $('#emailCre');
@@ -304,6 +299,7 @@
         page.elements.phoneUp = $('#phoneUp');
         page.elements.emailUp = $('#emailUp');
         page.elements.addressUp = $('#addressUp');
+        page.elements.discountUp = $('#discountUp');
         page.elements.wardUp = $('#wardUp');
         page.elements.districtUp = $('#districtUp');
         page.elements.provinceUp = $('#provinceUp');
@@ -480,10 +476,10 @@
                 page.elements.districtUp = $('#districtUp');
                 page.elements.provinceUp = $('#provinceUp');
 
-                page.elements.companyNameUp.val(supplier.email);
+                page.elements.companyNameUp.val(supplier.companyName);
                 page.elements.phoneUp.val(supplier.phone);
-                page.elements.emailUp.val(supplier.discount);
-                page.elements.addressUp.val(supplier.locationRegion.address);
+                page.elements.emailUp.val(supplier.email);
+                page.elements.discountUp.val(supplier.discount);
 
                 page.elements.addressUp.val(locationRegion.address);
                 page.elements.provinceUp.val(locationRegion.provinceId);
@@ -588,6 +584,90 @@
 
         }
 
+        page.commands.doUpdateSupplier = () => {
+            page.elements.footerAccordion.removeClass("show").addClass("hide");
+            page.elements.footerContent.empty();
+            page.elements.accordionCollapse.prop("checked", false);
+            page.elements.footerAccordion.addClass("accordion-modal-lg");
+            page.elements.btnUpdateSupplier.prop('disabled', true);
+
+            locationRegion.provinceId = page.elements.provinceUp.val();
+            locationRegion.provinceName = page.elements.provinceUp.find(":selected").text();
+            locationRegion.districtId = page.elements.districtUp.val();
+            locationRegion.districtName = page.elements.districtUp.find(":selected").text();
+            locationRegion.wardId = page.elements.wardUp.val();
+            locationRegion.wardName = page.elements.wardUp.find(":selected").text();
+            locationRegion.address = page.elements.addressUp.val();
+
+            supplier.companyName = page.elements.companyNameUp.val();
+            supplier.email = page.elements.emailUp.val();
+            supplier.phone = page.elements.phoneUp.val();
+            supplier.discount = page.elements.discountUp.val();
+            supplier.locationRegion = locationRegion;
+
+            $.ajax({
+                "headers": {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                "type": "PUT",
+                "url": page.url.updateSupplier + supplierId,
+                "data": JSON.stringify(supplier)
+            })
+                .done((item) => {
+                    supplier = item;
+                    console.log(supplier);
+
+                    page.commands.drawSuppliers();
+                    page.commands.supplierChange();
+
+                    page.elements.mdUpdateSupplier.modal('hide');
+                    App.SweetAleart.showSuccessAlert(App.SUCCESS_CREATED);
+
+                    page.commands.unbindAll();
+                })
+                .fail((jqxHR) => {
+                    console.log(jqxHR)
+                    App.IziToast.showErrorAlert(App.ERROR_400)
+
+                    page.elements.footerAccordion.removeClass("hide").addClass("show");
+                    page.elements.footerContent.empty();
+                    page.elements.accordionCollapse.prop("checked", true);
+
+                    let str = ``;
+
+                    if (jqxHR.status === 401) {
+                        str += `<label id="message-error" class="error">${App.ERROR_401}</label>`;
+                    } else {
+                        if (jqxHR.status === 403) {
+                            str += `<label id="message-error" class="error">${App.ERROR_403}</label>`;
+                        } else {
+                            if (jqxHR.responseJSON) {
+                                if (jqxHR.responseJSON.message) {
+                                    str += `<label id="message-error" class="error" for="message">${jqxHR.responseJSON.message}</label>`;
+                                } else {
+                                    $.each(jqxHR.responseJSON, function (key, value) {
+                                        str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                                        $("#" + key).addClass("error");
+                                    });
+                                }
+                            } else {
+                                str += `<label id="message-error" class="error">${App.ERROR_500}</label>`;
+                            }
+                        }
+                    }
+
+                    console.log(str)
+
+                    page.elements.footerContent.html(str);
+                })
+                .always(function () {
+                    page.elements.btnUpdateSupplier.prop('disabled', false);
+                });
+
+        }
+
+
         page.commands.unbindAll = () => {
             $('.delete').off();
         }
@@ -636,6 +716,10 @@
 
             page.elements.btnCreateSupplier.on('click', () => {
                 page.commands.doCreateSupplier();
+            })
+
+            page.elements.btnUpdateSupplier.on('click', () => {
+                page.commands.doUpdateSupplier();
             })
 
         }

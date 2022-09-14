@@ -30,7 +30,7 @@ public class Supplier {
 
     private String phone;
 
-    @Digits(integer = 2, fraction = 3)
+    @Digits(integer = 2, fraction = 2)
     private BigDecimal discount;
 
     @OneToOne
