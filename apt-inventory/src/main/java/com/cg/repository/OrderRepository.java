@@ -17,7 +17,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
     @Query("SELECT new com.cg.model.dto.OrderDTO (" +
             "ord.id, " +
             "ord.customer.fullName, " +
-            "ord.locationRegionDelivery, " +
+            "ord.deliveryInfo, " +
             "ord.orderDate, " +
             "ord.inventoryDeliveryDate, " +
             "ord.deliveryDate, " +
@@ -39,7 +39,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
             "o.quantityTotal, " +
             "o.totalAmount," +
             "o.customer," +
-            "o.locationRegionDelivery" +
+            "o.deliveryInfo" +
             ") " +
             "FROM Order AS o " +
             "WHERE o.id = :id"

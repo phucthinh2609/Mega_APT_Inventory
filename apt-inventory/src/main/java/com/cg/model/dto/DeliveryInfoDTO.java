@@ -1,6 +1,6 @@
 package com.cg.model.dto;
 
-import com.cg.model.LocationDelivery;
+import com.cg.model.DeliveryInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
@@ -16,8 +17,12 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class LocationDeliveryDTO implements Validator {
+public class DeliveryInfoDTO implements Validator {
     private String id;
+    private String companyName;
+    private String email;
+    private String fullName;
+    private String phone;
     private String provinceId;
     private String provinceName;
     private String districtId;
@@ -28,9 +33,13 @@ public class LocationDeliveryDTO implements Validator {
     @NotBlank(message = "Vui Lòng Nhập Địa Chỉ")
     private String address;
 
-    public LocationDelivery toLocationDelivery() {
-        return new LocationDelivery()
+    public DeliveryInfo toDeliveryInfo() {
+        return new DeliveryInfo()
                 .setId(Long.parseLong(id))
+                .setCompanyName(companyName)
+                .setEmail(email)
+                .setFullName(fullName)
+                .setPhone(phone)
                 .setProvinceId(Long.parseLong(provinceId))
                 .setProvinceName(provinceName)
                 .setDistrictId(Long.parseLong(districtId))

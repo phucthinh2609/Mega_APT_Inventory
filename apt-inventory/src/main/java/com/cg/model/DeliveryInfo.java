@@ -1,15 +1,13 @@
 package com.cg.model;
 
-import com.cg.model.dto.LocationDeliveryDTO;
+import com.cg.model.dto.DeliveryInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +15,21 @@ import java.util.Set;
 @Getter
 @Entity
 @Accessors(chain = true)
-@Table(name = "location_deliveries")
-public class LocationDelivery {
+@Table(name = "delivery_infos")
+public class DeliveryInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "company_name")
+    private String companyName;
+
+    private String email;
+
+    @Column(name = "full_name")
+    private String fullName;
+
+    private String phone;
 
     @Column(name = "province_id")
     private Long provinceId;
@@ -43,12 +51,16 @@ public class LocationDelivery {
 
     private String address;
 
-    @OneToOne(mappedBy = "locationRegionDelivery")
+    @OneToOne(mappedBy = "deliveryInfo")
     private Order order;
 
-    public LocationDeliveryDTO toLocationDeliveryDTO() {
-        return new LocationDeliveryDTO()
+    public DeliveryInfoDTO toDeliveryInfoDTO() {
+        return new DeliveryInfoDTO()
                 .setId(id.toString())
+                .setCompanyName(companyName)
+                .setEmail(email)
+                .setFullName(fullName)
+                .setPhone(phone)
                 .setProvinceId(provinceId.toString())
                 .setProvinceName(provinceName)
                 .setDistrictId(districtId.toString())

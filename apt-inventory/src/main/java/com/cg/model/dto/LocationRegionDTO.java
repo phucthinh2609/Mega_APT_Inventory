@@ -1,6 +1,5 @@
 package com.cg.model.dto;
 
-import com.cg.model.LocationDelivery;
 import com.cg.model.LocationRegion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
