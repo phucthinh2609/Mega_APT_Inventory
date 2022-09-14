@@ -2,6 +2,7 @@ package com.cg.service.inventoryDetail;
 
 import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.InventoryDetailProductCodeDTO;
 import com.cg.repository.InventoryDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,5 +72,10 @@ public class InventoryDetailServiceImpl implements InventoryDetailService {
     @Override
     public List<InventoryDetailDTO> getAllInventoryDetails() {
         return inventoryDetailRepository.getAllInventoryDetails();
+    }
+
+    @Override
+    public Optional<InventoryDetailProductCodeDTO> getInventoryDetailByProductCode(String productCode) {
+        return inventoryDetailRepository.getInventoryDetailByProductCode(productCode);
     }
 }

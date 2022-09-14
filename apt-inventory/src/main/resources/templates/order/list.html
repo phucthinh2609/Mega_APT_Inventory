@@ -179,6 +179,8 @@
     page.elements.customer = $('#customer');
     page.elements.quantityTotal = $('#quantityTotal');
     page.elements.totalAmount = $('#totalAmount');
+    page.elements.orderDate = $('#orderDate');
+    page.elements.inventoryDeliveryDate = $('#inventoryDeliveryDate');
     page.elements.descriptionText = $('#descriptionText');
 
     page.commands.showModalDetails = () => {
@@ -195,6 +197,8 @@
                 page.elements.customer.text(orderDetail[0].order.customer.fullName);
                 page.elements.quantityTotal.text(orderDetail[0].order.quantityTotal);
                 page.elements.totalAmount.text(orderDetail[0].order.totalAmount + " VNĐ");
+                page.elements.orderDate.text(orderDetail[0].order.orderDate === null ? "" : orderDetail[0].order.orderDate);
+                page.elements.inventoryDeliveryDate.text(orderDetail[0].order.inventoryDeliveryDate === null ? "" : orderDetail[0].order.inventoryDeliveryDate);
                 page.elements.modalDetail.modal('show');
             })
         })
@@ -314,9 +318,7 @@
     page.commands.changeOrder = () => {
         page.elements.btnChangeOrder = $('.changeOrder');
         page.elements.btnChangeOrder.on('click',function (){
-            console.log("1dsfhadsafdj");
             let orderId = $(this).data("id");
-            console.log(orderId);
             let changeOrder = {
                 employeeId : "",
                 orderId : "",

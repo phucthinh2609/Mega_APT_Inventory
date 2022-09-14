@@ -2,6 +2,7 @@ package com.cg.service.situation;
 
 import com.cg.model.Situation;
 import com.cg.model.dto.OrderDTO;
+import com.cg.model.dto.OrderDetailDTO;
 import com.cg.model.dto.SituationDTO;
 
 import java.util.List;
@@ -11,5 +12,6 @@ public interface SituationService {
     List<SituationDTO> findAllSituationDTO(String employeeId);
     Optional<SituationDTO> findLastSituationDTOByOrderIdAndEmployeeId(String employeeId, String orderId);
     void cancelledOrder(SituationDTO situationDTO,SituationDTO newSituationDTO);
-    SituationDTO changeOrder(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO);
+    SituationDTO changeOrderDelivery(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO);
+    SituationDTO changeOrderPending(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO, List<OrderDetailDTO> orderDetailDTOList);
 }

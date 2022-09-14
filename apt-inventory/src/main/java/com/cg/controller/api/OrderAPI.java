@@ -2,13 +2,13 @@ package com.cg.controller.api;
 
 import com.cg.exception.DataInputException;
 import com.cg.exception.ResourceNotFoundException;
-import com.cg.model.dto.EmployeeDTO;
-import com.cg.model.dto.OrderChangeDTO;
-import com.cg.model.dto.OrderDTO;
-import com.cg.model.dto.SituationDTO;
+import com.cg.model.OrderDetail;
+import com.cg.model.dto.*;
 import com.cg.model.enums.ESituationValue;
 import com.cg.service.employee.EmployeeService;
+import com.cg.service.inventoryDetail.InventoryDetailService;
 import com.cg.service.order.OrderService;
+import com.cg.service.orderDetail.OrderDetailService;
 import com.cg.service.situation.SituationService;
 import com.cg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +33,16 @@ public class OrderAPI {
     OrderService orderService;
 
     @Autowired
+    OrderDetailService orderDetailService;
+
+    @Autowired
     EmployeeService employeeService;
 
     @Autowired
     AppUtils appUtils;
+
+    @Autowired
+    InventoryDetailService inventoryDetailService;
 
 
     @GetMapping("/{employeeId}")
@@ -127,7 +134,19 @@ public class OrderAPI {
                 newSituationDTO.setValue(ESituationValue.DELIVERY);
                 newSituationDTO.setActive(true);
                 newSituationDTO.setDescription(orderChangeDTO.getDescription());
-                SituationDTO situationDTOCreate = situationService.changeOrder(situationDTO.get(),newSituationDTO,orderDTO);
+                List<OrderDetailDTO> orderDetailDTOList = orderDetailService.findAllOrderDetailDTO(newSituationDTO.getOrder().getId());
+                boolean flag = true;
+                List<InventoryDetailProductCodeDTO> listProductCodeErr = new ArrayList<>();
+                for (OrderDetailDTO orderDetailDTO : orderDetailDTOList ) {
+                    Optional<InventoryDetailProductCodeDTO> inventoryDetailProductCodeDTO = inventoryDetailService.getInventoryDetailByProductCode(orderDetailDTO.getProductCode());
+                    if(inventoryDetailProductCodeDTO.get().isSelled()) {
+
+                        flag = false;
+                    }
+                }
+
+
+                SituationDTO situationDTOCreate = situationService.changeOrderPending(situationDTO.get(),newSituationDTO,orderDTO,orderDetailDTOList);
                 return new ResponseEntity<>(situationDTOCreate,HttpStatus.CREATED);
             }catch (Exception e) {
                 throw new DataInputException("Liên Hệ Quản Trị Viên Hệ Thống Để Được Giải Quyết");
@@ -145,7 +164,7 @@ public class OrderAPI {
                 newSituationDTO.setValue(ESituationValue.COMPLETE);
                 newSituationDTO.setActive(true);
                 newSituationDTO.setDescription(orderChangeDTO.getDescription());
-                SituationDTO situationDTOCreate = situationService.changeOrder(situationDTO.get(),newSituationDTO,orderDTO);
+                SituationDTO situationDTOCreate = situationService.changeOrderDelivery(situationDTO.get(),newSituationDTO,orderDTO);
                 return new ResponseEntity<>(situationDTOCreate,HttpStatus.CREATED);
             }catch (Exception e) {
                 throw new DataInputException("Liên Hệ Quản Trị Viên Hệ Thống Để Được Giải Quyết");

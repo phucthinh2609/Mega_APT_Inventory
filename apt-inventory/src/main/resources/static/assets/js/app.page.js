@@ -212,12 +212,11 @@ class App {
                         <td>
                             <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded changeOrder" data-id="${obj.order.id}">Change</a>
                         </td>
-                        ${obj.strValue === "Đang Chờ Xử Lý" ? `<td>
+                        ${obj.strValue === "Đang Chờ Xử Lý" ? `<td class="text-right">
                                                                     <a href="/purchase-orders/update/${obj.order.id}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                                                     <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
                                                                 </td>` : `
-                                                                <td>
-                                                                    <a href="javascript:void(0);" data-id="${obj.order.id}" class="mr-3 text-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-pencil-box-multiple font-size-18"></i></a>
+                                                                <td class="text-right">
                                                                     <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
                                                                 </td>`
         }
@@ -275,8 +274,7 @@ class App {
                         <td>
                             <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded changeOrder" data-id="${obj.order.id}">Change</a>
                         </td>
-                            <td>
-                                <a href="javascript:void(0);" data-id="${obj.order.id}" class="mr-3 text-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-pencil-box-multiple font-size-18"></i></a>
+                            <td class="text-right">
                                 <a href="javascript:void(0);" data-id="${obj.order.id}" class="text-danger cancelled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-close font-size-18"></i></a>
                             </td>
                         </tr>

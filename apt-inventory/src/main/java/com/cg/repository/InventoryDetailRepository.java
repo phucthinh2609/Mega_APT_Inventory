@@ -2,6 +2,7 @@ package com.cg.repository;
 
 import com.cg.model.InventoryDetail;
 import com.cg.model.dto.InventoryDetailDTO;
+import com.cg.model.dto.InventoryDetailProductCodeDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InventoryDetailRepository extends JpaRepository<InventoryDetail, String> {
@@ -145,6 +147,21 @@ public interface InventoryDetailRepository extends JpaRepository<InventoryDetail
         "ORDER BY inDe.stockInDate"
     )
     List<InventoryDetailDTO> getAllInventoryDetails();
+
+    @Query("SELECT new com.cg.model.dto.InventoryDetailProductCodeDTO (" +
+            "inDe.id, " +
+            "inDe.stockInDate," +
+            "inDe.productCode," +
+            "inDe.stockInPrice," +
+            "inDe.purchaseOrderPrice," +
+            "inDe.selled," +
+            "inDe.grossProfit," +
+            "inDe.product" +
+            ") " +
+            "FROM InventoryDetail AS inDe " +
+            "WHERE inDe.productCode = :productCode"
+    )
+    Optional<InventoryDetailProductCodeDTO> getInventoryDetailByProductCode(String productCode);
 
 
 }

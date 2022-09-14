@@ -2,6 +2,7 @@ package com.cg.service.situation;
 import com.cg.model.Order;
 import com.cg.model.Situation;
 import com.cg.model.dto.OrderDTO;
+import com.cg.model.dto.OrderDetailDTO;
 import com.cg.model.dto.SituationDTO;
 import com.cg.repository.OrderRepository;
 import com.cg.repository.SituationRepository;
@@ -41,7 +42,19 @@ public class SituationServiceImpl implements SituationService{
     }
 
     @Override
-    public SituationDTO changeOrder(SituationDTO situationDTO, SituationDTO newSituationDTO ,OrderDTO orderDTO) {
+    public SituationDTO changeOrderDelivery(SituationDTO situationDTO, SituationDTO newSituationDTO ,OrderDTO orderDTO) {
+        situationDTO.setActive(false);
+        situationDTO.setEmployee(newSituationDTO.getEmployee());
+        Order newOrder = orderRepository.save(orderDTO.toOrder());
+        situationDTO.setOrder(newOrder.toOrderDTO());
+        newSituationDTO.setOrder(newOrder.toOrderDTO());
+        situationRepository.save(situationDTO.toSituation());
+        Situation situation = situationRepository.save(newSituationDTO.toSituation());
+        return situation.toSituationDTO();
+    }
+
+    @Override
+    public SituationDTO changeOrderPending(SituationDTO situationDTO, SituationDTO newSituationDTO, OrderDTO orderDTO, List<OrderDetailDTO> orderDetailDTOList) {
         situationDTO.setActive(false);
         situationDTO.setEmployee(newSituationDTO.getEmployee());
         Order newOrder = orderRepository.save(orderDTO.toOrder());
