@@ -370,4 +370,61 @@ ss App {
         return str;
     }
 
+    static renderProductsSelect2(obj) {
+        let str = `
+            <option value="${obj.id}">
+                ${obj.title}
+            </option>
+        `;
+
+        return str;
+    }
+
+    static renderRowProductPurchaseOrd(obj) {
+
+        let imageUrl;
+        let shortTitle = obj.title;
+        let title = shortTitle.substring(0,50);
+
+        $.each(obj.fileUrls, (key, value) => {
+            imageUrl = value
+        })
+
+        let str = `
+            <tr id="tr_${obj.id}">
+                <td>
+                    <img src="${imageUrl}" alt="product-img" title="product-img" class="avatar-md">
+                </td>
+                <td>
+                    <a class="myTooltip text-dark text-left" href="/products/${obj.slug}">
+                        ${title} ...
+                        <span class="myTooltiptext">${obj.title}</span>
+                    </a>
+                </td>
+                <td>
+                    <input id="price" name="price" type="text" class="form-control" value="0" style="width: 132px;display: inline-block;margin: 0 auto;">
+                </td>
+                <td>
+                    <div style="width: 120px;display: inline-block;margin: 0 auto;">
+                        <div class="input-group bootstrap-touchspin">
+                            <span class="input-group-btn input-group-prepend bootstrap-touchspin-injected">
+                                <button class="btn btn-primary bootstrap-touchspin-down" type="button">-</button>
+                            </span>
+                            <input type="text" value="0" name="demo_vertical" class="form-control ip-quantity">
+                            <span class="input-group-btn input-group-append bootstrap-touchspin-injected">
+                                <button class="btn btn-primary bootstrap-touchspin-up" type="button">+</button>
+                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td><span id="grandTotal_${obj.id}">0</span> đ</td>
+                <td>
+                    <button class="btn action-icon text-danger" id="delete_${obj.id}"> <i class="mdi mdi-trash-can font-size-18 delete"></i></button>
+                </td>
+            </tr>
+        `;
+
+        return str;
+    }
+
 }

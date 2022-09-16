@@ -158,4 +158,11 @@ public class Home {
         modelAndView.setViewName("blog/list");
         return modelAndView;
     }
+
+    @GetMapping("/demo")
+    public ModelAndView showDemoPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("purchase-order/demo-select2");
+        return modelAndView;
+    }
 }
