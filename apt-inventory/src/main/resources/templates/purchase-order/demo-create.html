@@ -103,28 +103,52 @@
                                                     <div class="table-responsive">
                                                         <table id="tbSelectPrd" class="table table-centered mb-0 table-nowrap text-center">
                                                             <thead class="thead-light">
-                                                                <tr>
-                                                                    <th>Image</th>
-                                                                    <th>Title</th>
-                                                                    <th>Price</th>
-                                                                    <th>Quantity</th>
-                                                                    <th>Total</th>
-                                                                    <th></th>
-                                                                </tr>
+                                                            <tr>
+                                                                <th>Image</th>
+                                                                <th>Title</th>
+                                                                <th>Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Total</th>
+                                                                <th></th>
+                                                            </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="https://res.cloudinary.com/apt-inventory/image/upload/v1663057450/product_images/362d3436-1ea9-405e-866e-3498b75dc912.jpg" alt="product-img" title="product-img" class="avatar-md">
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="myTooltip text-dark text-left" href="/products/zenbook-flip-15-q508-asus-amd-ryzen-8gb-256gb-nvidia-geforce-mx450-15-6-inch-gray">
+                                                                            Zenbook Flip 15 Q508 Asus AMD Ryzen/ 8GB/ 256GB/ N ...
+                                                                            <span class="myTooltiptext">Zenbook Flip 15 Q508 Asus AMD Ryzen/ 8GB/ 256GB/ NVIDIA GeForce MX450/ 15.6-inch/ Gray</span>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input id="price" name="price" type="text" class="form-control" style="width: 132px;display: inline-block;margin: 0 auto;">                                                     </td>
+                                                                    <td>
+                                                                        <div style="width: 120px;display: inline-block;margin: 0 auto;">
+                                                                            <div class="input-group bootstrap-touchspin">
+                                                                                <input type="text" value="02" name="demo_vertical" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><span id="grandTotal_54cb3099-18a7-4299-b0a0-d74171b2cd0e">0</span> đ</td>
+                                                                    <td>
+                                                                        <button class="btn action-icon text-danger" id="delete_54cb3099-18a7-4299-b0a0-d74171b2cd0e"> <i class="mdi mdi-trash-can font-size-18"></i></button>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                             <tfoot>
-                                                                <tr>
-                                                                    <td colspan="4"></td>
-                                                                    <td>Total Quantity: </td>
-                                                                    <td class="text-right" colspan="2" id="totalQuantity">10</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="4"></td>
-                                                                    <td>Total Amount: </td>
-                                                                    <td class="text-right font-size-15" colspan="2"><b id="totalAmount">1,857</b> ₫</td>
-                                                                </tr>
+                                                            <tr>
+                                                                <td colspan="4"></td>
+                                                                <td>Total Quantity: </td>
+                                                                <td class="text-right" colspan="2" id="totalQuantity">10</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4"></td>
+                                                                <td>Total Amount: </td>
+                                                                <td class="text-right font-size-15" colspan="2"><b id="totalAmount">1,857</b> ₫</td>
+                                                            </tr>
                                                             </tfoot>
                                                         </table>
                                                     </div>
@@ -322,8 +346,8 @@
 
         page.elements.productSelect2 = $('#productSelect2');
         page.elements.tbSelectPrd = $('#tbSelectPrd');
-        page.elements.btnTouchspinDown = $('.bootstrap-touchspin-down');
-        page.elements.btnTouchspinUp = $('.bootstrap-touchspin-up');
+        page.elements.bootstrapTouchspinDown = $('.bootstrap-touchspin-down');
+        page.elements.bootstrapTouchspinUp = $('.bootstrap-touchspin-up');
 
         page.elements.totalAmount = $('#totalAmount');
         page.elements.totalQuantity = $('#totalQuantity');
@@ -351,30 +375,6 @@
         page.elements.footerAccordion = $(".footer-modal section.accordion");
         page.elements.footerContent = $(".footer-modal section.accordion .content");
         page.elements.accordionCollapse = $('input[name=collapse]');
-
-        page.commands.touchSpinsUp = () => {
-            let parent = $(`#tr_${productId} .bootstrap-touchspin-up`).closest("tr");
-            let currentQuantity = +parent.find("input.ip-quantity").val();
-            let ipQuantity = parent.find("input.ip-quantity");
-
-            if (currentQuantity > 99) {
-                +parent.find("input.ip-quantity").val(100);
-            } else {
-                ipQuantity.val(currentQuantity + 1)
-            }
-        }
-
-        page.commands.touchSpinsDown = () => {
-            let parent = $(`#tr_${productId} .bootstrap-touchspin-down`).closest("tr");
-            let currentQuantity = +parent.find("input.ip-quantity").val();
-            let ipQuantity = parent.find("input.ip-quantity");
-
-            if (currentQuantity < 1) {
-                +parent.find("input.ip-quantity").val(0);
-            } else {
-                ipQuantity.val(currentQuantity - 1)
-            }
-        }
 
         page.commands.drawProductSelect2 = () => {
             $.ajax({
@@ -416,12 +416,35 @@
 
                 str = App.renderRowProductPurchaseOrd(product);
                 $('#tbSelectPrd tbody').append(str);
-
-                page.commands.clickRowProduct();
+                // page.elements.tbSelectPrd.tbody.append(str);
             })
             .fail((jqxHR) => {
                 console.log(jqxHR);
             })
+        }
+
+        page.commands.touchSpinsUp = () => {
+            let parent = $('.bootstrap-touchspin-up').closest("tr");
+            let currentQuantity = +parent.find("input.ip-quantity").val();
+            let ipQuantity = parent.find("input.ip-quantity");
+
+            if (currentQuantity > 99) {
+                +parent.find("input.ip-quantity").val(100);
+            } else {
+                ipQuantity.val(currentQuantity + 1)
+            }
+        }
+
+        page.commands.touchSpinsDown = () => {
+            let parent = $('.bootstrap-touchspin-down').closest("tr");
+            let currentQuantity = +parent.find("input.ip-quantity").val();
+            let ipQuantity = parent.find("input.ip-quantity");
+
+            if (currentQuantity < 1) {
+                +parent.find("input.ip-quantity").val(0);
+            } else {
+                ipQuantity.val(currentQuantity - 1)
+            }
         }
 
         page.commands.drawSuppliers = () => {
@@ -574,12 +597,6 @@
                 page.elements.district.text(supplier.locationRegion.districtName);
                 page.elements.province.text(supplier.locationRegion.provinceName);
             })
-        }
-
-        page.commands.clickRowProduct = () => {
-            $("#tbSelectPrd tbody tr:last-child").on("click", function () {
-                productId = $(this).attr('id').replace('tr_', '');
-            });
         }
 
         page.commands.handleShowUpdateModal = () => {
@@ -785,19 +802,6 @@
 
         }
 
-        page.commands.doRemoveRowProduct = () => {
-
-
-            App.SweetAleart.showSuspendedConfirmAlert()
-                .then((result) => {
-                    if (result.value) {
-                        $(`#tr_${productId}`).remove();
-                        App.SweetAleart.showSuccessAlert("Delete completed");
-
-                        $(`#productSelect2 option[value=${productId}]`).attr('disabled', false);
-                    }
-                });
-        };
 
         page.commands.unbindAll = () => {
             $('.delete').off();
@@ -856,22 +860,40 @@
             page.elements.productSelect2.on('change', () => {
                 productId = page.elements.productSelect2.val();
                 $(`#productSelect2 option[value=${productId}]`).attr('disabled', true);
+
                 page.commands.drawRowProduct();
             });
 
-            page.elements.tbSelectPrd.on("click", ".bootstrap-touchspin-down", function () {
-                page.commands.touchSpinsDown();
-            });
-
-            page.elements.tbSelectPrd.on("click", ".bootstrap-touchspin-up", function () {
-                page.commands.touchSpinsUp();
-            });
-
-            page.elements.tbSelectPrd.on('click', '.delete', () => {
-                page.commands.doRemoveRowProduct();
-            })
 
         }
+
+        page.elements.tbSelectPrd.on("click", ".bootstrap-touchspin-down", function () {
+            let parent = $(this).closest("tr");
+            let currentQuantity = +parent.find("input.ip-quantity").val();
+            let ipQuantity = parent.find("input.ip-quantity");
+
+            if (currentQuantity < 1) {
+                +parent.find("input.ip-quantity").val(0);
+            } else {
+                ipQuantity.val(currentQuantity - 1)
+            }
+        });
+
+        page.elements.tbSelectPrd.on("click", ".bootstrap-touchspin-up", function () {
+            let parent = $(`#tr_${productId} .bootstrap-touchspin-up`).closest("tr");
+            let currentQuantity = +parent.find("input.ip-quantity").val();
+            let ipQuantity = parent.find("input.ip-quantity");
+
+            if (currentQuantity > 99) {
+                +parent.find("input.ip-quantity").val(0);
+            } else {
+                ipQuantity.val(currentQuantity + 1)
+            }
+        });
+
+
+
+
 
         $(function () {
 

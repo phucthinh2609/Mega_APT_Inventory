@@ -74,6 +74,24 @@ public class ProductAPI {
         return new ResponseEntity<>(productRenderList, HttpStatus.OK);
     }
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> findById(@PathVariable String id){
+        Optional<Product> currentProduct = productService.findById(id);
+
+        if (!currentProduct.isPresent()) {
+            throw new DataInputException("Product is not found");
+        }
+
+        Iterable<ProductMedia> productMediaList = productMediaService.findAllByProductId(currentProduct.get().getId());
+
+        if (productMediaList == null) {
+            throw new DataInputException("Product is not found");
+        }
+
+        HashSet<ProductRender> productRenderList = convertToProductRender(productMediaList);
+        return new ResponseEntity<>(productRenderList, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@Validated ProductDTO productDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
